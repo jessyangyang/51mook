@@ -1,0 +1,30 @@
+{% extends 'base/bootstrap-modal-layout.html.twig' %}
+
+{% set modalSize = 'large' %}
+
+{% block title %}设置用户组{% endblock %}
+{% block body %}
+
+<form id="user-roles-form" class="form-horizontal" method="post" action="">
+<div class="radios">
+	{% for role in roles %}
+	<div class="radio">
+	{% if role.id > 10 %}
+  		<label class="checkbox-inline"><input type="radio" name="roles"  value="{{ role.id }}" {% if user.role_id == role.id %}checked{% endif %}> {{role.name}}</label>
+	{% endif %}
+	{% if app.super == true and role.id < 10 %}
+		<label class="checkbox-inline"><input type="radio" name="roles"  value="{{ role.id }}" {% if user.role_id == role.id %}checked{% endif %}> {{role.name}}</label>
+	{% endif %}
+	</div>
+	{% endfor %}
+</div>
+  <input type="hidden" name="_csrf_token" value="">
+</form>
+{% endblock %}
+
+
+{% block footer %}
+  <button class="btn btn-primary pull-right" data-toggle="form-submit" data-target="#user-roles-form">保存</button>
+  <button type="button" class="btn btn-link pull-right" data-dismiss="modal">取消</button>
+  <script>app.load('user/roles-modal')</script>
+{% endblock %}

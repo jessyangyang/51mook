@@ -1,0 +1,94 @@
+{% extends 'index/bookmanage/layout.html.twig' %}
+
+{% block title %}详细信息 - {{ parent() }}{% endblock %}
+
+{% set side_nav = 'detail' %}
+{% set script_controller = 'course-manage/detail' %}
+
+{% block main %}
+
+<div class="panel panel-default panel-col">
+  <div class="panel-heading">详细信息</div>
+  <div class="panel-body">
+    <form id="course-detail-form" class="form-horizontal" method="post">
+      {{ web_macro.flash_messages() }}
+
+      <div class="form-group">
+        <label class="col-md-2 control-label">发行时间</label>
+        <div class="col-md-8 controls">
+          <input type="text" id="course_expiryDay" name="pubtime" required="required" class="form-control width-input width-input-large" value="{{ book.pubtime|date('Y-n-d') }}">
+          <div class="help-block">时间格式: 1970-01-01 </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-2 control-label">出版社</label>
+        <div class="col-md-8 controls">
+          <input type="text" id="course_press" name="press" required="required" class="form-control width-input-large" value="{{ book.press }}">
+          <div class="help-block" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-2 control-label">版权</label>
+        <div class="col-md-8 controls">
+          <input type="text" id="course_copyright" name="copyright" required="required" class="form-control width-input-large" value="{{ book.copyright }}">
+          <div class="help-block" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-2 control-label">封面设计</label>
+        <div class="col-md-8 controls">
+          <input type="text" id="course_designer" name="designer" required="required" class="form-control width-input-large" value="{{ book.designer }}">
+          <div class="help-block" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-2 control-label">校对者</label>
+        <div class="col-md-8 controls">
+          <input type="text" id="course_proofreader" name="proofreader" required="required" class="form-control width-input-large" value="{{ book.proofreader }}">
+          <div class="help-block" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-2 control-label">ISBN</label>
+        <div class="col-md-8 controls">
+          <input type="text" id="course_isbn" name="isbn" required="required" class="form-control width-input-large" value="{{ book.isbn }}">
+          <div class="help-block" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-2 control-label">字数</label>
+        <div class="col-md-8 controls">
+            <input type="text" id="course_wordcount" name="wordcount" required="required" class="form-control width-input-large" value="{{ book.wordcount }}">
+            <div class="help-block" style="display:none;"></div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-2 control-label"><label>图书简介</label></div>
+        <div class="col-md-8 controls">
+          <textarea name="summary" rows="10" id="course-about-field" class="form-control">{{ book.summary }}</textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-8 col-md-offset-2 controls">
+            <button class="btn btn-fat btn-primary" id="course-create-btn" type="submit">保存</button>
+        </div>
+      </div>
+
+      <input type="hidden" name="_csrf_token" value="">
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+
+

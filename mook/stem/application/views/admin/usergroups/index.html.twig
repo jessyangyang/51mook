@@ -1,0 +1,35 @@
+{% extends 'admin/user/layout.html.twig' %}
+
+{% block title %}用户组管理 - {{ parent() }}{% endblock %}
+
+{% set menu = 'teacher' %}
+
+{% set script_controller = 'usergroup/group-list' %}
+
+{% block main %}
+<div class="page-header">
+  <button class="btn btn-info btn-sm pull-right" id="add-navigation-btn" data-toggle="modal" data-target="#modal" data-url="/admin/user/groups/post/new">添加用户组</button>
+  <h1>用户组管理</h1>
+</div>
+
+<table id="group-table" class="table table-striped table-hover" data-search-form="#group-search-form">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>名称</th>
+      <th>添加时间</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if roles %}
+      {% for role in roles %}
+        {% include 'admin/usergroups/tr.html.twig' with {role:role} %}
+      {% endfor %}
+    {% else %}
+       <tr><td colspan="20"><div class="empty">暂无用户组记录</div></td></tr>
+    {% endif %}
+  </tbody>
+</table>
+ {{ web_macro.paginator(paginator) }} 
+{% endblock %}

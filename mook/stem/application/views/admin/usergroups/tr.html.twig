@@ -1,0 +1,28 @@
+<tr id="user-table-tr-{{ role.id }}">
+  <td>
+    {{ role.id }}
+    {% if role.locked %}
+      <label class="label label-danger">禁</label>
+    {% endif %}
+  </td>
+  <td>
+    <strong>{{role.name}}</strong>
+  </td>
+   <td>
+    <span class="text-sm">{{ role.published|date('Y-n-d H:i:s') }}</span>
+    <br>
+    <a class="text-muted text-sm" href="http://www.baidu.com/s?wd={{ user.loginIp }}" target="_blank">{{ user.loginIp }}</a>
+  </td>
+  <td>
+    <div class="btn-group">
+      <a href="#modal" data-toggle="modal" data-url="/admin/user/groups/show/{{ role.id}}"  class="btn btn-default btn-sm">查看</a>
+      <a href="#" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="promote-user" href="javascript:" data-toggle="modal" data-target="#modal" data-url="/admin/user/groups/post/{{ role.id }}">编辑权限</a></li>
+        <li><a class="promote-user" id="user-groups-delete" href="javascript:" data-url="/admin/user/groups/delete/{{role.id}}" title="删除用户组 '{{role.name}}'' ">删除</a></li>
+      </ul>
+    </div>
+  </td>
+</tr>

@@ -1,0 +1,45 @@
+{% extends 'base/bootstrap-modal-layout.html.twig' %}
+
+{% set modal_class = 'modal-lg' %}
+{% set lesson = lesson|default(null) %}
+
+{% block title %}
+  {% if article %}编辑章节 {{ article.sort }}{% else %}添加章节{% endif %}
+{% endblock %}
+
+{% block body %}
+
+<form id="course-content-form" class="form-horizontal lesson-form" method="post" action="/book/{{ book.bid }}/manage/chapter">
+
+  <div class="form-group">
+    <div class="col-md-1 control-label"><label for="lesson-title-field">标题</label></div>
+    <div class="col-md-9 controls">
+      <div class="row">
+        <div class="col-md-10">
+          <input id="lesson-title-field" class="form-control" type="text" name="title" value="{{ article.title }}">
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-1 control-label"><label for="lesson-content-field">内容</label></div>
+    <div class="col-md-11 controls"><textarea class="form-control" id="lesson-content-field" name="body" rows="6">
+      {{ article.body }}
+    </textarea>
+   </div>
+  </div>
+  <input type="hidden" name="mid" value="{{ article.id }}">
+  <input type="hidden" name="_csrf_token" value="">
+
+</form>
+<script>app.load('course-manage/lesson-modal')</script>
+{% endblock %}
+
+{% block footer %}
+    <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+    <button type="submit" class="btn btn-primary" data-toggle="form-submit" data-target="#course-content-form">{% if article %}保存{% else %}添加{% endif %}</button>
+{% endblock %}
+
+{% set hideFooter = true %}

@@ -1,0 +1,57 @@
+{% extends 'index/layout.html.twig' %}
+
+{% block title %}注册 - {{ parent() }}{% endblock %}
+{% set script_controller = 'auth/register' %}
+
+{% block content %}
+<div class="row row-6">
+  <div class="col-md-6 col-md-offset-3 ptl">
+    {% if isLoginEnabled %}
+      <div class="panel panel-default panel-page">
+        <div class="panel-heading"><h2>注册</h2></div>
+
+        <form id="register-form" class="form-vertical" method="post" action="/register">
+
+          <div class="form-group">
+            <label for="register_email" class="control-label required">邮箱地址</label>
+            <div class="controls">
+              <input type="text" data-url="/register/email/check" class="form-control" required="required" name="email" id="register_email" data-widget-cid="widget-1" data-explain="填写你常用的邮箱作为登录帐号">
+              <p class="help-block">填写你常用的邮箱作为登录帐号</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="register_password" class="control-label required">密码</label>
+            <div class="controls">
+              <input type="password" class="form-control" required="required" name="password" id="register_password" data-widget-cid="widget-2" data-explain="5-20位英文、数字、符号，区分大小写">
+              <p class="help-block">5-20位英文、数字、符号，区分大小写</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="register_confirmPassword" class="control-label required">确认密码</label>
+            <div class="controls">
+              <input type="password" class="form-control" required="required" name="confirmpassword" id="register_confirmPassword" data-widget-cid="widget-3" data-explain="再输入一次密码">
+              <p class="help-block">再输入一次密码</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="controls">
+              <button type="submit" class="btn btn-primary btn-large btn-block">注册</button>
+            </div>
+          </div>
+
+          <input type="hidden" name="_csrf_token" value="">
+
+        </form>
+
+        {% include 'index/login/social-logins-block.html.twig' %}
+
+      </div><!-- /panel -->
+    {% else %}
+        <div class="panel-heading"><h2>系统暂时关闭注册，请联系管理员</h2></div>
+    {% endif %}    
+  </div>
+</div>
+{% endblock %}

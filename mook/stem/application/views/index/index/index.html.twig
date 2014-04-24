@@ -1,0 +1,40 @@
+{% extends 'index/index/layout.html.twig' %}
+
+{% block content %}
+
+<div class="es-row-wrap container-gap">
+
+  {% if blocks.home_top_banner %}
+    <div class="homepage-feature homepage-feature-slides mbl">
+      <div class="cycle-pager"></div>
+      {{ blocks.home_top_banner|raw }}
+    </div>
+  {% endif %}
+
+  <div class="row row-9-3">
+
+    <div class="col-md-9">
+      <div class="es-box">
+        <div class="es-box-heading"><h2>图书</h2></div>
+        <div class="es-box-body">
+          {% if courses %}
+            {% if courses|length >= 12 %}
+              <a class="btn btn-default btn-lg btn-block" href="">更多图书</a>
+            {% endif %}
+          {% else %}
+            <div class="empty">还没有图书</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      
+    </div>
+
+  </div>
+
+  <div class="row"><div class="col-md-12"></div></div>
+
+</div>
+{% endblock %}

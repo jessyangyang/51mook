@@ -1,0 +1,17 @@
+<tbody>
+  {% for category in categories %}
+		<tr id="category-tr-{{ category.cid }}">
+		  <td>
+		    {{ category.cid }}
+		  </td>
+		  <td>{{ category.name }}</td>
+		  <td>{{ category.dateline|date('Y-n-d H:i') }}</td>
+		  <td>{{ category.sort }}</td>
+		  <td>
+	        <a href="javascript:;" class="btn btn-default btn-sm " data-url="/admin/books/category/post/{{ category.cid }}" data-toggle="modal" data-target="#modal"><i class="glyphicon glyphicon-edit"></i> 编辑</a>
+		   </td>
+		</tr>
+	{% else %}
+	  <tr><td colspan="20"><div class="empty">暂无分类记录</div></td></tr>
+  {% endfor %}
+</tbody>

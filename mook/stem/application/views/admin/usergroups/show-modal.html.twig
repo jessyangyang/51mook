@@ -1,0 +1,52 @@
+{% extends 'base/bootstrap-modal-layout.html.twig' %}
+
+{% set modalSize = 'large' %}
+{% set hide_footer = true %}
+
+{% block title %}查看用户组{% endblock %}
+{% block body %}
+
+<form id="group-show-form" class="form-horizontal" method="post" action="/admin/user/groups">
+<div class="row form-group">
+  <div class="col-md-2 control-label">
+      <label for="id">ID</label>
+    </div>
+    <div class="col-md-3 controls">
+    <p class="form-control-static">{{ currentRole.id }}</p>
+    </div>
+  </div>
+<div class="row form-group">
+  <div class="col-md-2 control-label">
+      <label for="email">用户组名</label>
+    </div>
+    <div class="col-md-7 controls">
+    <p class="form-control-static">{{ currentRole.name }}</p>
+    </div>
+  </div>
+ {% if rolegroups %}
+ {% for grole in rolegroups %}
+ {% if grole.group %}
+<div class="row form-group">
+    <div class="col-md-2 control-label">
+        <label for="roles">{{grole.name}}</label>
+    </div>
+    <div class="col-md-7 controls">
+        {% for rolebox in grole.group %}
+        <div class="checkbox disabled">
+          <label>
+            <input type="checkbox" value="{{rolebox.key}}" name="roles[]" {% if rolebox.key in currentRole.permission%}checked{% endif %}/>  {{rolebox.name}}
+          </label>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+</form>
+{% endblock %}
+
+{% block footer %}
+  <button type="button" class="btn btn-link pull-right" data-dismiss="modal">取消</button>
+{% endblock %}

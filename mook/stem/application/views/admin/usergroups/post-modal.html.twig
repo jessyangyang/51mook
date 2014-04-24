@@ -1,0 +1,64 @@
+{% extends 'base/bootstrap-modal-layout.html.twig' %}
+
+{% set modalSize = 'large' %}
+{% set type = 'create' %}
+{% if currentRole %}{% set type = 'edit' %}{% endif %}
+
+{% block title %}{{ subtitle }}新用户组{% endblock %}
+{% block body %}
+
+<form id="group-{{type}}-form" class="form-horizontal" method="post" action="/admin/user/groups">
+<div class="row form-group">
+  <div class="col-md-2 control-label">
+      <label for="id">ID</label>
+    </div>
+    <div class="col-md-3 controls">
+      {% if currentRole %}
+          <p class="form-control-static">{{ currentRole.id }}</p>
+          <input type="hidden" id="id" name="id" class="form-control" value="{{ currentRole.id }}" />
+          <input type="hidden" id="type" name="type" class="form-control" value="{{type}}" />
+      {% else %}
+          <input type="text" id="id" name="id" class="form-control" value="{{ currentRole.id }}" />
+          <input type="hidden" id="type" name="type" class="form-control" value="{{type}}" />
+      {% endif %}
+    </div>
+  </div>
+<div class="row form-group">
+  <div class="col-md-2 control-label">
+      <label for="email">用户组名</label>
+    </div>
+    <div class="col-md-7 controls">
+      <input type="text" id="groupname" name="groupname" class="form-control" value="{{ currentRole.name }}" />
+    </div>
+  </div>
+ {% if rolegroups %}
+ {% for grole in rolegroups %}
+ {% if grole.group %}
+<div class="row form-group">
+    <div class="col-md-2 control-label">
+        <label for="roles">{{grole.name}}</label>
+    </div>
+    <div class="col-md-7 controls">
+        {% for rolebox in grole.group %}
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="{{rolebox.key}}" name="roles[]" {% if rolebox.key in currentRole.permission%}checked{% endif %}/>  {{rolebox.name}}
+          </label>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  <input type="hidden" name="_csrf_token" value="">
+
+</form>
+{% endblock %}
+
+{% block footer %}
+  <button type="submit" class="btn btn-primary pull-right" data-toggle="form-submit" data-target="#group-{{ type }}-form">提交</button>
+  <button type="button" class="btn btn-link pull-right" data-dismiss="modal">取消</button>
+  <script>app.load('usergroup/{{ type }}-modal')</script>
+{% endblock %}

@@ -1,0 +1,26 @@
+<tr id="course-tr-{{menu.id}}" class="item-chapter">
+  <td>  {{ menu.sort }}</td>
+  <td>
+    <a target="_blank" href=""><strong>{{ menu.title }}</strong></a>
+      </td>
+  <td>{% if menu.dateline > 0 %}{{menu.dateline|date('Y-n-d H:i')}}{% else %} --{% endif %}</td>
+  <td>
+    {% if menu.modified > 0 %}{{menu.modified|date('Y-n-d H:i')}}{% else %} --{% endif %}
+  </td>
+  <td>
+    <div class="btn-group">
+      <a  href="javascript:" class="btn btn-default btn-sm" data-target="#modal" data-toggle="modal" data-url="/book/{{ book.bid }}/manage/article/{{ menu.id}}">管理</a>
+
+      <a data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle" type="button" href="#">
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu pull-right">
+        <li><a target="_blank" href=""><span class="glyphicon glyphicon-eye-open"></span> 预览</a></li>
+        
+        <li class="divider"></li>
+
+        <li><a data-url="/book/{{ book.bid }}/manage/article/delete/{{ menu.id}}" href="javascript:" class="delete-menu"><span class="glyphicon glyphicon-trash"></span> 删除章节</a></li>
+      </ul>
+    </div>
+  </td>
+</tr>

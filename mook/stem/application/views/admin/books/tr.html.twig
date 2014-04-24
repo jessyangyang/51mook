@@ -1,0 +1,53 @@
+<tr id="course-tr-{{ book.bid }}">
+  <td>{{ book.bid }}</td>
+  <td>
+    <a href="" target="_blank"><strong>{{ book.title }}</strong></a>
+    <br>
+    <span class="text-muted text-sm">分类：{{ book.category|default('--') }}</span>
+    {% if course.recommended %}
+      <span class="label label-default">荐:{{ course.recommendedTime|date('Y-m-d') }} / 序号:{{ course.recommendedSeq }}</span>
+    {% endif %}
+  </td>
+  <td>{{ book.author }}</td>
+  <td>
+    {{ book.pubtime|date('Y年n月d日') }}<br>
+    <span class="text-muted text-sm">{{book.published}}</span>
+  </td>
+  <td><span class="text-muted">{{book.verified}}</span></td>
+  <td>
+    <a data-url="" data-target="#modal" data-toggle="modal" role="show-user" href="javascript:;">{{book.username}}</a>
+    <br>
+    <span class="text-muted text-sm">{{ book.pubtime|date('Y-n-d H:i') }}</span>
+  </td>
+  <td>
+    <div class="btn-group">
+      <a class="btn btn-default btn-sm" href="/book/{{ book.bid }}/manage/base" target="_blank">管理</a>
+      <a href="#" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span></a>
+      <ul class="dropdown-menu pull-right">
+          <li><a class="recommend-course" href="#modal" data-toggle="modal" data-url=""><span class="glyphicon glyphicon-hand-up"></span> 推荐图书</a></li>
+          {% if course.recommended %}
+            <li><a class="cancel-recommend-course" href="javascript:" data-url=""><span class="glyphicon glyphicon-hand-right"></span> 取消推荐</a></li>
+          {% endif %}
+
+          <li><a href="" target="_blank"><span class="glyphicon glyphicon-eye-open"></span> 预览</a></li>
+
+          <li class="divider"></li>
+
+          {% if course.status == 'published' %}
+            <li><a class="close-course" href="javascript:" data-url=""><span class="glyphicon glyphicon-ban-circle"></span> 下架图书</a></li>
+          {% endif %}
+
+          {% if book.verified == '未发布' or book.verified == '已下架' %}
+            <li><a class="publish-course" href="javascript:" data-url=""><span class="glyphicon glyphicon-ok-circle"></span> 发布图书</a></li>
+          {% else %}
+            <li><a class="publish-course" href="javascript:" data-url=""><span class="glyphicon glyphicon-cancel-circle"></span> 下架图书</a></li>
+          {% endif %}
+
+          <li class="divider"></li>
+
+          <li><a class="delete-course" href="javascript:" data-url="/admin/books/delete/{{book.bid}}"><span class="glyphicon glyphicon-trash"></span> 删除图书</a></li>
+      </ul>
+    </div>
+  </td>
+</tr>

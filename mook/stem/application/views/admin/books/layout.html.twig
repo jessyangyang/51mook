@@ -1,0 +1,34 @@
+{% extends "admin/layout.html.twig" %}
+
+{% set nav = 'course' %}
+
+{% block content %}
+  <div class="col-md-2">
+    {% block sidebar %}
+      <div class="list-group">
+        <a href="/admin/books" class="list-group-item {% if menu == 'course' %}active{% endif %}">图书管理</a>
+        <a href="/admin/books/category" class="list-group-item {% if menu == 'category' %}active{% endif %}" >分类管理</a>
+
+        <a href="" class="list-group-item {% if menu == 'course-order' %}active{% endif %}">交易管理</a>
+
+        {# <a href="" class="list-group-item {% if menu == 'refunds' %}active{% endif %}">退款管理</a> #}
+
+        {# <a href="" class="list-group-item {% if menu == 'review' %}active{% endif %}" style="display:none;">评价管理</a> #}
+
+        {# <a href="" class="list-group-item {% if menu == 'thread' %}active{% endif %}" style="display:none;">讨论区管理</a> #}
+
+        {# <a href="" class="list-group-item {% if menu == 'question' %}active{% endif %}" style="display:none;">问答管理</a> #}
+
+        {# <a href="" class="list-group-item {% if menu == 'note' %}active{% endif %}" style="display:none;">笔记管理</a> #}
+
+        {# <a href="" class="list-group-item {% if menu == 'tag' %}active{% endif %}" >标签管理</a> #}
+
+        {# <a href="" class="list-group-item {% if menu == 'course-disk' %}active{% endif %}" style="display:none;">文件管理</a> #}
+
+      </div>
+    {% endblock %}
+  </div>
+  <div class="col-md-10">
+      {% block main %}{% endblock %}
+  </div>
+{% endblock %}
