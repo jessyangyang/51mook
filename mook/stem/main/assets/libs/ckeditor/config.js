@@ -39,7 +39,7 @@ CKEDITOR.editorConfig = function( config ) {
     };
 
 	config.contentsCss = '/js/ckeditor/contents.css' + '?code=' + Math.random();
-	config.height = 500;
+	config.height = 420;
 	config.filebrowserBrowseUrl = '/kcfinder/browse.php?type=files';
     config.filebrowserImageBrowseUrl = '/files/load/images';
     config.filebrowserFlashBrowseUrl = '/kcfinder/browse.php?type=flash';
