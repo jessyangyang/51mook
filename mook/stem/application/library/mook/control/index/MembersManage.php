@@ -197,4 +197,18 @@ class MembersManage extends MembersControl
         }
         return false;
     }
+
+
+    /**
+     * [updateMembers description]
+     * @param  [type] $uid    [description]
+     * @param  array  $fields [description]
+     * @return [type]         [description]
+     */
+    public function updateMembers($uid, $fields = array())
+    {
+        if (!$uid and !is_array($fields)) return false;
+
+        return $this->members->where("id='$uid'")->update($fields);
+    }
 }

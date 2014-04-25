@@ -10,7 +10,6 @@
 
 namespace lib\dao;
 
-use \lib\models\Members;
 use \lib\models\users\Roles;
 use \lib\models\users\RoleCategory;
 use \lib\models\users\UserRole;
