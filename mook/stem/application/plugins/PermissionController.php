@@ -75,7 +75,7 @@ class PermissionControllerPlugin extends Plugin_Abstract
                 $request->setControllerName('Index');
                 $request->setActionName('index');
             }
-            else if (in_array($key[0], $check) and $user['role_id'] > 2 and !in_array($this->current_key, $userpermission)) {
+            else if (in_array($key[0], $check) and $user['role_id'] > 3 and !in_array($this->current_key, $userpermission)) {
                 $request->setControllerName('Index');
                 $request->setActionName('index');
             }
