@@ -107,6 +107,7 @@ class BookController extends \Yaf\Controller_Abstract
                     if ($file = $data->getQuery('file')) {
                         $avatar_id = $image->saveImagesBookFromCut($data->getQuery('file'),$data->getPost('x'),$data->getPost('y'),$data->getPost('width'),$data->getPost('height'), $user['id'], $bid);
                         if($avatar_id) {
+                            $image->addBookImage($avatar_id,$bid,1);
                             ImagesManage::unlink(ImagesManage::getRealPath($file));
                         }
                         header("Location: /book/$bid/manage/picture");

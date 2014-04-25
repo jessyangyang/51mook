@@ -579,8 +579,6 @@ class ImageControl extends \local\image\Images
     {
         if (!$insertId or !$bid) return 0;
 
-        
-
         $fields = array(
             'bid'  => $bid,
             'pid'  => $insertId,
