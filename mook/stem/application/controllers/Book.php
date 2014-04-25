@@ -142,6 +142,7 @@ class BookController extends \Yaf\Controller_Abstract
                     $views->assign('image',$coverPath);
                     break;
                 case 'upload':
+                    $action = 'picture-crop';
                     if ($file = $data->getQuery('file')) {
                         $views->assign('scaled',ImagesManage::getImageSizeForPath($file,480));
                         $views->assign('file',ImagesManage::getRelativeImage($file));
