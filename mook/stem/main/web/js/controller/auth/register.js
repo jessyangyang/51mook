@@ -10,7 +10,7 @@ define(function(require, exports, module) {
         validator.addItem({
             element: '[name="email"]',
             required: true,
-            rule: 'email'
+            rule: 'email email_remote'
         });
 
         validator.addItem({

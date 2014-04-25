@@ -11,11 +11,12 @@
         <div class="panel-heading"><h2>注册</h2></div>
 
         <form id="register-form" class="form-vertical" method="post" action="/register">
-
+        
+          {{ web_macro.flash_messages() }}
           <div class="form-group">
             <label for="register_email" class="control-label required">邮箱地址</label>
             <div class="controls">
-              <input type="text" data-url="/register/email/check" class="form-control" required="required" name="email" id="register_email" data-widget-cid="widget-1" data-explain="填写你常用的邮箱作为登录帐号">
+              <input type="text" data-url="/register/email/check" class="form-control" required="required" name="email" id="register_email" data-explain="填写你常用的邮箱作为登录帐号">
               <p class="help-block">填写你常用的邮箱作为登录帐号</p>
             </div>
           </div>
@@ -23,7 +24,7 @@
           <div class="form-group">
             <label for="register_password" class="control-label required">密码</label>
             <div class="controls">
-              <input type="password" class="form-control" required="required" name="password" id="register_password" data-widget-cid="widget-2" data-explain="5-20位英文、数字、符号，区分大小写">
+              <input type="password" class="form-control" required="required" name="password" id="register_password" data-explain="5-20位英文、数字、符号，区分大小写">
               <p class="help-block">5-20位英文、数字、符号，区分大小写</p>
             </div>
           </div>
@@ -31,7 +32,7 @@
           <div class="form-group">
             <label for="register_confirmPassword" class="control-label required">确认密码</label>
             <div class="controls">
-              <input type="password" class="form-control" required="required" name="confirmpassword" id="register_confirmPassword" data-widget-cid="widget-3" data-explain="再输入一次密码">
+              <input type="password" class="form-control" required="required" name="confirmpassword" id="register_confirmPassword" data-explain="再输入一次密码">
               <p class="help-block">再输入一次密码</p>
             </div>
           </div>

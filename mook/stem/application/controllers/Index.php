@@ -10,6 +10,7 @@
 
 use \mook\control\index\MembersManage;
 use \mool\control\pagesControl;
+use \local\rest\Restful;
 use \Yaf\Registry;
 
 class IndexController extends \Yaf\Controller_Abstract 
@@ -75,7 +76,7 @@ class IndexController extends \Yaf\Controller_Abstract
 
         if ($data->isPost()) {
         	$username = explode('@',$data->getPost('email'));
-        	if ($uid = $members->register($data->getPost('email'),$username[0],$data->getPost('email'),$data->getPost('password'),false)) {
+        	if ($uid = $members->register($data->getPost('email'),$username[0],$data->getPost('password'),false)) {
         		header('Location: /');
             	exit();
         	}
@@ -84,6 +85,32 @@ class IndexController extends \Yaf\Controller_Abstract
         $views->assign('isLoginEnabled',true);
         $views->assign('title',"mook");
         $views->display('index/register/index.html.twig');
+    }
+
+    public function registerCheckAction()
+    {
+        $rest = Restful::instance();
+        $data = $this->getRequest();
+
+        $success = true;
+        $message = "";
+
+        $members = new MembersManage();
+        $app = $members->getCurrentSession();
+
+        if ($app) {
+            header('Location: /');
+            exit();
+        }
+
+        if ($email = $data->getQuery('value') and $members->isRegistered($data->getQuery('value'))) {
+            $success = false;
+            $message = "已注册.";
+        }
+
+        $rest->assign('success',$success);
+        $rest->assign('message',$message);
+        $rest->response();
     }
 
     public function logoutAction()

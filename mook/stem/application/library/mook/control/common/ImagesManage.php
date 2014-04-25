@@ -153,13 +153,60 @@ class ImagesManage extends \lib\dao\ImageControl
         return false;
     }
 
+    public function saveImageMemberFromPath($filepath, $uid, $class= 1, $thumb = false)
+    {
+        if (file_exists($filepath)) {
+            $fields = array(
+                'uid' => $uid,
+                'class' => $class,
+                'title' => basename($files['name']),
+                'filename' => $this->images_member->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'type' => $files['type'],
+                'size' => $files['size'],
+                'path' => $this->images->escapeString($filepath),
+                'thumb' => 0,
+                'dateline' => UPDATE_TIME
+            );
 
+            if ($this->insertId = $this->images_member->insert($fields)) {
+                return $this->insertId;
+            }
+        }
+
+        return false;
+    }
+
+    public function saveWebImageToLocal($url, $uid, $path = 'book', $relatived = true)
+    {
+        $pathinfo = pathinfo($url); 
+
+        // print_r($pathinfo);
+
+        $fileExt = $this->getImageType($pathinfo['extension']);
+        // Allow Type
+        if (!$this->hasImageType($fileExt)) {
+            # code...
+        }
+
+        // Get file path
+        if (!$this->_file = $this->getFilePath($pathinfo['basename'], $uid, true, $path, false)) {
+            # code...
+        }
+
+        $data = file_get_contents($url);
+        $img_size = file_put_contents(FILES_PATH . '/files' . $this->_file, $data);
+
+        if (!file_exists(FILES_PATH . '/files' . $this->_file, $data)) return false;
+
+        if ($relatived) return $this->_file;
+        return FILES_PATH . '/files' . $this->_file;
+    }
 
     /**
-     * [getImageSizeForWeb 获取网页等比展示的大小和真实大小]
+     * [getImageSizeForPath 获取网页等比展示的大小和真实大小]
      * @return [type] [description]
      */
-    public static function getImageSizeForWeb($filepath,$width = false,$height = false)
+    public static function getImageSizeForPath($filepath,$width = false,$height = false)
     {
         if(!file_exists(self::getRealPath($filepath))) return false;
 

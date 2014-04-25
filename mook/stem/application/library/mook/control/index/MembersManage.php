@@ -11,7 +11,7 @@
 namespace mook\control\index;
 
 use \lib\dao\MembersControl;
-use \lib\dao\ImageControl;
+use \mook\control\common\ImagesManage;
 use \lib\dao\RolesControl;
 use \Yaf\Registry;
 
@@ -27,6 +27,13 @@ class MembersManage extends MembersControl
         return self::$instance;
     }
 
+    /**
+     * Instance construct
+     */
+    function __construct($uid = false) {
+        parent::__construct();
+        $this->images = new ImagesManage();
+    }
 
 	/**
      * Register User 
@@ -37,7 +44,7 @@ class MembersManage extends MembersControl
      * @param String , $img , image url
      * @return Boolean
      */
-    public function register($email,$username,$password,$imgUrl)
+    public function register($email,$username,$password,$imgUrl = false)
     {
         $email = addslashes($email);
 
@@ -48,16 +55,21 @@ class MembersManage extends MembersControl
             'published' => UPDATE_TIME,
             'role_id' => self::ROLE_NORMAL
         );
-                
+        if ($this->isRegistered($email) or $this->getCurrentSession()) return false;
+
         if ($userId = $this->members->insert($arr)) {
 
         	$roles = new RolesControl();
         	$role = $roles->getRolePermissionForId(self::ROLE_NORMAL);
         	$permission = $role ? $role['permission'] : false; 
 
-            if ($imgUrl) $avatarId = $this->images->saveImageFromUrl($imgUrl . ".jpeg", $userId, self::IMAGE_TYPE, self::IMAGE_PATH);
+            $avatarId = 0;
 
-            $avatarId = $avatarId ? $avatarId : false;
+            if ($imgUrl) {
+                $coverpath = $this->images->saveWebImageToLocal($imgUrl, $userId, 'head');
+                if ($coverpath) $avatarId = $this->images->saveImageMemberFromPath($coverpath,$userId);
+            }
+
 
             $infoArr = array(
                 'id' => $userId,
@@ -75,7 +87,7 @@ class MembersManage extends MembersControl
                 'role_id' => self::ROLE_NORMAL,
             	'permission' => $permission);
 
-            if ($avatarId) $app['cover'] = ImageControl::getRelativeImage($avatarId);
+            if ($avatarId) $app['cover'] = ImagesManage::getRelativeImage($avatarId);
 
             $this->session->set('app',$app);
 
@@ -96,7 +108,7 @@ class MembersManage extends MembersControl
 
         if (is_array($list)) {
         	$info = $this->memberInfo->where("id='". $list[0]['id']."'")->fetchRow();
-            if (isset($info['avatar_id']) and $info['avatar_id']) $list[0]['cover'] = ImageControl::getRelativeImage($info['avatar_id']);
+            if (isset($info['avatar_id']) and $info['avatar_id']) $list[0]['cover'] = ImagesManage::getRelativeImage($info['avatar_id']);
             else $list[0]['cover'] = false;
             return $list[0];
         }
@@ -130,6 +142,8 @@ class MembersManage extends MembersControl
      */
     public function login($email,$password)
     {
+        if ($this->getCurrentSession()) return false;
+
         $wherearr = "email='" . $this->members->escapeString(trim($email)) . "' AND password='" . md5($this->members->escapeString($password)) . "'";
         $row = $this->members->field("id,email,username,role_id,published")->where($wherearr)->fetchRow();
         if ($row) {
@@ -159,7 +173,7 @@ class MembersManage extends MembersControl
 
 	            $this->memberInfo->where("id='". $row['id'] ."'")->update($infoArr);
 
-        		if (isset($info['avatar_id']) and $info['avatar_id']) $app['cover'] = ImageControl::getRelativeImage($info['avatar_id']);
+        		if (isset($info['avatar_id']) and $info['avatar_id']) $app['cover'] = ImagesManage::getRelativeImage($info['avatar_id']);
 
                 if ($row['role_id'] <= 3) $app['super'] = true;
 
