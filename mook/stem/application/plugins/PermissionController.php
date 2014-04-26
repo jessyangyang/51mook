@@ -23,7 +23,7 @@ class PermissionControllerPlugin extends Plugin_Abstract
 
     public function routerStartup(Request_Abstract $request, Response_Abstract $response)
     {
-        $this->checkSystemPermission($request, $response);
+        // $this->checkSystemPermission($request, $response);
     }
 
     public function routerShutdown(Request_Abstract $request, Response_Abstract $response) 
@@ -80,12 +80,6 @@ class PermissionControllerPlugin extends Plugin_Abstract
                 $request->setActionName('index');
             }
     
-        }
-        else
-        {
-            // $request->setControllerName('Index');
-            // $request->setActionName('index');
-            // $request->setRequestUri("/");
         }
     }
 

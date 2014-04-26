@@ -49,6 +49,7 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract
 
     public function _initPlugins(Dispatcher $dispatcher)
     {
+        $dispatcher->registerPlugin(new XhprofControllerPlugin());
         $dispatcher->registerPlugin(new PermissionControllerPlugin());
         // $dispatcher->registerPlugin(new OAUTH2Plugin());
     }
