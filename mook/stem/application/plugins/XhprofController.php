@@ -36,7 +36,7 @@ class XhprofControllerPlugin extends Plugin_Abstract
     }
 
     public function dispatchLoopShutdown(Request_Abstract $request, Response_Abstract $response) 
-    {echo "dispatchLoopShutdown,";
+    {
         $this->debug($request, $response);
     }
 
@@ -50,7 +50,7 @@ class XhprofControllerPlugin extends Plugin_Abstract
         }
         else
         {
-        	xhprof_enable();
+        	// xhprof_enable();
         	$this->start =  microtime(true);
         }
     }
@@ -62,7 +62,7 @@ class XhprofControllerPlugin extends Plugin_Abstract
         if ($config and $config['debug'] == false) {
            return;
         }
-        $xhprof_data = xhprof_disable();
+        // $xhprof_data = xhprof_disable();
 
         $this->stop =  microtime(true);
 
