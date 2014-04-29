@@ -3,7 +3,6 @@ define(function(require, exports, module) {
     require('common/validator-rules').inject(Validator);
     var Notify = require('common/bootstrap-notify');
 
-    // require('ckeditor/ckeditor');
     require('redactor/redactor.css');
     require('redactor/redactor.min.js');
     require('redactor/lang/zh_cn.js');
@@ -13,11 +12,15 @@ define(function(require, exports, module) {
 
         $('#lesson-content-field').redactor({
             lang: 'zh_cn',
+            iframe: true,
+            minHeight: 400,
+            maxHeight: 650,
+            autoresize: true,
+            css: '/assets/libs/redactor/css/custom.css',
             imageUpload: $("[name='image_upload']").val(),
             imageGetJson: $("[name='image_list']").val()
         });
-        // CKEDITOR.replace( 'lesson-content-field' );
-        console.log($.Redactor.opts);
+        
         var validator = new Validator({
             element: '#course-content-form',
             triggerType: 'change'
