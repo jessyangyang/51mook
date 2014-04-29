@@ -263,7 +263,7 @@ class ImageControl extends \local\image\Images
 
         if (!$id) return false;
         $fileInfo = pathinfo($file);
-        $this->fileName = $id ."_".$common->random(4) . "_" . time() .'.'.$fileInfo['extension'];
+        $this->fileName = $id ."_".$common->random(4) . "_" . date("Ymd_hi") .'.'.$fileInfo['extension'];
 
         if ($mkdir) {
             if($fixed)
@@ -277,6 +277,7 @@ class ImageControl extends \local\image\Images
             }
             else
             {
+
                 $newFilePath = FILES_PATH . '/files' . $this->path[$path]. $pathOne;
 
 

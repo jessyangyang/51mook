@@ -216,12 +216,17 @@ class AdminBookManage extends BookControllers
      * @param  [type] $data [description]
      * @return [type]       [description]
      */
-    public function createArticle($bid, $data)
+    public function createArticle($bid, $datas)
     {
-        if (!is_array($data)) return false;
+        if (!$bid and !is_array($datas)) return false;
 
+        $data = array(
+            'mid' => isset($datas['mid']) ? $datas['mid'] : false,
+            'title' => isset($datas['title']) ? $datas['title'] : '',
+            'body' => isset($datas['body']) ? $datas['body'] : '');
 
         $menus  = $this->booksMenuFilter($data);
+
         if ($menus) $menus['bid'] = $bid;
 
 
@@ -232,14 +237,21 @@ class AdminBookManage extends BookControllers
             if ($this->menu->where("id='". $data['mid'] ."'")->update($menus))
             {
                 $body = $this->bookChapter->escapeString($data['body']);
-                $this->bookChapter->where("menu_id='". $data['mid'] ."'")->update(array('body'=> $body));
-                $this->menu->commit();
-                return $data['mid'];
+                if ($bookmenu = $this->bookChapter->where("menu_id='". $data['mid'] ."'")->fetchRow()) {
+                    $this->bookChapter->where("menu_id='". $bookmenu['menu_id'] ."'")->update(array('body'=> $body));
+                    $this->menu->commit();
+                    return $bookmenu['menu_id'];
+                }
+                else
+                {
+                    $aid = $this->bookChapter->insert(array('menu_id' => $data['mid'],'body' => $body));
+                    $this->menu->commit();
+                    return $aid;
+                }
             }
             $this->menu->rollback();
         }
         else {
-
             $menus['dateline'] = UPDATE_TIME;
             $this->menu->begin();
 

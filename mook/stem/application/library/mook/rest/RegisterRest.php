@@ -65,6 +65,8 @@ class RegisterRest extends \local\rest\Restful{
         self::regRestURL('book_post','/book/:bid/manage/:action','book','bookPost','图书管理');
         self::regRestURL('book_article','/book/:bid/manage/article/:mid','book','bookArticle','编辑文章');
         self::regRestURL('book_article_delete','/book/:bid/manage/article/delete/:mid','book','bookArticleDelete','删除文章');
+        self::regRestURL('book_article_content','/book/:bid/manage/article/content/:mid','book','bookArticleContent','文章');
+        self::regRestURL('book_article_image','/book/:bid/manage/article/image/:mid/:action','book','bookArticleImage','文章');
 
         // Files Upload
         self::regRestURL('files_image_upload','/files/upload/:type','files','upload','更新图片');

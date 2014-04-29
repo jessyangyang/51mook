@@ -23,13 +23,15 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" spellcheck='false'>
     <div class="col-md-1 control-label"><label for="lesson-content-field">内容</label></div>
     <div class="col-md-11 controls"><textarea class="form-control" id="lesson-content-field" name="body" rows="6">
       {{ article.body }}
     </textarea>
    </div>
   </div>
+  <input type="hidden" name="image_upload" value="/book/{{ book.bid }}/manage/article/image/{{ article.id }}/upload">
+  <input type="hidden" name="image_list" value="/book/{{ book.bid }}/manage/article/image/{{ article.id }}/list">
   <input type="hidden" name="mid" value="{{ article.id }}">
   <input type="hidden" name="_csrf_token" value="">
 

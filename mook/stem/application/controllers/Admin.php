@@ -293,6 +293,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $roles = Roles::instance();
 
         $rolegroups = $roles->getAllRoles();
+        print_r($rolegroups);
 
         $roleControl = new RolesControl();
  

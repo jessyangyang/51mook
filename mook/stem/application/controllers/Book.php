@@ -32,7 +32,7 @@ class BookController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -54,7 +54,7 @@ class BookController extends \Yaf\Controller_Abstract
         $data = $this->getRequest();
         $rest = Restful::instance();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
         $bookControl = new AdminBookManage();
@@ -165,7 +165,7 @@ class BookController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -182,7 +182,33 @@ class BookController extends \Yaf\Controller_Abstract
         $views->assign('app',$app);
         $views->assign('article',$article);
         $views->assign('book',$book);
+        $views->assign('mid',$mid);
         $views->display('index/bookmanage/content-modal.html.twig');
+    }
+
+    public function bookArticleContentAction($mid)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+
+        $bookControl = new AdminBookManage();
+        $book = $bookControl->getBookRow(array('books.bid' => $bid));
+
+
+        $article = $bookControl->getArticleForID($mid);
+        $category = $bookControl->getCategory();
+
+
+        $views->assign('app',$app);
+        $views->assign('article',$article);
+        $views->assign('book',$book);
+        $views->assign('category',$category);
+
+        $views->display('index/books/article.html.twig');
+        
     }
 
     public function bookArticleDeleteAction($bid = false, $mid = false)
@@ -190,7 +216,7 @@ class BookController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -199,6 +225,39 @@ class BookController extends \Yaf\Controller_Abstract
         
         exit();
 
+    }
+
+    public function bookArticleImageAction($bid , $mid, $action = 'upload')
+    {
+        $data = $this->getRequest();
+        $rest = Restful::instance();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+        if (!$app) exit(); 
+
+        $image = new ImagesManage();
+
+        if ($action == 'upload' and $data->isPost()) {
+            
+            if ($filepath = $image->saveImagesArticle($data->getFiles('file'),$bid, $mid, $app['id'],true)) {
+                $rest->assign('filelink',$filepath);
+                $rest->response();
+            }
+        }
+        elseif ($action == 'list') {
+           $list = $image->getArticleForID($bid);
+           if ($list) {
+               $images = array();
+               foreach ($list as $key => $value) {
+                   # code...
+               }
+               $rest->assign('',$images);
+               $rest->response();
+           }
+        }
+
+        exit();
     }
 
 }

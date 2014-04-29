@@ -51,6 +51,16 @@ class ImagesManage extends \lib\dao\ImageControl
         		->joinQuery("images_book as i","$table.pid=i.ibid")->where($sql)->fetchList();
     }
 
+    public function getArticleForID($bid,$type = false)
+    {
+        $list =  $this->images_article->where("bid=$bid")->order("dateline")->fetchList();
+
+        if (is_array($list)) {
+            return $list;
+        }
+        return false;
+    }
+
 
     public function saveImagesBook($files, $bid, $uid, $class= 1, $thumb = false)
     {
@@ -79,7 +89,7 @@ class ImagesManage extends \lib\dao\ImageControl
 
     public function saveImagesBookFromCut($fileName, $x, $y, $width, $height, $uid, $bid, $class= 1, $thumb = false)
     {
-    	if ($fileName and $filepath = $this->saveImageFromSize($fileName, $x, $y, $width, $height, $uid, 'book')) {
+    	if ($fileName and $filepath = $this->saveImageFromSize($fileName, $x, $y, $width, $height, $uid, 'book', $bid)) {
     		$fields = array(
                 'bid' => $bid,
                 'uid' => $uid,
@@ -130,10 +140,12 @@ class ImagesManage extends \lib\dao\ImageControl
         return false;
     }
 
-    public function saveImagesArticle($files, $bmid, $uid, $class = 1, $thumb = false)
+    public function saveImagesArticle($files, $bid, $bmid, $uid, $retype = false, $class = 1, $thumb = false)
     {
-        if ($filepath = $this->save($files, $uid, $path='head')) {
+        if ($filepath = $this->save($files, $uid, $path='article')) {
             $fields = array(
+                'bid' => $bid,
+                'bmid' => $bmid,
                 'uid' => $uid,
                 'class' => $class,
                 'title' => basename($files['name']),
@@ -145,8 +157,11 @@ class ImagesManage extends \lib\dao\ImageControl
                 'dateline' => UPDATE_TIME
             );
 
-            if ($this->insertId = $this->images_article->insert($fields)) {
+            if ($retype == false and $this->insertId = $this->images_article->insert($fields)) {
                 return $this->insertId;
+            }
+            else {
+                return $filepath;
             }
         }
 

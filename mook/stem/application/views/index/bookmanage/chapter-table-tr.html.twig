@@ -1,7 +1,7 @@
 <tr id="course-tr-{{menu.id}}" class="item-chapter">
   <td>  {{ menu.sort }}</td>
   <td>
-    <a target="_blank" href=""><strong>{{ menu.title }}</strong></a>
+    <a target="_blank" href="/book/{{ book.bid }}/manage/article/content/{{ menu.id}}"><strong>{{ menu.title }}</strong></a>
       </td>
   <td>{% if menu.dateline > 0 %}{{menu.dateline|date('Y-n-d H:i')}}{% else %} --{% endif %}</td>
   <td>
