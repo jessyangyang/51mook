@@ -1,5 +1,4 @@
 {% extends 'index/index/layout.html.twig' %}
-
 {% block content %}
 
 <div class="container">
@@ -12,12 +11,11 @@
     </div>
 
 <!-- mook 列表 start -->
-
     <!-- row start -->
+    {% for value in books %}
     <div class="row">
-     <!-- mook first -->
-     {% for book in books %}
-        <div class="col-6 col-sm-3 col-md-3">
+        {% for book in value %}
+        <div class="col-6 col-md-3">
             <div class="thumbnail">
                 <div class="cover-container">
                     <a href="article-list.html">
@@ -38,7 +36,8 @@
         </div>                
         </div>
       </div>
+      {% endfor %}
+      </div>
     {% endfor %}
-  </div>
 </div>
 {% endblock %}

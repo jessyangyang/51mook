@@ -29,9 +29,16 @@ class IndexController extends \Yaf\Controller_Abstract
 
         $books = $bookControl->getBookList(array("bf.verified" => 3,"bf.published" => 4),20,1);
 
+        $bookList = array();
+        $j = 0;
+        foreach ($books as $key => $value) {
+            if ($key%4 == 0) $j++;
+            $bookList[$j][] = $value;
+        }
+
         $views->assign('title',"mook");
         $views->assign('app',$app);
-        $views->assign('books',$books);
+        $views->assign('books',$bookList);
         $views->display('index/index/index.html.twig');
     }
 
