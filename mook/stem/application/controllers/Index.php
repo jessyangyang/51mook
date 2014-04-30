@@ -9,6 +9,7 @@
  */
 
 use \mook\control\index\MembersManage;
+use \mook\control\admin\AdminBookManage;
 use \mool\control\pagesControl;
 use \local\rest\Restful;
 use \Yaf\Registry;
@@ -24,8 +25,13 @@ class IndexController extends \Yaf\Controller_Abstract
         $members = new MembersManage();
         $app = $members->getCurrentSession();
 
+        $bookControl = new AdminBookManage();
+
+        $books = $bookControl->getBookList(array("bf.verified" => 3,"bf.published" => 4),20,1);
+
         $views->assign('title',"mook");
         $views->assign('app',$app);
+        $views->assign('books',$books);
         $views->display('index/index/index.html.twig');
     }
 

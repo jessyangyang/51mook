@@ -1,9 +1,10 @@
-{% extends 'index/layout.html.twig' %}
+{% extends 'index/layout.html.old.twig' %}
 
 {% block title %}图书管理 - {{ parent() }}{% endblock %}
 
 {% block content %}
-
+<link rel="stylesheet" media="screen" href="/web/css/web.css" />
+<link rel="stylesheet" media="screen" href="/web/css/member.css" />
 {% include 'index/books/header.html.twig' %}
 
 <div class="row">

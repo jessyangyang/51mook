@@ -2,39 +2,43 @@
 
 {% block content %}
 
-<div class="es-row-wrap container-gap">
+<div class="container">
 
-  {% if blocks.home_top_banner %}
-    <div class="homepage-feature homepage-feature-slides mbl">
-      <div class="cycle-pager"></div>
-      {{ blocks.home_top_banner|raw }}
+    <!-- 欢迎词面板 -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <p>你要想得新意思吧？请去读旧书；你要找旧的见解吧？请你看新出版的。——<span>Lord Litton </span></p>
+        </div>
     </div>
-  {% endif %}
 
-  <div class="row row-9-3">
+<!-- mook 列表 start -->
 
-    <div class="col-md-9">
-      <div class="es-box">
-        <div class="es-box-heading"><h2>图书</h2></div>
-        <div class="es-box-body">
-          {% if courses %}
-            {% if courses|length >= 12 %}
-              <a class="btn btn-default btn-lg btn-block" href="">更多图书</a>
-            {% endif %}
-          {% else %}
-            <div class="empty">还没有图书</div>
-          {% endif %}
+    <!-- row start -->
+    <div class="row">
+     <!-- mook first -->
+     {% for book in books %}
+        <div class="col-sm-3 col-md-3">
+            <div class="thumbnail">
+                <div class="cover-container">
+                    <a href="article-list.html">
+            <div class="hovermaskwrapper">
+              <div class="hovermask"></div>
+            </div>
+            <img data-src="holder.js/300x200" alt="..." src="{{ book.cover|default('/assets/img/default/cover2.png') }}" class="img-rounded">
+          </a>
+        </div>
+              <div class="caption">
+          <h4><a href="#">{{ book.title }}</a></h4>
+          <div class="media">
+            <a class="pull-left" href="#"><img class="media-object img-rounded" src="{{ book.bid }}" alt="Author"></a>
+            <div class="media-body">
+              <h6 class="media-heading"><a href="#">{{ book.username }}</a></h6>
+            </div>
+          </div>
+        </div>                
         </div>
       </div>
-    </div>
-
-    <div class="col-md-3">
-      
-    </div>
-
+    {% endfor %}
   </div>
-
-  <div class="row"><div class="col-md-12"></div></div>
-
 </div>
 {% endblock %}

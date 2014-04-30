@@ -63,17 +63,21 @@ class AdminBookManage extends BookControllers
         $offset = $page == 1 ? 0 : ($page - 1)*$limit; 
         $table = $this->book->table;
 
-        $list = $this->book->field("$table.bid,$table.cid,$table.title,$table.author,bc.name as category,$table.pubtime,$table.isbn,$table.press,f.apple_price as price,$table.summary,f.tags,bi.price,bi.apple_price,bf.verified,bf.published,m.username")
+        $list = $this->book->field("$table.bid,$table.cid,$table.title,$table.author,bc.name as category,$table.pubtime,$table.isbn,$table.press,f.apple_price as price,$table.summary,f.tags,bi.price,bi.apple_price,bf.verified,bf.published,m.username,ib.path as cover")
             ->joinQuery("book_info as f","$table.bid=f.bid")
             ->joinQuery('book_fields as bf',"$table.bid=bf.bid")
             ->joinQuery('book_info as bi',"$table.bid=bi.bid")
             ->joinQuery('book_category as bc',"$table.cid=bc.cid")
+            ->joinQuery('images_book as ib',"$table.cover=ib.ibid")
             ->joinQuery('members as m','bf.uid=m.id')
             ->where($sql)->order("$table.published")
             ->limit($offset,$limit)->fetchList();
 
         if (is_array($list)) {
             foreach ($list as $key => $value) {
+                if (isset($value['cover']) and $value['cover']) {
+                    $list[$key]['cover'] = ImageControl::getRelativeImage($value['cover']);
+                }
                 if (isset($value['published']) and $value['published']) {
                     $list[$key]['published'] = $this->changedBookStatus(intval($value['published']));
                 }
@@ -391,6 +395,7 @@ class AdminBookManage extends BookControllers
         isset($data['pubtime']) and $filter['pubtime'] = strtotime($data['pubtime']);
         isset($data['isbn']) and $filter['isbn'] = $data['isbn'];
         isset($data['summary']) and $filter['summary'] = $data['summary'];
+        isset($data['cover']) and $filter['cover'] = $data['cover'];
         if (count($filter) > 0) return $filter;
         return false; 
     }

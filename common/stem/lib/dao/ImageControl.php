@@ -160,7 +160,7 @@ class ImageControl extends \local\image\Images
      * @param  string  $path     [description]
      * @return [type]            [description]
      */
-    public function saveImageFromSize($fileName, $x, $y, $width, $height, $uid ,$path = 'image')
+    public function saveImageFromSize($fileName, $x, $y, $width, $height, $uid ,$path = 'image',$fixed = false)
     {
         if(!file_exists(self::getRealPath($fileName))) return false;
 
@@ -183,7 +183,7 @@ class ImageControl extends \local\image\Images
 
 
         $fileName = pathinfo($fileName);
-        $filePath =$this->getFilePath($fileName['basename'],$uid,true, $path);
+        $filePath =$this->getFilePath($fileName['basename'],$uid,true, $path,$fixed);
 
         if(function_exists("imagecreatetruecolor") && function_exists("imagecopyresampled") && $ni = imagecreatetruecolor($width, $height)) {
                 imagecopyresampled($ni, $im, 0, 0, $x, $y, $width, $height, $width, $height);

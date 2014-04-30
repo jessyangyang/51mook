@@ -107,7 +107,7 @@ class BookController extends \Yaf\Controller_Abstract
                     if ($file = $data->getQuery('file')) {
                         $avatar_id = $image->saveImagesBookFromCut($data->getQuery('file'),$data->getPost('x'),$data->getPost('y'),$data->getPost('width'),$data->getPost('height'), $user['id'], $bid);
                         if($avatar_id) {
-                            $image->addBookImage($avatar_id,$bid,1);
+                            $bookControl->updateBook($bid,array('cover' => $avatar_id));
                             ImagesManage::unlink(ImagesManage::getRealPath($file));
                         }
                         header("Location: /book/$bid/manage/picture");
@@ -138,7 +138,7 @@ class BookController extends \Yaf\Controller_Abstract
                     break;
                 case 'picture':
                     $bookImage = $image->getImagesBookForID($bid,1);
-                    $coverPath = isset($bookImage[0]['path']) ?  ImagesManage::getRelativeImage($bookImage[0]['path']) : false;
+                    $coverPath = isset($bookImage['path']) ?  ImagesManage::getRelativeImage($bookImage['path']) : false;
                     $views->assign('image',$coverPath);
                     break;
                 case 'upload':

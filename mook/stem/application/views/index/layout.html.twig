@@ -5,18 +5,20 @@
 <!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="zh-cn"> <!--<![endif]-->
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %} {% endblock %}</title>
+  <meta content="墨客 深度阅读内容" name="description">
+  <meta content="墨客" name="author">
   <meta name="keywords" content="{% block keywords %}{% endblock %}" />
   <meta name="description" content="{% block description %}{% endblock %}" />
   {% block stylesheets %}
     <link href="http://cdn.bootcss.com/twitter-bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" media="screen" href="/css/common.css" />
-    <link rel="stylesheet" media="screen" href="/css/bootstrap-extends.css" />
-    <link rel="stylesheet" media="screen" href="/web/css/web.css" />
-    <link rel="stylesheet" media="screen" href="/web/css/member.css" />
+    <!--[if<link rel="stylesheet" media="screen" href="/assets/css/common.css" />-->
+    <link rel="stylesheet" media="screen" href="/assets/css/bootstrap-extends.css" />
+    <!--[if<link rel="stylesheet" media="screen" href="/web/css/web.css" />-->
+    <!--[if<link rel="stylesheet" media="screen" href="/web/css/member.css" />-->
+    <link rel="stylesheet" media="screen" href="/web/css/style.css" />
     <!--[if lt IE 8]>
       <link href="/assets/css/oldie.css" rel="stylesheet">
     <![endif]-->
@@ -35,87 +37,22 @@
 <body {% if bodyClass|default('') %}class="{{ bodyClass }}"{% endif %}>
 {% block body %}
 
-  <div class="navbar navbar-inverse site-navbar" id="site-navbar"  data-counter-url="">
-    <div class="container">
-      <div class="container-gap">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-           {% if setting.logo %}
-            <a class="navbar-brand-logo" href=""><img src=""></a>
-          {% else %}
-            <a class="navbar-brand" href="">墨客</a>
-          {% endif %}
+  {% include 'index/header.html.twig' %}
+  {% block content %}{% endblock %}
+  
+  <footer class="ci-footer clearfix" role="contentinfo">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-4 col-sm-6">
+            <p>© 2014 51mook.com, all rights reserved</p>
+            <p>京ICP备13024004号</p>
+          </div>
+          <div class="col-md-4 col-md-offset-4" style="text-align:right;">
+          <p>简介 联系我们</p>
+          </div>
         </div>
-        <div class="navbar-collapse collapse">
-
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href=""><span class="glyphicon glyphicon-search"></span> 搜索</a></li>
-            {% if app %}
-              <li><a href=""> 写文章 </a></li>
-              <li><a href="" class="badge-container notification-badge-container">
-                <span class="glyphicon glyphicon-bullhorn hidden-lt-ie8"></span>
-                <span class="visible-lt-ie8">通知</span>
-                {% if app.user.newNotificationNum > 0 %}<span class="badge">{{ app.user.newNotificationNum }}</span>{% endif %}</a></li>
-              <li>
-                <a href="" class="badge-container message-badge-container">
-                <span class="glyphicon glyphicon-envelope hidden-lt-ie8"></span>
-                <span class="visible-lt-ie8">私信</span>
-                {% if app.user.newMessageNum > 0 %}<span class="badge">{{ app.user.newMessageNum }}</span>{% endif %}
-                </a>
-                </li>
-              <li class="visible-lt-ie8"><a href="">{{ app.username }}</a></li>
-              <li class="dropdown hidden-lt-ie8">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.username }} <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href=""><i class="glyphicon glyphicon-home"></i> 我的主页</a></li>
-                  <li><a href=""><i class="glyphicon glyphicon-cog"></i> 帐号设置</a></li>
-                  <li class="divider"></li>
-                    {% if app.role_id < 10 %}
-                    <li><a href="/admin"><i class="glyphicon glyphicon-dashboard"></i> 管理后台</a></li>
-                    <li class="divider"></li>
-                    {% endif %}
-                  <li><a href="/logout"><i class="glyphicon glyphicon-off"></i> 退出</a></li>
-                </ul>
-              </li>
-            {% else %}
-              <li><a href="/login">登录</a></li>
-              <li><a href="/register">注册</a></li>
-            {% endif %}
-          </ul>
-        </div><!--/.navbar-collapse -->
       </div>
-    </div>
-  </div>
-
-  <div id="content-container" class="container">
-    {% if app.user and app.user.setup == 0 and (hideSetupHint is not defined or hideSetupHint != true) %}
-      <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        为了帐号的安全，以及更好的使用体验，请设置您的Email地址。
-        <a href="">现在就去设置</a>
-      </div>
-    {% endif %}
-    {% block content %}{% endblock %}
-  </div><!-- /container -->
-
-  <div class="site-footer container clearfix">
-
-    
-
-    <div class="text-gray" data-role="default-foot-bar">
-      Powered by 
-      <a href="" target="_blank"> Mook.com</a>
-      ©2013-2014 <a href="" target="_blank"> </a>
-
-      <div class="pull-right"><a href="http://www.miibeian.gov.cn/" target="_blank"></a></div>
-
-    </div>
-  </div>
-
+  </footer>
   {% block bottom %}{% endblock %}
 
   <div id="login-modal" class="modal" data-url=""></div>

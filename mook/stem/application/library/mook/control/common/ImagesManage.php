@@ -42,13 +42,12 @@ class ImagesManage extends \lib\dao\ImageControl
     public function getImagesBookForID($bid,$type = false)
     {
         if(!$bid) return false; 
-        $table = $this->bookimage->table;
+        $table = $this->images_book->table;
 
         $sql = "$table.bid='$bid'";
-        $type and $sql.= " AND $table.type='$type'";
+        $type and $sql.= " AND $table.class='$type'";
         
-        return $this->bookimage->field("$table.pid,i.uid,i.title,i.filename,i.type,i.path,i.dateline")
-        		->joinQuery("images_book as i","$table.pid=i.ibid")->where($sql)->fetchList();
+        return $this->images_book->where($sql)->fetchRow();
     }
 
     public function getArticleForID($bid,$type = false)
@@ -89,7 +88,7 @@ class ImagesManage extends \lib\dao\ImageControl
 
     public function saveImagesBookFromCut($fileName, $x, $y, $width, $height, $uid, $bid, $class= 1, $thumb = false)
     {
-    	if ($fileName and $filepath = $this->saveImageFromSize($fileName, $x, $y, $width, $height, $uid, 'book', $bid)) {
+    	if ($fileName and $filepath = $this->saveImageFromSize($fileName, $x, $y, $width, $height, $uid, 'book', true)) {
     		$fields = array(
                 'bid' => $bid,
                 'uid' => $uid,
