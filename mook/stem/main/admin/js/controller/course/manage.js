@@ -12,25 +12,29 @@ define(function(require, exports, module) {
 			});
 		});
 
-		$table.on('click', '.close-course', function(){
-			if (!confirm('您确认要关闭此图书吗？')) return false;
+		$table.on('click', '.verify-book', function(){
+			var title = $(this).attr('title');
+			var message = '您确认要' + title + '吗？';
+			if (!confirm(message)) return false;
 			$.post($(this).data('url'), function(html){
 				var $tr = $(html);
 				$table.find('#' + $tr.attr('id')).replaceWith(html);
-				Notify.success('图书关闭成功！');
+				Notify.success(title + '成功！');
 			});
 		});
 
-		$table.on('click', '.publish-course', function(){
-			if (!confirm('您确认要发布此图书吗？')) return false;
+		$table.on('click', '.publish-book', function(){
+			var title = $(this).attr('title');
+			var message = '您确认要' + title + '吗？';
+			if (!confirm(message)) return false;
 			$.post($(this).data('url'), function(html){
 				var $tr = $(html);
 				$table.find('#' + $tr.attr('id')).replaceWith(html);
-				Notify.success('图书发布成功！');
+				Notify.success(title + '成功！');
 			});
 		});
 
-		$table.on('click', '.delete-course', function() {
+		$table.on('click', '.delete-book', function() {
 			if (!confirm('删除图书，将删除图书的章节、图片信息。真的要删除该图书吗？')) {
 				return ;
 			}

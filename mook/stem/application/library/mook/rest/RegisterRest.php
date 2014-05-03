@@ -30,7 +30,8 @@ class RegisterRest extends \local\rest\Restful{
         self::regRestURL('admin_user_post','/admin/user/post/:id','admin','userPost','编辑信息');
         self::regRestURL('admin_user_roles','/admin/user/roles/:id','admin','userRoles','编辑用户组');
         self::regRestURL('admin_user_avatar','/admin/user/avatar/:id','admin','userAvatar','用户头像');
-        self::regRestURL('admin_user_reset','/admin/user/reset/:id','admin','userReset','用户头像');
+        self::regRestURL('admin_user_reset','/admin/user/reset/:id','admin','userReset','重置密码');
+        self::regRestURL('admin_user_delete','/admin/user/delete/:id','admin','userDelete','删除用户');
 
         // admin usergroups
         self::regRestURL('admin_user_groups','/admin/user/groups','admin','userGroups','用户组');
@@ -40,7 +41,7 @@ class RegisterRest extends \local\rest\Restful{
 
         // admin books
         self::regRestURL('admin_book_index','/admin/books/:limit/:page','admin','books','图书管理');
-        self::regRestURL('admin_book_post','/admin/books/:action','admin','bookPost','图书操作');
+        self::regRestURL('admin_book_post','/admin/books/post/:action/:bid/:id','admin','bookPost','图书操作');
         self::regRestURL('admin_book_delete','/admin/books/delete/:bid','admin','bookDelete','图书删除');
         self::regRestURL('admin_book_category','/admin/books/category','admin','bookCategory','图书分类');
         self::regRestURL('admin_book_category_post','/admin/books/category/post/:bcid','admin','bookCategoryPost','编辑图书分类');

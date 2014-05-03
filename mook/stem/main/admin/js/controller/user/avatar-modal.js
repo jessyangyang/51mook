@@ -9,7 +9,7 @@ define(function(require, exports, module) {
         });
 
         validator.addItem({
-            element: '[name="form[avatar]"]',
+            element: '[name="picture"]',
             required: true,
             requiredErrorMessage: '请选择要上传的头像文件。'
         });

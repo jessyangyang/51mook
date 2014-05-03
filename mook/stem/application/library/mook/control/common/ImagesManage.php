@@ -39,15 +39,22 @@ class ImagesManage extends \lib\dao\ImageControl
      * @param String ,
      * @return Array
      */
-    public function getImagesBookForID($bid,$type = false)
+    public function getImagesBookForID($bid,$type = 1)
     {
         if(!$bid) return false; 
-        $table = $this->images_book->table;
 
-        $sql = "$table.bid='$bid'";
-        $type and $sql.= " AND $table.class='$type'";
+        $sql = "bid='$bid' AND class='$type'";
         
         return $this->images_book->where($sql)->fetchRow();
+    }
+
+    public function getImagesMemberForID($uid,$type = 1)
+    {    
+        if(!$uid) return false; 
+
+        $sql = "uid='$uid' AND class='$type'";
+        
+        return $this->images_member->where($sql)->fetchRow();
     }
 
     public function getArticleForID($bid,$type = false)
@@ -88,7 +95,7 @@ class ImagesManage extends \lib\dao\ImageControl
 
     public function saveImagesBookFromCut($fileName, $x, $y, $width, $height, $uid, $bid, $class= 1, $thumb = false)
     {
-    	if ($fileName and $filepath = $this->saveImageFromSize($fileName, $x, $y, $width, $height, $uid, 'book', true)) {
+    	if ($fileName and $filepath = $this->saveImageFromSize($fileName, $x, $y, $width, $height, $uid, 'book', $bid)) {
     		$fields = array(
                 'bid' => $bid,
                 'uid' => $uid,
@@ -103,14 +110,13 @@ class ImagesManage extends \lib\dao\ImageControl
             );
 
             if ($file = $this->getImagesBookForID($bid,1)) {
-            	$fields['ibid'] = $file[0]['pid'];
-	            if ($this->images_book->where("ibid='". $file[0]['pid'] ."'")->update($fields)) {
-	            	self::unlink(self::getRealPath($file[0]['path']));
-	            	return $file[0]['pid'];
+            	$fields['ibid'] = $file['ibid'];
+	            if ($this->images_book->where("ibid='". $file['ibid'] ."'")->update($fields)) {
+	            	self::unlink(self::getRealPath($file['path']));
+	            	return $file['ibid'];
 	            }
             }
-
-            if ($this->insertId = $this->images_book->insert($fields)) {
+            else if ($this->insertId = $this->images_book->insert($fields)) {
                 return $this->insertId;
             }
     	}
@@ -137,6 +143,39 @@ class ImagesManage extends \lib\dao\ImageControl
         }
 
         return false;
+    }
+
+    public function saveImagesMemberFromCut($fileName, $x, $y, $width, $height, $uid, $class = 1, $thumb = false)
+    {
+        if ($fileName and $filepath = $this->saveImageFromSize($fileName, $x, $y, $width, $height, $uid, 'head', $uid)) {
+            $fields = array(
+                'uid' => $uid,
+                'class' => $class,
+                'title' => basename(pathinfo($fileName,PATHINFO_BASENAME)),
+                'filename' => $this->images_member->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'type' => 'image/' . pathinfo($filepath,PATHINFO_EXTENSION),
+                'size' => filesize(self::getRealPath($filepath)),
+                'path' => $this->images_member->escapeString($filepath),
+                'thumb' => 0,
+                'dateline' => UPDATE_TIME
+            );
+
+            if ($thumb) {
+               $this->makethumb(self::getRealPath($filepath),48,48,'small');
+               // $this->makethumb(self::getRealPath($filepath),120,120,'medium');
+            }
+
+            if ($file = $this->getImagesMemberForID($uid,1)) {
+                $fields['imid'] = $file['imid'];
+                if ($this->images_member->where("imid='". $file['imid'] ."'")->update($fields)) {
+                    self::unlink(self::getRealPath($file['path']));
+                    return $file['imid'];
+                }
+            }
+            else if ($this->insertId = $this->images_member->insert($fields)) {
+                return $this->insertId;
+            }
+        }
     }
 
     public function saveImagesArticle($files, $bid, $bmid, $uid, $retype = false, $class = 1, $thumb = false)
@@ -257,7 +296,15 @@ class ImagesManage extends \lib\dao\ImageControl
             'naturalHeight' => $file[1]);
     }
 
+    public static function getRealCoverSize($filepath, $size = 'small')
+    {
+        $path = self::getRealPath($filepath);
+        if (!is_file($path)) return false;
 
+        $tmp = pathinfo($filepath);
 
+        $filename = explode(".",$tmp['basename']);
+        return self::getRelativeImage($tmp['dirname'] . "/" . $filename[0] . "_$size." . $tmp['extension']);
+    }
 
 }

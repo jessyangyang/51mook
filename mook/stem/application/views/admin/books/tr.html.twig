@@ -34,19 +34,29 @@
 
           <li class="divider"></li>
 
-          {% if course.status == 'published' %}
-            <li><a class="close-course" href="javascript:" data-url=""><span class="glyphicon glyphicon-ban-circle"></span> 下架图书</a></li>
-          {% endif %}
-
-          {% if book.verified == '未发布' or book.verified == '已下架' %}
-            <li><a class="publish-course" href="javascript:" data-url=""><span class="glyphicon glyphicon-ok-circle"></span> 发布图书</a></li>
-          {% else %}
-            <li><a class="publish-course" href="javascript:" data-url=""><span class="glyphicon glyphicon-cancel-circle"></span> 下架图书</a></li>
+          {% if book.published == '等待审核' %}
+            <li><a class="publish-book" href="javascript:" data-url="/admin/books/post/publish/{{ book.bid }}/2" title="审核图书"><span class="glyphicon"></span> 审核图书</a></li>
+          {% elseif book.published == '审核中' %}
+            <li><a class="publish-book" href="javascript:" data-url="/admin/books/post/publish/{{ book.bid }}/4" title="审核通过"><span class="glyphicon glyphicon-ok"></span> 审核通过</a></li>
+            <li><a class="publish-book" href="javascript:" data-url="/admin/books/post/publish/{{ book.bid }}/3" title="审核失败"><span class="glyphicon glyphicon-remove-circle"></span> 审核失败</a></li>
+            <li><a class="publish-book" href="javascript:" data-url="/admin/books/post/publish/{{ book.bid }}/1" title="重新审核"><span class="glyphicon glyphicon-repeat"></span> 重新审核</a></li>
+          {% elseif book.published == '审核失败' %}
+            <li><a class="publish-book" href="javascript:" data-url="/admin/books/post/publish/{{ book.bid }}/1" title="重新审核"><span class="glyphicon"></span> 重新审核</a></li>
+          {% elseif book.published == '审核通过' %}
+            <li><a class="publish-book" href="javascript:" data-url="/admin/books/post/publish/{{ book.bid }}/1" title="重新审核"><span class="glyphicon glyphicon-repeat"></span> 重新审核</a></li>
           {% endif %}
 
           <li class="divider"></li>
 
-          <li><a class="delete-course" href="javascript:" data-url="/admin/books/delete/{{book.bid}}"><span class="glyphicon glyphicon-trash"></span> 删除图书</a></li>
+          {% if book.verified == '未发布' or book.verified == '已下架' %}
+            <li><a class="verify-book" href="javascript:" data-url="/admin/books/post/verify/{{ book.bid }}/3" title="发布图书"><span class="glyphicon glyphicon-ok-circle"></span> 发布图书</a></li>
+          {% else %}
+            <li><a class="verify-book" href="javascript:" data-url="/admin/books/post/verify/{{ book.bid }}/1" title="下架图书"><span class="glyphicon glyphicon-ban-circle"></span> 下架图书</a></li>
+          {% endif %}
+
+          <li class="divider"></li>
+
+          <li><a class="delete-book" href="javascript:" data-url="/admin/books/delete/{{book.bid}}"><span class="glyphicon glyphicon-trash"></span> 删除图书</a></li>
       </ul>
     </div>
   </td>

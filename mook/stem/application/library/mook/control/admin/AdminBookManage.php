@@ -10,7 +10,7 @@
 
 namespace mook\control\admin;
 
-use \lib\dao\ImageControl;
+use \mook\control\common\ImagesManage;
 use \lib\dao\BookControllers;
 
 use \lib\models\BookMenu;
@@ -60,23 +60,27 @@ class AdminBookManage extends BookControllers
             }
         }
 
-        $offset = $page == 1 ? 0 : ($page - 1)*$limit; 
+        $offset = $page == 1 ? 0 : ($page - 1)*$limit;
+
         $table = $this->book->table;
 
-        $list = $this->book->field("$table.bid,$table.cid,$table.title,$table.author,bc.name as category,$table.pubtime,$table.isbn,$table.press,f.apple_price as price,$table.summary,f.tags,bi.price,bi.apple_price,bf.verified,bf.published,m.username,ib.path as cover")
-            ->joinQuery("book_info as f","$table.bid=f.bid")
+        $list = $this->book->field("$table.bid,$table.cid,$table.title,$table.author,bc.name as category,$table.pubtime,$table.isbn,$table.press,bi.apple_price as price,$table.summary,bi.tags,bi.price,bf.verified,bf.published,m.username,ib.path as cover,im.path as usercover")
             ->joinQuery('book_fields as bf',"$table.bid=bf.bid")
             ->joinQuery('book_info as bi',"$table.bid=bi.bid")
             ->joinQuery('book_category as bc',"$table.cid=bc.cid")
             ->joinQuery('images_book as ib',"$table.cover=ib.ibid")
             ->joinQuery('members as m','bf.uid=m.id')
+            ->joinQuery('images_member as im','m.id=im.uid')
             ->where($sql)->order("$table.published")
-            ->limit($offset,$limit)->fetchList();
+            ->limit("$offset,$limit")->fetchList();
 
         if (is_array($list)) {
             foreach ($list as $key => $value) {
+                if (isset($value['usercover']) and $value['usercover']) {
+                    $list[$key]['usercover'] = ImagesManage::getRealCoverSize($value['usercover']);
+                }
                 if (isset($value['cover']) and $value['cover']) {
-                    $list[$key]['cover'] = ImageControl::getRelativeImage($value['cover']);
+                    $list[$key]['cover'] = ImagesManage::getRelativeImage($value['cover']);
                 }
                 if (isset($value['published']) and $value['published']) {
                     $list[$key]['published'] = $this->changedBookStatus(intval($value['published']));
@@ -112,13 +116,24 @@ class AdminBookManage extends BookControllers
 
         $table = $this->book->table;
 
-        $list = $this->book->field("$table.bid,$table.cid,bc.name,$table.title,$table.author,$table.pubtime,$table.isbn,$table.press,f.subtitle,f.oldtitle,f.apple_price as price,$table.summary,f.translator,f.tags,f.copyright,f.download_path as path,f.designer,f.proofreader,f.wordcount,f.dateline,bf.uid,bf.verified,bf.published")
+        $list = $this->book->field("$table.bid,$table.cid,bc.name,$table.title,$table.author,$table.pubtime,$table.isbn,$table.press,f.subtitle,f.oldtitle,f.apple_price as price,$table.summary,f.translator,f.tags,f.copyright,f.download_path as path,f.designer,f.proofreader,f.wordcount,f.dateline,bf.uid,bf.verified,bf.published,m.username,ib.path as cover")
             ->joinQuery("book_info as f","$table.bid=f.bid")
             ->joinQuery('book_fields as bf',"$table.bid=bf.bid")
             ->joinQuery('book_category as bc',"$table.cid=bc.cid")
+            ->joinQuery('images_book as ib',"$table.cover=ib.ibid")
+            ->joinQuery('members as m','bf.uid=m.id')
             ->where($sql)->limit(1)->fetchList();
 
-        if (is_array($list)) {
+        if ($list and is_array($list)) {
+            if (isset($list[0]['cover']) and $list[0]['cover']) {
+                $list[0]['cover'] = ImagesManage::getRelativeImage($list[0]['cover']);
+            }
+            if (isset($list[0]['published']) and $list[0]['published']) {
+                $list[0]['published'] = $this->changedBookStatus(intval($list[0]['published']));
+            }
+            if (isset($list[0]['verified']) and $list[0]['verified']) {
+                $list[0]['verified'] = $this->changedBookVerified(intval($list[0]['verified']));
+            }
             return $list[0];
         }
 
@@ -163,17 +178,23 @@ class AdminBookManage extends BookControllers
     {
         if (!$bid) return false;
 
-        $bookFields = $this->booksFilter($data);
+        $bookFilter = $this->booksFilter($data);
 
-        $bookInfoFields = $this->booksInfoFilter($data);
+        $bookInfoFilter = $this->booksInfoFilter($data);
 
-        if ($bookFields and count($bookFields) > 0) {
-            $this->book->where("bid='$bid'")->update($bookFields);
+        $bookFieldsFilter = $this->booksFieldsFilter($data);
+
+        if ($bookFilter and count($bookFilter) > 0) {
+            return $this->book->where("bid='$bid'")->update($bookFilter);
         }
 
-        if ($bookInfoFields and count($bookInfoFields) > 0) {
-            $this->bookinfo->where("bid='$bid'")->update($bookInfoFields);
+        if ($bookInfoFilter and count($bookInfoFilter) > 0) {
+            return $this->bookinfo->where("bid='$bid'")->update($bookInfoFilter);
 
+        }
+
+        if ($bookFieldsFilter and count($bookFieldsFilter) > 0) {
+            return $this->bookfields->where("bid='$bid'")->update($bookFieldsFilter);
         }
     }
 
@@ -420,6 +441,22 @@ class AdminBookManage extends BookControllers
         isset($data['designer']) and $filter['designer'] = $data['designer'];
         if (count($filter) > 0) return $filter;
         return false; 
+    }
+
+    /**
+     * [booksFieldsFilter description]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    public function booksFieldsFilter($data)
+    {
+        $filter = array();
+        isset($data['mofidied']) and $filter['mofidied'] = $data['mofidied'];
+        isset($data['verified']) and $filter['verified'] = $data['verified'];
+        isset($data['published']) and $filter['published'] = $data['published'];
+        isset($data['download_count']) and $filter['download_count'] = $data['download_count'];
+        if (count($filter) > 0) return $filter;
+        return false;
     }
 
     /**

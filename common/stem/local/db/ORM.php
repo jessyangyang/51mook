@@ -386,7 +386,7 @@ class ORM extends MySQL
      * @return Array 
      */
     function fetchList($option = array(),$debug = false) {
-        if(!is_array($option)){
+        if($option and !is_array($option)){
             $option = array('where' => $this->primaryKey.(strpos($option, ',')? ' IN('.$option.')': '='.$option));
         }
         $tmpOption = $this->_options($option);

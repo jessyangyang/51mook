@@ -28,7 +28,7 @@ class IndexController extends \Yaf\Controller_Abstract
         $bookControl = new AdminBookManage();
 
         $books = $bookControl->getBookList(array("bf.verified" => 3,"bf.published" => 4),20,1);
-
+        
         $bookList = array();
         $j = 0;
         foreach ($books as $key => $value) {

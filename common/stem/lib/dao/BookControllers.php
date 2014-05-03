@@ -517,7 +517,7 @@ class BookControllers
                 $state = "已发布";
                 break;
             default:
-                $state = "等待审核";
+                $state = "已下架";
                 break;
         }
         return $state;

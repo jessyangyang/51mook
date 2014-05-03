@@ -22,13 +22,13 @@
             <div class="hovermaskwrapper">
               <div class="hovermask"></div>
             </div>
-            <img data-src="holder.js/300x200" alt="..." src="{{ book.cover|default('/assets/img/default/cover2.png') }}" class="img-rounded">
+            <img data-src="holder.js/300x200" alt="..." src="{{ book.cover|default('/assets/img/default/cover4.png') }}" class="img-rounded">
           </a>
         </div>
               <div class="caption">
           <h4><a href="#">{{ book.title }}</a></h4>
           <div class="media">
-            <a class="pull-left" href="#"><img class="media-object img-rounded" src="{{ book.bid }}" alt="Author"></a>
+            <a class="pull-left" href="#"><img class="media-object img-rounded avatar-small" src="{{ book.usercover|default('/assets/img/default/avatar.png') }}" alt="Author"></a>
             <div class="media-body">
               <h6 class="media-heading"><a href="#">{{ book.username }}</a></h6>
             </div>

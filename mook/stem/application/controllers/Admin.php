@@ -14,6 +14,7 @@ use \mook\dao\Roles;
 use \mook\control\admin\AdminUserManage;
 use \mook\control\admin\AdminBookManage;
 use \mook\control\index\MembersManage;
+use \mook\control\common\ImagesManage;
 use \mook\control\pagesControl;
 
 class AdminController extends \Yaf\Controller_Abstract 
@@ -197,14 +198,70 @@ class AdminController extends \Yaf\Controller_Abstract
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
-        if ($id) {
-            $member = new AdminUserManage();
-            $user = $member->getUserForId($id);
+        $image = new ImagesManage();
+        $userControl = new AdminUserManage();
+
+        if ($id and $tmp = explode("?", $id)) $id = $tmp[0];
+
+        $member = new AdminUserManage();
+        $user = $member->getUserForId($id);
+
+        $views->assign('user',$user);
+        $views->assign('app',$app);
+
+        if ($data->isPost()) {
+            switch ($data->getQuery('action')) {
+                case 'upload':
+                    if ($file = $data->getQuery('file')) {
+                        $avatar_id = $image->saveImagesMemberFromCut($file, $data->getPost('x'),$data->getPost('y'),$data->getPost('width'),$data->getPost('height'), $user['id'], 1, true);
+                        if($avatar_id) {
+                            $userControl->updateUser($id, array('avatar_id' => $avatar_id));
+                            ImagesManage::unlink(ImagesManage::getRealPath($file));
+                        }
+                    }
+                    break;
+                case 'crop':
+                    $file = $data->getFiles('picture');
+                    $path = $image->save($file, $user['id'], 'tmp');
+
+                    $scaled = getimagesize(ImagesManage::getRealPath($path));
+
+                    if ($scaled[0] >= 800 or $scaled[1] >= 800) {
+                       MessageManage::createResponse($views,'上传格式错误','上传图片格式错误，图片长宽小于 800px。');
+                       ImagesManage::unlink($path);
+                    }
+                    else if (!ImagesManage::hasImageType($scaled[2],true)) {
+                       MessageManage::createResponse($views,'上传格式错误','上传图片格式错误，请上传jpg, gif, png格式的文件。');
+                    }
+                    if ($path) {
+                        header('Location: /admin/user/avatar/' . $id . '?action=upload&file=' . $path);
+                        exit();
+                    }
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+        }
+        else
+        {
+            if ($data->getQuery('action') == 'upload') {
+                if ($file = $data->getQuery('file')) {
+                    $views->assign('scaled',ImagesManage::getImageSizeForPath($file,480));
+                    $views->assign('file',ImagesManage::getRelativeImage($file));
+                    $views->assign('tmp',$data->getQuery('file'));
+                    $views->display('admin/user/user-avatar-crop-modal.html.twig');
+                }
+            }
+            else
+            {
+                $memberImage = $image->getImagesMemberForID($id, 1);
+                $coverPath = isset($memberImage['path']) ?  ImagesManage::getRelativeImage($memberImage['path']) : false;
+                $views->assign('image',$coverPath);
+            }
         }
 
         $views->assign('title','');
-        $views->assign('user',$user);
-        $views->assign('app',$app);
         $views->display('admin/user/user-avatar-modal.html.twig');
     }
 
@@ -338,7 +395,7 @@ class AdminController extends \Yaf\Controller_Abstract
      * @param  integer $page  [description]
      * @return [type]         [description]
      */
-    public function booksAction($limit = 10, $page = 1)
+    public function booksAction($limit = 15, $page = 1)
     {
     	$views = $this->getView();
     	$data = $this->getRequest();
@@ -348,7 +405,11 @@ class AdminController extends \Yaf\Controller_Abstract
 
         $bookControl = new AdminBookManage();
 
-        $books = $bookControl->getBookList(false,$limit = 10, $page = 1);
+        $books = $bookControl->getBookList(false,$limit, $page);
+
+        $pages = new pagesControl('/admin/books',$members->getMembersCount(),$limit,$page);
+
+        $views->assign('paginator',$pages);
 
     	$views->assign('title','');
         $views->assign('books',$books);
@@ -357,7 +418,7 @@ class AdminController extends \Yaf\Controller_Abstract
 
     }
 
-    public function bookPostAction($action = false)
+    public function bookPostAction($action = false,$bid = false, $id = false)
     {
         $views = $this->getView();
         $data = $this->getRequest();
@@ -368,7 +429,27 @@ class AdminController extends \Yaf\Controller_Abstract
 
         $views->assign('title','');
         $views->assign('app',$app);
-        $views->display('admin/books/index.html.twig');
+
+        $book = array();
+
+        if ($action and $bid and $id) {
+            $bookControl = new AdminBookManage();
+            switch ($action) {
+                case 'publish':
+                    $bookControl->updateBook($bid, array('published' => $id));
+                    break;
+                case 'verify':
+                    $bookControl->updateBook($bid, array('verified' => $id));
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+            $book = $bookControl->getBookRow(array('books.bid' => $bid));
+        }
+
+        $views->assign('book',$book);
+        $views->display('admin/books/tr.html.twig');
     }
 
     public function bookDeleteAction($bid = false)

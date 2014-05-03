@@ -162,7 +162,7 @@ class ImageControl extends \local\image\Images
      */
     public function saveImageFromSize($fileName, $x, $y, $width, $height, $uid ,$path = 'image',$fixed = false)
     {
-        if(!file_exists(self::getRealPath($fileName))) return false;
+        if(!is_file(self::getRealPath($fileName))) return false;
 
         $im = '';
         if($data = getimagesize(self::getRealPath($fileName))) {
@@ -183,14 +183,14 @@ class ImageControl extends \local\image\Images
 
 
         $fileName = pathinfo($fileName);
-        $filePath =$this->getFilePath($fileName['basename'],$uid,true, $path,$fixed);
+        $filePath =$this->getFilePath($fileName['basename'],$uid,true, $path, $fixed);
 
         if(function_exists("imagecreatetruecolor") && function_exists("imagecopyresampled") && $ni = imagecreatetruecolor($width, $height)) {
                 imagecopyresampled($ni, $im, 0, 0, $x, $y, $width, $height, $width, $height);
 
-                if(function_exists('imagejpeg')) {
+                if(function_exists('imagejpeg') and $fileName['extension'] == 'jpg') {
                     imagejpeg($ni, FILES_PATH . '/files' . $filePath);
-                } elseif(function_exists('imagepng')) {
+                } elseif(function_exists('imagepng') and $fileName['extension'] == 'png') {
                     imagepng($ni, FILES_PATH . '/files' . $filePath);
                 }
                 imagedestroy($ni);
@@ -278,7 +278,7 @@ class ImageControl extends \local\image\Images
             else
             {
 
-                $newFilePath = FILES_PATH . '/files' . $this->path[$path]. $pathOne;
+                $newFilePath = FILES_PATH . '/files' . $this->path[$path] . $pathOne;
 
 
                 if (!is_dir($newFilePath)) {
@@ -297,9 +297,8 @@ class ImageControl extends \local\image\Images
             }
 
         }
-
-        if($fixed) return $this->path[$path].$fixed . '/' . $this->fileName;
-        else return $this->path[$path].$pathOne."/".$pathTwo."/".$this->fileName;
+        if($fixed) return $this->path[$path] . $fixed . '/' . $this->fileName;
+        else return $this->path[$path] . $pathOne ."/".$pathTwo."/".$this->fileName;
     }
 
     /**
@@ -339,7 +338,10 @@ class ImageControl extends \local\image\Images
             return false;
         }
 
-        $dstfile = $srcfile . '.' . $salt;
+        $tmp = pathinfo($srcfile);
+        $filename = explode(".",$tmp['basename']);
+        $dstfile = $tmp['dirname'] . "/" . $filename[0] . "_$salt";
+        $type = $tmp['extension'];
 
         //缩略图大小
         $tow = intval($thumbwidth);
@@ -412,13 +414,13 @@ class ImageControl extends \local\image\Images
             } else {
                 return '';
             }
-            if(function_exists('imagejpeg')) {
-                imagejpeg($ni, $dstfile . ".jpeg");
+            if(function_exists('imagejpeg') and $type == 'jpg') {
+                imagejpeg($ni, $dstfile . ".jpg");
                 //大图片
                 if($make_max) {
                     imagejpeg($maxni, $srcfile);
                 }
-            } elseif(function_exists('imagepng')) {
+            } elseif(function_exists('imagepng') and $type == 'png') {
                 imagepng($ni, $dstfile . '.png');
                 //大图片
                 if($make_max) {
