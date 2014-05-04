@@ -397,6 +397,20 @@ class AdminBookManage extends BookControllers
         if ($list) return $list[0]['count(*)'];
         return false;
     }
+
+
+    public function updateMenusSort($bid, $data)
+    {
+        if (!is_array($data)) return false;
+
+        $ids = implode(',', array_values($data));
+        $sql = "UPDATE book_menu SET sort = CASE id ";
+        foreach ($data as $id => $ordinal) {
+            $sql .= sprintf("WHEN %d THEN %d ", $ordinal, $id);
+        }
+        $sql .= "END WHERE id IN ($ids)";
+        return $this->menu->query($sql);
+    }
     
 
 

@@ -84,6 +84,16 @@ class BookController extends \Yaf\Controller_Abstract
                 case 'chapter':
                     $aid = $bookControl->createArticle($bid, $data->getPost());
                     break;
+                case 'sort':
+                    $action = 'chapter';
+                    $menus = $data->getPost('ids');
+                    foreach ($menus as $key => $value) {
+                        $menu_id = explode("-", $value);
+                        $menus[$key] = $menu_id[2];
+                    }
+                    $bookControl->updateMenusSort($bid,$menus);
+                    exit();
+                    break;
                 case 'picture':
                     $file = $data->getFiles('picture');
                     $path = $image->save($file, $user['id'], 'tmp');

@@ -110,6 +110,11 @@ class AdminUserManage
 
     }
 
+    public function resetPassword($uid,$password)
+    {
+        return $this->members->where("id='$uid'")->update(array('password' => md5(trim($password))));
+    }
+
 
     /**
      * [addUserRole description]

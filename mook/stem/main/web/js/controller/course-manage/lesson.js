@@ -7,37 +7,22 @@ define(function(require, exports, module) {
     exports.run = function() {
         require('./header').run();
 
-        // var $list = $("#course-item-list").sortable({
-        //     distance: 20,
-        //     onDrop: function (item, container, _super) {
-        //         _super(item, container);
-        //         var data = $list.sortable("serialize").get();
-        //         $.post($list.data('sortUrl'), {ids:data}, function(response){
-
-        //             $list.find('.item-lesson').each(function(index){
-        //                 $(this).find('.number').text(index+1);
-        //             });
-
-        //             $list.find('.item-chapter').each(function(index){
-        //                 $(this).find('.number').text(index+1);
-        //             });
+        var $list = $("#book-menu-table tbody").sortable({
+            itemSelector:"tr",
+            distance: 20,
+            onDrop: function (item, container, _super) {
+                _super(item, container);
+                var data = $list.sortable("serialize").get();
+                $.post($list.data('sortUrl'), {ids:data}, function(response){
+                    $list.find('.item-chapter').each(function(index){
+                        $(this).find('.chapter-sort').text(index+1);
+                    });
                     
-        //         });
-        //     },
-        //     serialize: function(parent, children, isContainer) {
-        //         return isContainer ? children : parent.attr('id');
-        //     }
-        // });
-
-        $("#course-item-list").on('click', '.delete-lesson-btn', function(e) {
-            if (!confirm('删除课时的同时会删除课时的资料、测验。\n您真的要删除该课时吗？')) {
-                return ;
+                });
+            },
+            serialize: function(parent, children, isContainer) {
+                return isContainer ? children : parent.attr('id');
             }
-            var $btn = $(e.currentTarget);
-            $.post($(this).data('url'), function(response) {
-                $btn.parents('.item-lesson').remove();
-                Notify.success('课时已删除！');
-            }, 'json');
         });
 
         $("#book-menu-table").on('click', '.delete-menu', function(e) {
@@ -57,7 +42,7 @@ define(function(require, exports, module) {
                 var id = '#' + $(html).attr('id');
                 $(id).replaceWith(html);
                 $(id).find('.btn-link').tooltip();
-                Notify.success('课时发布成功！');
+                Notify.success('图书发布成功！');
             });
         });
 
@@ -67,7 +52,7 @@ define(function(require, exports, module) {
                 var id = '#' + $(html).attr('id');
                 $(id).replaceWith(html);
                 $(id).find('.btn-link').tooltip();
-                Notify.success('课时已取消发布！');
+                Notify.success('图书已取消发布！');
             });
         });
 

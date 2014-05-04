@@ -274,9 +274,13 @@ class AdminController extends \Yaf\Controller_Abstract
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
-        if ($id) {
-            $member = new AdminUserManage();
-            $user = $member->getUserForId($id);
+        if (!$id) return false;
+
+        $member = new AdminUserManage();
+        $user = $member->getUserForId($id);
+
+        if ($data->isPost()) {
+            $member->resetPassword($id, $data->getPost('newPassword'));
         }
 
         $views->assign('title','');
@@ -350,7 +354,6 @@ class AdminController extends \Yaf\Controller_Abstract
         $roles = Roles::instance();
 
         $rolegroups = $roles->getAllRoles();
-        print_r($rolegroups);
 
         $roleControl = new RolesControl();
  
@@ -406,6 +409,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $bookControl = new AdminBookManage();
 
         $books = $bookControl->getBookList(false,$limit, $page);
+        $category = $bookControl->getCategory();
 
         $pages = new pagesControl('/admin/books',$members->getMembersCount(),$limit,$page);
 
@@ -414,6 +418,7 @@ class AdminController extends \Yaf\Controller_Abstract
     	$views->assign('title','');
         $views->assign('books',$books);
         $views->assign('app',$app);
+        $views->assign('category',$category);
     	$views->display('admin/books/index.html.twig');
 
     }
