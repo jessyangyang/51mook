@@ -188,7 +188,7 @@ class ImageControl extends \local\image\Images
         if(function_exists("imagecreatetruecolor") && function_exists("imagecopyresampled") && $ni = imagecreatetruecolor($width, $height)) {
                 imagecopyresampled($ni, $im, 0, 0, $x, $y, $width, $height, $width, $height);
 
-                if(function_exists('imagejpeg') and $fileName['extension'] == 'jpg') {
+                if(function_exists('imagejpeg') and $fileName['extension'] == 'jpg'or $fileName['extension'] == 'jpeg') {
                     imagejpeg($ni, FILES_PATH . '/files' . $filePath);
                 } elseif(function_exists('imagepng') and $fileName['extension'] == 'png') {
                     imagepng($ni, FILES_PATH . '/files' . $filePath);
@@ -414,7 +414,7 @@ class ImageControl extends \local\image\Images
             } else {
                 return '';
             }
-            if(function_exists('imagejpeg') and $type == 'jpg') {
+            if(function_exists('imagejpeg') and $type == 'jpg' or $type == 'jpeg') {
                 imagejpeg($ni, $dstfile . ".jpg");
                 //大图片
                 if($make_max) {
