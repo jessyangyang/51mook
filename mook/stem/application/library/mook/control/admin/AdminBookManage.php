@@ -202,17 +202,18 @@ class AdminBookManage extends BookControllers
 
         $bookFieldsFilter = $this->booksFieldsFilter($data);
 
+
         if ($bookFilter and count($bookFilter) > 0) {
-            return $this->book->where("bid='$bid'")->update($bookFilter);
+            $this->book->where("bid='$bid'")->update($bookFilter);
         }
 
         if ($bookInfoFilter and count($bookInfoFilter) > 0) {
-            return $this->bookinfo->where("bid='$bid'")->update($bookInfoFilter);
+            $this->bookinfo->where("bid='$bid'")->update($bookInfoFilter);
 
         }
 
         if ($bookFieldsFilter and count($bookFieldsFilter) > 0) {
-            return $this->bookfields->where("bid='$bid'")->update($bookFieldsFilter);
+            $this->bookfields->where("bid='$bid'")->update($bookFieldsFilter);
         }
     }
 
