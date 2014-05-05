@@ -44,6 +44,7 @@ class BookController extends \Yaf\Controller_Abstract
             }
         }
 
+        $views->assign('app',$app);
         $views->assign('title','');
         $views->display('index/books/new.html.twig');
     }
