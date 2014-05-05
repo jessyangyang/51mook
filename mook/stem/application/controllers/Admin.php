@@ -412,6 +412,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $category = $bookControl->getCategory();
 
         $pages = new pagesControl('/admin/books',$members->getMembersCount(),$limit,$page);
+        echo $members->getMembersCount();
 
         $views->assign('paginator',$pages);
 
