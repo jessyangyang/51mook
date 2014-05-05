@@ -101,8 +101,8 @@ class BookController extends \Yaf\Controller_Abstract
 
                     $scaled = getimagesize(ImagesManage::getRealPath($path));
 
-                    if ($scaled[0] >= 800 or $scaled[1] >= 800) {
-                       MessageManage::createResponse($views,'上传格式错误','上传图片格式错误，图片长宽小于 800px。');
+                    if ($scaled[0] >= 1200 or $scaled[1] >= 1200) {
+                       MessageManage::createResponse($views,'上传格式错误','上传图片格式错误，图片长宽小于 1200px。');
                        ImagesManage::unlink($path);
                     }
                     else if (!ImagesManage::hasImageType($scaled[2],true)) {
