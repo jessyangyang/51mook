@@ -38,6 +38,24 @@ class AdminBookManage extends BookControllers
         $this->bookChapter = NULL;
     }
 
+    public function getBooksCount($option = array())
+    {
+        $sql = '';
+
+        if (is_array($option) or $option)
+        {
+            $i = 1;
+            $count = count($option);
+            foreach ($option as $key => $value) {
+                if($i == $count) $sql .= "$key='" . $value . "'";
+                else $sql .= "$key='" . $value . "' AND ";
+                $i ++;
+            }
+        }
+
+        $count = $this->book->query("select count(*) from books");
+        return $count ? $count[0]['count(*)'] : 0;
+    }
     /**
      * [getBookList description]
      * @param  array   $option [description]
