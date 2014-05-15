@@ -331,17 +331,25 @@ class ImageControl extends \local\image\Images
      * @param  [type] $srcfile [description]
      * @return [type]          [description]
      */
-    public function makethumb($srcfile, $thumbwidth = 100 , $thumbheight = 100 ,$salt = 'thumb') {
+    public function makethumb($srcfile, $thumbwidth = 100 , $thumbheight = 100 ,$salt = 'thumb', $type = false) {
 
         //判断文件是否存在
         if (!file_exists($srcfile)) {
             return false;
         }
 
+
         $tmp = pathinfo($srcfile);
         $filename = explode(".",$tmp['basename']);
         $dstfile = $tmp['dirname'] . "/" . $filename[0] . "_$salt";
-        $type = $tmp['extension'];
+
+        if ($type and $this->hasImageType($type)) {
+            # code...
+        }
+        else
+        {
+            $type = $tmp['extension'];
+        }
 
         //缩略图大小
         $tow = intval($thumbwidth);

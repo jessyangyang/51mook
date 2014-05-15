@@ -110,8 +110,8 @@ class ImagesManage extends \lib\dao\ImageControl
             );
 
             if ($thumb) {
-               $this->makethumb(self::getRealPath($filepath),130,188,'small');
-               $this->makethumb(self::getRealPath($filepath),216,310,'medium');
+               $this->makethumb(self::getRealPath($filepath),130,188,'small','jpeg');
+               $this->makethumb(self::getRealPath($filepath),216,310,'medium','jpeg');
             }
 
             if ($file = $this->getImagesBookForID($bid,1)) {
@@ -166,8 +166,8 @@ class ImagesManage extends \lib\dao\ImageControl
             );
 
             if ($thumb) {
-               $this->makethumb(self::getRealPath($filepath),48,48,'small');
-               $this->makethumb(self::getRealPath($filepath),130,130,'medium');
+               $this->makethumb(self::getRealPath($filepath),48,48,'small','jpeg');
+               $this->makethumb(self::getRealPath($filepath),130,130,'medium','jpeg');
             }
 
             if ($file = $this->getImagesMemberForID($uid,1)) {
