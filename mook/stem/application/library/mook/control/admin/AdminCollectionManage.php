@@ -17,10 +17,11 @@ use \lib\models\collection\CollectionCategory;
 
 use \Yaf\Registry;
 
-class AdminCollectionManage
+class AdminCollectionManage \mook\control\common\BlogManage
 {
 	protected $collection;
     protected $collectionCategory;
+
     /**
      * Instance construct
      */
@@ -34,7 +35,10 @@ class AdminCollectionManage
         $this->collectionCategory = NULL;
     }
 
-
+    /**
+     * [getCollectionCategory description]
+     * @return [type] [description]
+     */
     public function getCollectionCategory()
     {
         return $this->collectionCategory->fetchList();
@@ -64,6 +68,13 @@ class AdminCollectionManage
         return $this->collectionCategory->where("ccid=$ccid")->delete();
     }
 
+    /**
+     * [getCollectionList description]
+     * @param  array   $option [description]
+     * @param  integer $limit  [description]
+     * @param  integer $page   [description]
+     * @return [type]          [description]
+     */
     public function getCollectionList($option = array(),$limit = 10,$page = 1)
     {
         $sql = '';

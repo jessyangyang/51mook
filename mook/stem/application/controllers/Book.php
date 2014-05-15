@@ -189,7 +189,6 @@ class BookController extends \Yaf\Controller_Abstract
             $article = $bookControl->getArticleForID($mid);
         }
 
-
         $views->assign('app',$app);
         $views->assign('article',$article);
         $views->assign('book',$book);
@@ -251,8 +250,8 @@ class BookController extends \Yaf\Controller_Abstract
 
         if ($action == 'upload' and $data->isPost()) {
             
-            if ($filepath = $image->saveImagesArticle($data->getFiles('file'),$bid, $mid, $app['id'],true)) {
-                $rest->assign('filelink',$filepath);
+            if ($filepath = $image->saveImagesArticle($data->getFiles('file'),$bid, $mid, $app['uid'],true,1,true)) {
+                $rest->assign('filelink',ImagesManage::getRelativeImage($filepath));
                 $rest->response();
             }
         }
@@ -261,10 +260,15 @@ class BookController extends \Yaf\Controller_Abstract
            if ($list) {
                $images = array();
                foreach ($list as $key => $value) {
-                   # code...
-               }
-               $rest->assign('',$images);
-               $rest->response();
+                    $thumb = $value['thumb'] > 0 ? $image->getRealCoverSize($value['path'],'small','jpg') : '';
+                    $images[] = array(
+                    'thumb' => $thumb,
+                    'image' => ImagesManage::getRelativeImage($value['path']),
+                    'title' => $value['filename'],
+                    'folder' => $mid);
+                }
+                echo stripslashes(json_encode($images));
+                exit();
            }
         }
 

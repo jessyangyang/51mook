@@ -13,6 +13,9 @@ namespace mook\control\common;
 
 class BlogManage extends \local\rss\DOMHtml
 {
+
+	public static $allowBlogs = array('sina','163');
+	
 	public static function loadSinaBlog($url, $user = NULL, $pass = NULL)
 	{
 		

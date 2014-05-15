@@ -19,6 +19,10 @@ class ImagesArticle extends \local\db\ORM
             'type' => 'int',
             'default' => 0,
             'comment' => 'iaid'),
+        'bid' => array(
+            'type' => 'int',
+            'default' => 0,
+            'comment' => 'bid'),
         'bmid' => array(
             'type' => 'int',
             'default' => 0,

@@ -59,7 +59,7 @@ class ImagesManage extends \lib\dao\ImageControl
 
     public function getArticleForID($bid,$type = false)
     {
-        $list =  $this->images_article->where("bid=$bid")->order("dateline")->fetchList();
+        $list =  $this->images_article->where("bid='$bid'")->order("dateline")->fetchList();
 
         if (is_array($list)) {
             return $list;
@@ -185,22 +185,27 @@ class ImagesManage extends \lib\dao\ImageControl
 
     public function saveImagesArticle($files, $bid, $bmid, $uid, $retype = false, $class = 1, $thumb = false)
     {
-        if ($filepath = $this->save($files, $uid, $path='article')) {
+        if ($filepath = $this->save($files, $uid, 'article', true)) {
             $fields = array(
                 'bid' => $bid,
                 'bmid' => $bmid,
                 'uid' => $uid,
-                'class' => $class,
                 'title' => basename($files['name']),
                 'filename' => $this->images_article->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
                 'type' => $files['type'],
                 'size' => $files['size'],
                 'path' => $this->images_article->escapeString($filepath),
-                'thumb' => 0,
+                'thumb' => $thumb ? 1 : 0,
                 'dateline' => UPDATE_TIME
             );
 
-            if ($retype == false and $this->insertId = $this->images_article->insert($fields)) {
+            if ($thumb) {
+               $this->makethumb(self::getRealPath($filepath),100,144,'small','jpeg');
+            }
+
+            $this->insertId = $this->images_article->insert($fields);
+
+            if ($retype == false) {
                 return $this->insertId;
             }
             else {
@@ -301,15 +306,15 @@ class ImagesManage extends \lib\dao\ImageControl
             'naturalHeight' => $file[1]);
     }
 
-    public static function getRealCoverSize($filepath, $size = 'small')
+    public static function getRealCoverSize($filepath, $size = 'small', $type = false)
     {
         $path = self::getRealPath($filepath);
         if (!is_file($path)) return false;
 
         $tmp = pathinfo($filepath);
-
+        $type = $type ? $type : $tmp['extension'];
         $filename = explode(".",$tmp['basename']);
-        return self::getRelativeImage($tmp['dirname'] . "/" . $filename[0] . "_$size." . $tmp['extension']);
+        return self::getRelativeImage($tmp['dirname'] . "/" . $filename[0] . "_$size." . $type);
     }
 
 }

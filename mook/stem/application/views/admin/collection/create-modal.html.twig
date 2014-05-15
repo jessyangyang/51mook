@@ -9,28 +9,28 @@
 
   <div class="row form-group">
     <div class="col-md-2 control-label">
-      <label for="email">博客地址</label>
+      <label for="url">博客地址</label>
     </div>
     <div class="col-md-7 controls">
-      <input type="text" id="email"  name="email" value="{{ collection.title }}" class="form-control" >
+      <input type="text" id="url"  name="url" value="{{ collection.title }}" class="form-control" >
     </div>
   </div>
 
   <div class="row form-group">
     <div class="col-md-2 control-label">
-      <label for="name">作者名</label>
+      <label for="author">作者名</label>
     </div>
     <div class="col-md-7 controls">
-      <input type="text" id="name" name="{{ collection.author }}" class="form-control" >
+      <input type="text" id="author" name="author" value="{{ collection.author }}" class="form-control" >
     </div>
   </div>
 
   <div class="row form-group">
     <div class="col-md-2 control-label">
-      <label for="name">分类</label>
+      <label for="cid">分类</label>
     </div>
     <div class="col-md-7 controls">
-      <select class="form-control" name="roles">
+      <select class="form-control" name="cid">
         {% if categories%}
           {% for category in categories %}
             <option value="{{ category.ccid }}" {% if category.ccid == collection.ccid %} checked {% endif %}>{{ category.name }}</option>
