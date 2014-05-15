@@ -1,6 +1,6 @@
 <?php
 /**
-* MembersManage  Class 
+* AdminBookManage  Class 
 *
 * @package     DuyuMvc
 * @author      Jess

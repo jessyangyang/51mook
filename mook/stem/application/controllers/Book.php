@@ -116,7 +116,7 @@ class BookController extends \Yaf\Controller_Abstract
                 case 'upload':
                     $action = 'picture-crop';
                     if ($file = $data->getQuery('file')) {
-                        $avatar_id = $image->saveImagesBookFromCut($data->getQuery('file'),$data->getPost('x'),$data->getPost('y'),$data->getPost('width'),$data->getPost('height'), $user['id'], $bid);
+                        $avatar_id = $image->saveImagesBookFromCut($data->getQuery('file'),$data->getPost('x'),$data->getPost('y'),$data->getPost('width'),$data->getPost('height'), $user['id'], $bid, 1, true);
                         if($avatar_id) {
                             $bookControl->updateBook($bid,array('cover' => $avatar_id));
                             ImagesManage::unlink(ImagesManage::getRealPath($file));

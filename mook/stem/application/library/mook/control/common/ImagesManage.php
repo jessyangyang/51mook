@@ -105,9 +105,14 @@ class ImagesManage extends \lib\dao\ImageControl
                 'type' => 'image/' . pathinfo($filepath,PATHINFO_EXTENSION),
                 'size' => filesize(self::getRealPath($filepath)),
                 'path' => $this->images_book->escapeString($filepath),
-                'thumb' => 0,
+                'thumb' => $thumb ? 1 : 0,
                 'dateline' => UPDATE_TIME
             );
+
+            if ($thumb) {
+               $this->makethumb(self::getRealPath($filepath),130,188,'small');
+               $this->makethumb(self::getRealPath($filepath),216,310,'medium');
+            }
 
             if ($file = $this->getImagesBookForID($bid,1)) {
             	$fields['ibid'] = $file['ibid'];
@@ -156,13 +161,13 @@ class ImagesManage extends \lib\dao\ImageControl
                 'type' => 'image/' . pathinfo($filepath,PATHINFO_EXTENSION),
                 'size' => filesize(self::getRealPath($filepath)),
                 'path' => $this->images_member->escapeString($filepath),
-                'thumb' => 0,
+                'thumb' => $thumb ? 1 : 0,
                 'dateline' => UPDATE_TIME
             );
 
             if ($thumb) {
                $this->makethumb(self::getRealPath($filepath),48,48,'small');
-               // $this->makethumb(self::getRealPath($filepath),120,120,'medium');
+               $this->makethumb(self::getRealPath($filepath),130,130,'medium');
             }
 
             if ($file = $this->getImagesMemberForID($uid,1)) {

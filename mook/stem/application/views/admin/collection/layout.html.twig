@@ -1,0 +1,26 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% set nav = 'content' %}
+
+{% block content %}
+  <div class="col-md-2">
+    {% block sidebar %}
+
+      <div class="list-group">
+        <a href="/admin/feed" class="list-group-item {% if menu == 'feed' %}active{% endif %}">RSS管理</a>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">采集</div>
+        <div class="list-group">
+          <a href="/admin/collection" class="list-group-item {% if menu == 'collection' %}active{% endif %}">采集管理</a>
+          <a href="/admin/collection/category" class="list-group-item {% if menu == 'category' %}active{% endif %}">分类管理</a>
+        </div>
+      </div>
+
+    {% endblock %}
+  </div>
+  <div class="col-md-10">
+      {% block main %}{% endblock %}
+  </div>
+{% endblock %}

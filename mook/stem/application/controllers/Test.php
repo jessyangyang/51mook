@@ -9,6 +9,8 @@
  */
 
 use \mook\dao\Roles;
+use \local\rss\Feed;
+use \local\rss\DOMHtml;
 
 class TestController extends \Yaf\Controller_Abstract 
 {
@@ -32,6 +34,31 @@ class TestController extends \Yaf\Controller_Abstract
 
         exit();
     }
+
+    public function feedAction()
+    {
+        $data = $this->getRequest();
+
+        // $rss = Feed::loadRss('http://blog.sina.com.cn/rss/twocold.xml');
+        $dom = DOMHtml::loadHtml('http://blog.sina.com.cn/twocold');
+        echo "<pre>";
+        // foreach ($rss->item as $key => $value) {
+        //     if (isset($value->{'content:encoded'})){
+        //         echo $value->{'content:encoded'};
+        //     }
+        //     else
+        //     {
+        //         echo htmlSpecialChars($value->description);
+        //     }
+        // }
+        $elements = $dom->query("//link[@title='RSS']");
+        foreach ($elements as $key => $value) {
+            $value->getAttribute('href') and $uid = basename($value->getAttribute('href'),".xml");
+            print_r($uid);
+        }
+        exit();
+    }
+
 
     public function rolesAction() 
     {

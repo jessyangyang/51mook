@@ -13,6 +13,7 @@ use \lib\dao\RolesControl;
 use \mook\dao\Roles;
 use \mook\control\admin\AdminUserManage;
 use \mook\control\admin\AdminBookManage;
+use \mook\control\admin\AdminCollectionManage;
 use \mook\control\index\MembersManage;
 use \mook\control\common\ImagesManage;
 use \mook\control\pagesControl;
@@ -28,7 +29,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
         $views->assign('title',"mook");
@@ -41,7 +42,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -54,7 +55,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $members->logout();
         header('Location: /login');
         exit();
@@ -71,7 +72,7 @@ class AdminController extends \Yaf\Controller_Abstract
     	$views = $this->getView();
     	$data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
     	$list = $members->getMembersList(null,$limit, $page);
@@ -113,7 +114,7 @@ class AdminController extends \Yaf\Controller_Abstract
     	$views = $this->getView();
     	$data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -126,7 +127,7 @@ class AdminController extends \Yaf\Controller_Abstract
     	$views = $this->getView();
     	$data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -147,7 +148,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -168,7 +169,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -194,7 +195,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -270,7 +271,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -294,7 +295,7 @@ class AdminController extends \Yaf\Controller_Abstract
     	$views = $this->getView();
     	$data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession(); 
 
     	$roles = new RolesControl();
@@ -325,7 +326,7 @@ class AdminController extends \Yaf\Controller_Abstract
 
         if (!$rcid) return;
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -379,7 +380,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -403,7 +404,7 @@ class AdminController extends \Yaf\Controller_Abstract
     	$views = $this->getView();
     	$data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
         $bookControl = new AdminBookManage();
@@ -428,7 +429,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -462,7 +463,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
@@ -480,7 +481,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
         $control = new AdminBookManage();
@@ -513,7 +514,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit();
 
@@ -531,6 +532,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views->assign('title','');
         $views->assign('category',$category);
         $views->assign('type',$type);
+        $views->assign('app',$app);
         $views->display('admin/bookcategory/post-modal.html.twig');
     }
 
@@ -539,7 +541,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
         if (!$app) exit();
 
@@ -551,8 +553,130 @@ class AdminController extends \Yaf\Controller_Abstract
             $category = $control->deleteCategoryForId($bcid);
         }
 
-        $views->assign('categories',$control->getCategory());
         $views->display('admin/bookcategory/tbody.html.twig');
+    }
+
+    /**
+     * [feedAction description]
+     * @return [type] [description]
+     */
+    public function feedAction($limit = 10,$page = 1)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+
+
+        $views->display('admin/feed/index.html.twig');
+    }
+
+    public function collectionAction($limit = 10,$page = 1)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $collectionControl = new AdminCollectionManage();
+
+        $category = $collectionControl->getCollectionCategory();
+        $views->assign('category',$category);
+        $views->display('admin/collection/index.html.twig');
+    }
+
+    public function collectionPostAction($ctid = false)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $collectionControl = new AdminCollectionManage();
+
+        $type = 'create';
+        $collection = false;
+        if ($ctid > 0) {
+            $type = 'edit';
+            $collection = $collectionControl->getCollectionList(array('collection.ctid' => intval($ctid)),1,1);
+        }
+
+        $categories = $collectionControl->getCollectionCategory();
+        
+        $views->assign('categories',$categories);
+        $views->assign('collection',$collection);
+        $views->display('admin/collection/create-modal.html.twig');
+    }
+
+    public function collectionDeleteAction($ctid = false)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $collectionControl = new AdminCollectionManage();
+
+
+
+    }
+
+    public function collectionCategoryAction()
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+
+        $collectionControl = new AdminCollectionManage();
+
+        $display = 'admin/collectioncategory/index.html.twig';
+
+        if ($data->isPost()) {
+            $type = $data->getPost('type');
+
+            if ( $type == 'create') {
+               $collectionControl->addCollectionCategory($data->getPost());
+            }
+            else if ($type == 'edit') {
+               $collectionControl->updateCollectionCategory($data->getPost('ccid'),$data->getPost());
+            }
+            $display = 'admin/collectioncategory/tbody.html.twig';
+        }
+
+        $categories = $collectionControl->getCollectionCategory();
+        $views->assign('categories',$categories);
+        $views->display($display);
+    }
+
+    public function collectionCategoryPostAction($ccid = false)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+        if (!$app) exit();
+
+        $collectionControl = new AdminCollectionManage();
+
+        $type = 'create';
+        $category = false;
+
+        if ($ccid > 0) {
+            $type = 'edit';
+            $category = $collectionControl->getCollectionCategoryForID($ccid);
+        }
+        
+        $views->assign('category', $category);
+        $views->assign('type', $type);
+        $views->display('admin/collectioncategory/post-modal.html.twig');
+    }
+
+    public function collectionCategoryDeleteAction($ccid = false)
+    {
+        $data = $this->getRequest();
+        if ($ccid) {
+            
+        }
+
+        exit();
     }
 
 }

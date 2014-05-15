@@ -1,0 +1,17 @@
+<tbody>
+  {% for category in categories %}
+		<tr id="category-tr-{{ category.ccid }}">
+		  <td>
+		    {{ category.ccid }}
+		  </td>
+		  <td>{{ category.name }}</td>
+		  <td>{{ category.dateline|date('Y-n-d H:i') }}</td>
+		  <td>{{ category.sort }}</td>
+		  <td>
+	        <a href="javascript:;" class="btn btn-default btn-sm {% if category.ccid == 0 %}disabled{% endif %}" data-url="/admin/collection/category/post/{{ category.ccid }}" data-toggle="modal" data-target="#modal"><i class="glyphicon glyphicon-edit"></i> 编辑</a>
+		   </td>
+		</tr>
+	{% else %}
+	  <tr><td colspan="20"><div class="empty">暂无分类记录</div></td></tr>
+  {% endfor %}
+</tbody>

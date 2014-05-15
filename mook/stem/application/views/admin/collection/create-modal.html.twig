@@ -1,0 +1,56 @@
+{% extends 'base/bootstrap-modal-layout.html.twig' %}
+
+{% set modalSize = 'large' %}
+
+{% block title %}{% if type == 'create' %}添加{% else %}编辑{% endif %}链接{% endblock %}
+{% block body %}
+
+<form id="user-create-form" class="form-horizontal" method="post" action="/admin/collection">
+
+  <div class="row form-group">
+    <div class="col-md-2 control-label">
+      <label for="email">博客地址</label>
+    </div>
+    <div class="col-md-7 controls">
+      <input type="text" id="email"  name="email" value="{{ collection.title }}" class="form-control" >
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-2 control-label">
+      <label for="name">作者名</label>
+    </div>
+    <div class="col-md-7 controls">
+      <input type="text" id="name" name="{{ collection.author }}" class="form-control" >
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-2 control-label">
+      <label for="name">分类</label>
+    </div>
+    <div class="col-md-7 controls">
+      <select class="form-control" name="roles">
+        {% if categories%}
+          {% for category in categories %}
+            <option value="{{ category.ccid }}" {% if category.ccid == collection.ccid %} checked {% endif %}>{{ category.name }}</option>
+          {% endfor %}
+        {% else %}
+        <option value='0'>默认分类</option>
+        {% endif %}
+      </select>
+    </div>
+  </div>
+
+  <input type="hidden" name="ctid" value="{{ collection.ctid }}"/>
+  <input type="hidden" name="type" value="{{ type }}"/>
+  <input type="hidden" name="_csrf_token" value="">
+
+</form>
+{% endblock %}
+
+{% block footer %}
+  <button type="submit" class="btn btn-primary pull-right" data-toggle="form-submit" data-target="#user-create-form">提交</button>
+  <button type="button" class="btn btn-link pull-right" data-dismiss="modal">取消</button>
+  <script>app.load('user/create-modal')</script>
+{% endblock %}

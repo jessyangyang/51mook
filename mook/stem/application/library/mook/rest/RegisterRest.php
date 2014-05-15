@@ -46,10 +46,25 @@ class RegisterRest extends \local\rest\Restful{
         self::regRestURL('admin_book_category','/admin/books/category','admin','bookCategory','图书分类');
         self::regRestURL('admin_book_category_post','/admin/books/category/post/:bcid','admin','bookCategoryPost','编辑图书分类');
         self::regRestURL('admin_book_category_delete','/admin/books/category/delete/:bcid','admin','bookCategoryDelete','删除图书分类');
+
+        // admin feeds
+        self::regRestURL('admin_feed_index','/admin/feed/:limit/:page','admin','feed','Rss管理');
+
+        // admin collection
+        self::regRestURL('admin_collection_index','/admin/collection/:limit/:page','admin','collection','采集管理');
+        self::regRestURL('admin_collection_post','/admin/collection/post/:ctid','admin','collectionPost','编辑采集');
+        self::regRestURL('admin_collection_delete','/admin/collection/delete/:ctid','admin','collectionDelete','删除采集');
+        self::regRestURL('admin_collection_category','/admin/collection/category','admin','collectionCategory','采集分类管理');
+        self::regRestURL('admin_collection_category_post','/admin/collection/category/post/:ccid','admin','collectionCategoryPost','采集分类编辑');
+        self::regRestURL('admin_collection_category_delete','/admin/collection/category/delete/:ccid','admin','collectionCategoryDelete','采集分类删除');
+
+
+
         
         // Test
         self::regRestURL('test_index','/test/index','test','index','测试首页');
         self::regRestURL('test_roles','/test/roles','test','roles','权限更新');
+        self::regRestURL('test_feed','/test/feed','test','feed','rss订阅测试');
 
         /**
          * Web System
