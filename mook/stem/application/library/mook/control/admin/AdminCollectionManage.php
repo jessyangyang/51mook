@@ -130,7 +130,7 @@ class AdminCollectionManage extends \mook\control\common\BlogManage
 
         $table = $this->collection->table;
 
-        $list = $this->collection->field("$table.ctid,$table.cabid,$table.title,$table.author,$table.ccid,$table.url,$table.blog_id,$table.dateline,cc.name as category,cab.name as type")
+        $list = $this->collection->field("$table.ctid,$table.cabid,$table.title,$table.author,$table.ccid,$table.url,$table.dateline,cc.name as category,cab.name as type")
             ->joinQuery('collection_category as cc',"$table.ccid=cc.ccid")
             ->joinQuery('collection_allow_blog as cab',"$table.cabid=cab.cabid")
             ->where($sql)->order("$table.dateline")
@@ -205,7 +205,6 @@ class AdminCollectionManage extends \mook\control\common\BlogManage
         isset($data['ccid']) and $filter['ccid'] = $data['ccid'] ? $data['ccid'] : 0;
         isset($data['cabid']) and $filter['cabid'] = $data['cabid'] ? $data['cabid'] : 0;
         isset($data['url']) and $filter['url'] = $data['url'];
-        isset($data['blog_id']) and $filter['blog_id'] = $data['blog_id'];
         isset($data['dateline']) and $filter['dateline'] = $data['dateline'];
         if (count($filter) > 0) return $filter;
         return false; 

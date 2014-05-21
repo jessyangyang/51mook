@@ -39,10 +39,6 @@ class Collection extends \local\db\ORM
             'type' => 'varchar',
             'default' => 0,
             'comment' => 'url'),
-        'blog_id' => array(
-            'type' => 'int',
-            'default' => 0,
-            'comment' => 'blog_id'),
         'dateline' => array(
             'type' => 'int',
             'default' => 0,
