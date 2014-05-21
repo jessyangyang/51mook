@@ -182,7 +182,6 @@ class AdminCollectionManage extends \mook\control\common\BlogManage
  
         $bookControl = AdminBookManage::instance();
 
-        print_r($datas);
         if ($bid = $bookControl->createBook($uid, $book)) {
             foreach ($datas as $key => $value) {
                 $value['type'] = 1;
