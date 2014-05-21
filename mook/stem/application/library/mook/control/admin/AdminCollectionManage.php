@@ -170,8 +170,8 @@ class AdminCollectionManage extends \mook\control\common\BlogManage
 
         if (!$collection) return false;
 
+        set_time_limit(300);
         $datas = self::loadSinaBlog($collection[0]['url'], $year, $page);
-
         if (!$datas) return false;
 
         $book = array();
@@ -188,6 +188,7 @@ class AdminCollectionManage extends \mook\control\common\BlogManage
                 $bookControl->createArticle($bid,$value);
             }
         }
+        set_time_limit(60);
     }
 
     /**
