@@ -34,6 +34,23 @@
     </div>
   </div>
 
+  <div class="row form-group">
+    <div class="col-md-2 control-label">
+      <label for="cid">图书分类</label>
+    </div>
+    <div class="col-md-7 controls">
+      <select class="form-control" name="cid">
+        {% if categories%}
+          {% for category in categories %}
+            <option value="{{ category.cid }}" {% if category.cid == collection.cid %} checked {% endif %}>{{ category.name }}</option>
+          {% endfor %}
+        {% else %}
+        <option value='0'>默认分类</option>
+        {% endif %}
+      </select>
+    </div>
+  </div>
+
   <input type="hidden" name="ctid" value="{{ collection.ctid }}"/>
   <input type="hidden" name="type" value="collection"/>
   <input type="hidden" name="_csrf_token" value="">

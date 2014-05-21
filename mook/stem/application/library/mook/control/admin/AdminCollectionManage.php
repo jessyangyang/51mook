@@ -176,7 +176,7 @@ class AdminCollectionManage extends \mook\control\common\BlogManage
 
         $book = array();
         $book['title'] = $collection[0]['title'] . " " . $year;
-        $book['cid'] = $collection[0]['ccid'];
+        $book['cid'] = $collection[0]['cid'];
         $book['pubtime'] = UPDATE_TIME;
         $book['author'] = $collection[0]['author'];
  

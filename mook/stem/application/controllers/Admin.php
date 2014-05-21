@@ -588,11 +588,10 @@ class AdminController extends \Yaf\Controller_Abstract
 
         if ($data->isPost()) {
             $ctid = $data->getPost('ctid');
-            
+
             switch ($data->getPost('type')) {
                 case 'create':
                     $ctid = $collectionControl->addCollection($data->getPost());
-
                     break;
                 case 'edit':
                     $collectionControl->updateCollection($ctid, $data->getPost());
@@ -653,9 +652,11 @@ class AdminController extends \Yaf\Controller_Abstract
         if (!$app) exit();
 
         $collectionControl = new AdminCollectionManage();
+        $bookControl = AdminBookManage::instance();
 
-        $categories = $collectionControl->getCollectionCategory();
+        $categories = $bookControl->getCategory();
         $collection = $collectionControl->getCollectionList(array('collection.ctid' => intval($ctid)),1,1);
+        
         $views->assign('collection', $collection[0]);
         $views->assign('categories', $categories);
         $views->display('admin/collection/collection-modal.html.twig');
