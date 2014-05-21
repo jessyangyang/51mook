@@ -164,7 +164,7 @@ class AdminCollectionManage extends \mook\control\common\BlogManage
     }
 
 
-    public function createBookFromBlog($ctid, $uid, $year = 2014, $page = 1)
+    public function createBookFromBlog($ctid, $uid, $cid, $year = 2014, $page = 1)
     {
         $collection = $this->getCollectionList(array('ctid' => $ctid),1,1);
 
@@ -176,8 +176,7 @@ class AdminCollectionManage extends \mook\control\common\BlogManage
 
         $book = array();
         $book['title'] = $collection[0]['title'] . " " . $year;
-        $book['cid'] = $collection[0]['cid'];
-        $book['pubtime'] = UPDATE_TIME;
+        $book['cid'] = $cid;
         $book['author'] = $collection[0]['author'];
  
         $bookControl = AdminBookManage::instance();

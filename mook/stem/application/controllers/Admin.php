@@ -597,7 +597,7 @@ class AdminController extends \Yaf\Controller_Abstract
                     $collectionControl->updateCollection($ctid, $data->getPost());
                     break;
                 case 'collection':
-                    $collectionControl->createBookFromBlog($ctid,$app['uid'], $data->getPost('year'), $data->getPost('page'));
+                    $collectionControl->createBookFromBlog($ctid,$app['uid'], $data->getPost('cid'), $data->getPost('year'), $data->getPost('page'));
                     exit();
                     break;
                 default:
@@ -656,7 +656,7 @@ class AdminController extends \Yaf\Controller_Abstract
 
         $categories = $bookControl->getCategory();
         $collection = $collectionControl->getCollectionList(array('collection.ctid' => intval($ctid)),1,1);
-        
+
         $views->assign('collection', $collection[0]);
         $views->assign('categories', $categories);
         $views->display('admin/collection/collection-modal.html.twig');

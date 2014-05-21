@@ -180,7 +180,7 @@ class AdminBookManage extends BookControllers
 
         if ($books) {
 
-            $books['cid'] = 0;
+            !isset($books['cid']) $books['cid'] = 0;
             $books['published'] = UPDATE_TIME;
 
             $this->book->begin();
@@ -469,7 +469,7 @@ class AdminBookManage extends BookControllers
     public function booksFilter($data)
     {
         $filter = array();
-        isset($data['cid']) and $filter['cid'] = $data['cid'];
+        isset($data['cid']) and $filter['cid'] = $data['cid'] ? $data['cid'] : 0;
         isset($data['title']) and $filter['title'] = $data['title'];
         isset($data['author']) and $filter['author'] = $data['author'];
         isset($data['press']) and $filter['press'] = $data['press'];
