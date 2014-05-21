@@ -180,7 +180,7 @@ class AdminBookManage extends BookControllers
 
         if ($books) {
 
-            !isset($books['cid']) $books['cid'] = 0;
+            !isset($books['cid']) and $books['cid'] = 0;
             $books['published'] = UPDATE_TIME;
 
             $this->book->begin();
