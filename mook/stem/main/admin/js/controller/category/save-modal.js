@@ -14,7 +14,7 @@ define(function(require, exports, module) {
             autoSubmit: false,
             onFormValidated: function(error, results, $form) {
                 if (error) {
-                    return ;
+                    return false;
                 }
 
                 $.post($form.attr('action'), $form.serialize(), function(html){

@@ -16,7 +16,7 @@ define(function(require, exports, module) {
 				$.post($form.attr('action'), $form.serialize(), function(html) {
 					$modal.modal('hide');
 					Notify.success('添加Blog成功');
-                    // window.location.reload();
+                    window.location.reload();
 				}).error(function(){
 					Notify.danger('添加Blog失败');
 				});

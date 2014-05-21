@@ -36,10 +36,10 @@
 
   <div class="row form-group">
     <div class="col-md-2 control-label">
-      <label for="cid">分类</label>
+      <label for="ccid">分类</label>
     </div>
     <div class="col-md-7 controls">
-      <select class="form-control" name="cid">
+      <select class="form-control" name="ccid">
         {% if categories%}
           {% for category in categories %}
             <option value="{{ category.ccid }}" {% if category.ccid == collection.ccid %} checked {% endif %}>{{ category.name }}</option>

@@ -584,22 +584,26 @@ class AdminController extends \Yaf\Controller_Abstract
 
         $twig = 'admin/collection/index.html.twig';
 
+        $ctid = false;
+
         if ($data->isPost()) {
+            $ctid = $data->getPost('ctid');
+            
             switch ($data->getPost('type')) {
                 case 'create':
-                    $collectionControl->addCollection($data->getPost());
+                    $ctid = $collectionControl->addCollection($data->getPost());
+
                     break;
                 case 'edit':
-                    $collectionControl->updateCollection($data->getPost('ctid'), $data->getPost());
+                    $collectionControl->updateCollection($ctid, $data->getPost());
                     break;
                 case 'collection':
-                    $collectionControl->createBookFromBlog($data->getPost('ctid'),$app['uid'], $data->getPost('year'), $data->getPost('page'));
+                    $collectionControl->createBookFromBlog($ctid,$app['uid'], $data->getPost('year'), $data->getPost('page'));
+                    exit();
                     break;
                 default:
                     break;
             }
-            exit();
-            // $twig = 'admin/collection/article-tr.html.twig';
         }
 
         $category = $collectionControl->getCollectionCategory();
