@@ -87,12 +87,19 @@ class BookController extends \Yaf\Controller_Abstract
                     break;
                 case 'sort':
                     $action = 'chapter';
+
+                    $page = $data->getQuery('page') ? $data->getQuery('page') - 1 : 0;
+                    $limit = $data->getQuery('limit') ? $data->getQuery('limit') : 10;
                     $menus = $data->getPost('ids');
+
+                    $menulist = array();
+
                     foreach ($menus as $key => $value) {
                         $menu_id = explode("-", $value);
-                        $menus[$key] = $menu_id[2];
+                        $menulist[$key + ($page * $limit + 1)] = intval($menu_id[2]);
                     }
-                    $bookControl->updateMenusSort($bid,$menus);
+
+                    $bookControl->updateMenusSort($bid,$menulist);
                     exit();
                     break;
                 case 'picture':

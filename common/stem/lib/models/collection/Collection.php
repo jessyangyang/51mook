@@ -19,6 +19,10 @@ class Collection extends \local\db\ORM
             'type' => 'int',
             'default' => 0,
             'comment' => 'ctid'),
+        'cabid' => array(
+            'type' => 'int',
+            'default' => 0,
+            'comment' => 'cabid'),
         'title' => array(
             'type' => 'varchar',
             'default' => 0,

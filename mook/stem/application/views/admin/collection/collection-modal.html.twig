@@ -1,0 +1,48 @@
+{% extends 'base/bootstrap-modal-layout.html.twig' %}
+
+{% set modalSize = 'large' %}
+
+{% block title %}采集Blog{% endblock %}
+{% block body %}
+
+<form id="collection-blog-form" class="form-horizontal" method="post" action="/admin/collection">
+
+  <div class="row form-group">
+    <div class="col-md-2 control-label">
+      <label for="url">博客URL</label>
+    </div>
+    <div class="col-md-7 controls">
+      <input type="text" id="url"  name="url" value="{{ collection.url }}" class="form-control" >
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-2 control-label">
+      <label for="year">采集年份</label>
+    </div>
+    <div class="col-md-7 controls">
+      <input type="text" id="year"  name="year" value="{{ collection.time|date('Y') }}" class="form-control" >
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-2 control-label">
+      <label for="page">采集页数</label>
+    </div>
+    <div class="col-md-7 controls">
+      <input type="text" id="page"  name="page" value="1" class="form-control" >
+    </div>
+  </div>
+
+  <input type="hidden" name="ctid" value="{{ collection.ctid }}"/>
+  <input type="hidden" name="type" value="collection"/>
+  <input type="hidden" name="_csrf_token" value="">
+
+</form>
+{% endblock %}
+
+{% block footer %}
+  <button type="submit" class="btn btn-primary pull-right" data-toggle="form-submit" data-target="#collection-blog-form">开始采集</button>
+  <button type="button" class="btn btn-link pull-right" data-dismiss="modal">取消</button>
+  <script>app.load('collection/blog-modal')</script>
+{% endblock %}

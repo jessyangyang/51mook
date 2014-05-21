@@ -5,14 +5,23 @@
 {% block title %}{% if type == 'create' %}添加{% else %}编辑{% endif %}链接{% endblock %}
 {% block body %}
 
-<form id="user-create-form" class="form-horizontal" method="post" action="/admin/collection">
+<form id="collection-create-form" class="form-horizontal" method="post" action="/admin/collection">
 
   <div class="row form-group">
     <div class="col-md-2 control-label">
-      <label for="url">博客地址</label>
+      <label for="title">博客标题</label>
     </div>
     <div class="col-md-7 controls">
-      <input type="text" id="url"  name="url" value="{{ collection.title }}" class="form-control" >
+      <input type="text" id="title"  name="title" value="{{ collection.title }}" class="form-control" >
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-2 control-label">
+      <label for="url">博客URL</label>
+    </div>
+    <div class="col-md-7 controls">
+      <input type="text" id="url"  name="url" value="{{ collection.url }}" class="form-control" >
     </div>
   </div>
 
@@ -41,6 +50,22 @@
       </select>
     </div>
   </div>
+  <div class="row form-group">
+    <div class="col-md-2 control-label">
+      <label for="cabid">类型</label>
+    </div>
+    <div class="col-md-7 controls">
+      <select class="form-control" name="cabid">
+        {% if allows%}
+          {% for allow in allows %}
+            <option value="{{ allow.cabid }}" {% if allow.cabid == collection.cabid %} checked {% endif %}>{{ allow.name }}</option>
+          {% endfor %}
+        {% else %}
+        <option value='0'>无</option>
+        {% endif %}
+      </select>
+    </div>
+  </div>
 
   <input type="hidden" name="ctid" value="{{ collection.ctid }}"/>
   <input type="hidden" name="type" value="{{ type }}"/>
@@ -50,7 +75,7 @@
 {% endblock %}
 
 {% block footer %}
-  <button type="submit" class="btn btn-primary pull-right" data-toggle="form-submit" data-target="#user-create-form">提交</button>
+  <button type="submit" class="btn btn-primary pull-right" data-toggle="form-submit" data-target="#collection-create-form">提交</button>
   <button type="button" class="btn btn-link pull-right" data-dismiss="modal">取消</button>
-  <script>app.load('user/create-modal')</script>
+  <script>app.load('collection/create-modal')</script>
 {% endblock %}

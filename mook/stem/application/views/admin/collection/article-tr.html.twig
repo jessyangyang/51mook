@@ -1,46 +1,32 @@
-<tr id="article-{{ article.id }}">
-	<td><input value="{{article.id}}" type="checkbox" data-role="batch-item" > {{article.id}}</td>
+<tr id="article-{{ article.ctid }}">
+	<td><input value="{{article.ctid}}" type="checkbox" data-role="batch-item" > {{article.ctid}}</td>
 	<td>
 			<span class="text-muted"><a href="" target="_blank">{{ article.title | slice(0,22) }}{% if article.title|length >22 %}...{% endif %}</a></span>
+			<br>
+			<span class="text-muted text-sm">{{ article.url }}</span>
 	</td>
+	<td>{{ article.author }}</td>
 	<td>
-	{% if category %}
-		<span class="text-muted"><a href="{{ path('article_category',{categoryCode:category.code}) }}" target="_blank">{{ category.name }}</a></span>
+	{% if article.category %}
+		<span class="text-muted">{{ article.category }}</span>
 		{% else %}
 		<span class="text-muted">未分类</span>
 	{% endif %}
 	</td>
-	<td>{{ article.updatedTime|date('Y-n-d H:i') }}</td>
-	<td>
-	<a href="javascript:;" class="featured-label" data-set-url="" data-cancel-url="">{% if article.featured == 1 %}<span class="label label-success">{% else %}<span class="label label-default">{% endif %}头</span></a>
+	<td><span class="text-muted">{{ article.type }}</span></td>
 
-	<a href="javascript:;" class="promoted-label" data-set-url="" data-cancel-url="">{% if article.promoted == 1 %}<span class="label label-success">{% else %}<span class="label label-default">{% endif %}荐</span></a>
-
-	<a href="javascript:;" class="sticky-label" data-set-url="" data-cancel-url="">{% if article.sticky == 1 %}<span class="label label-success">{% else %}<span class="label label-default">{% endif %}顶</span></a>
-	</td>
-
-	<td></td>
+	<td>{{ article.dateline|date('Y-n-d H:i') }}</td>
 
 	<td>
 		<div class="btn-group">
-			<a href="" class="btn btn-default btn-sm" >采集</a>
-		  	<a href="" class="btn btn-default btn-sm" >编辑</a>
+		  	<a href="javascript:" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal" data-url="/admin/collection/post/{{ article.ctid }}">编辑</a>
 		  	<a href="#" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
 		    	<span class="caret"></span>
 		  	</a>
 		  	<ul class="dropdown-menu">
-		  	{% if article.status != 'published' %}
-			    <li><a href="javascript:" data-role="publish-item" data-url="">发布</a></li>
-		    {% endif %}
-	     	{% if article.status == 'published' %}
-			    <li><a href="javascript:" data-role="unpublish-item" data-url="">未发布</a></li>
-		    {% endif %}
-		    {% if article.status != 'trash' %}
-			    <li><a href="javascript:" data-role="trash-item" data-url="">移至回收站</a></li>
-		    {% endif %}
-		    {% if article.status == 'trash' %}
-			    <li><a href="javascript:" data-role="delete-item" data-url="">永久删除</a></li>
-			  {% endif %}
+		  		<li><a href="javascript:" data-toggle="modal" data-target="#modal" data-url="/admin/collection/blog/{{ article.ctid }}">采集</a></li>
+		  		<li class="divider"></li>
+		  		<li><a href="javascript:" data-role="delete-item" data-url="/admin/collection/delete/{{ article.ctid }}">永久删除</a></li>
 		  </ul>
 		</div>
 	</td>

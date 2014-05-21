@@ -53,6 +53,7 @@ class RegisterRest extends \local\rest\Restful{
         // admin collection
         self::regRestURL('admin_collection_index','/admin/collection/:limit/:page','admin','collection','采集管理');
         self::regRestURL('admin_collection_post','/admin/collection/post/:ctid','admin','collectionPost','编辑采集');
+        self::regRestURL('admin_collection_blog','/admin/collection/blog/:ctid','admin','collectionBlog','采集博客');
         self::regRestURL('admin_collection_delete','/admin/collection/delete/:ctid','admin','collectionDelete','删除采集');
         self::regRestURL('admin_collection_category','/admin/collection/category','admin','collectionCategory','采集分类管理');
         self::regRestURL('admin_collection_category_post','/admin/collection/category/post/:ccid','admin','collectionCategoryPost','采集分类编辑');

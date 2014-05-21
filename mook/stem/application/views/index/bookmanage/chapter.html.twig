@@ -31,7 +31,7 @@
       <th width="15%">操作</th>
     </tr>
     </thead>
-    <tbody data-sort-url="/book/{{ book.bid }}/manage/sort">
+    <tbody data-sort-url="/book/{{ book.bid }}/manage/sort?limit=10&page={{ paginator.currentPage }}">
     	{% for menu in menus %}
     		{% include 'index/bookmanage/chapter-table-tr.html.twig' %}
     	{% endfor %}

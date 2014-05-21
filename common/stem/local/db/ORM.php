@@ -193,7 +193,7 @@ class ORM extends MySQL
         foreach ($dbData as $key => $value){
             if(empty($this->fields[$key])) 
             { 
-                $dbData["`".$key."`"] = $dbData[$key];
+                $dbData["`".$key."`"] = $this->escapeString($dbData[$key]);
                 unset($dbData[$key]); 
                 continue; 
             }

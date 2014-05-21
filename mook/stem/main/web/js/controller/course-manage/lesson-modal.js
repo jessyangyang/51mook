@@ -14,7 +14,7 @@ define(function(require, exports, module) {
             lang: 'zh_cn',
             iframe: true,
             minHeight: 400,
-            maxHeight: 650,
+            maxHeight: 430,
             autoresize: true,
             css: '/assets/libs/redactor/css/custom.css',
             imageUpload: $("[name='image_upload']").val(),

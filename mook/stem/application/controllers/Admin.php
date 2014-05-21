@@ -568,7 +568,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
-
+        $views->assign('app',$app);
         $views->display('admin/feed/index.html.twig');
     }
 
@@ -577,17 +577,48 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+
         $collectionControl = new AdminCollectionManage();
 
+        $twig = 'admin/collection/index.html.twig';
+
+        if ($data->isPost()) {
+            switch ($data->getPost('type')) {
+                case 'create':
+                    $collectionControl->addCollection($data->getPost());
+                    break;
+                case 'edit':
+                    $collectionControl->updateCollection($data->getPost('ctid'), $data->getPost());
+                    break;
+                case 'collection':
+                    $collectionControl->createBookFromBlog($data->getPost('ctid'),$app['uid'], $data->getPost('year'), $data->getPost('page'));
+                    break;
+                default:
+                    break;
+            }
+            exit();
+            // $twig = 'admin/collection/article-tr.html.twig';
+        }
+
         $category = $collectionControl->getCollectionCategory();
+        $collection = $collectionControl->getCollectionList();
+
         $views->assign('category',$category);
-        $views->display('admin/collection/index.html.twig');
+        $views->assign('articles', $collection);
+        $views->assign('app',$app);
+        $views->display($twig);
     }
 
     public function collectionPostAction($ctid = false)
     {
         $views = $this->getView();
         $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+        if (!$app) exit();
 
         $collectionControl = new AdminCollectionManage();
 
@@ -599,10 +630,31 @@ class AdminController extends \Yaf\Controller_Abstract
         }
 
         $categories = $collectionControl->getCollectionCategory();
+        $allowtype = $collectionControl->getCollectionAllowBlog();
         
-        $views->assign('categories',$categories);
-        $views->assign('collection',$collection);
+        $views->assign('type', $type);
+        $views->assign('allows', $allowtype);
+        $views->assign('categories', $categories);
+        $views->assign('collection', $collection[0]);
         $views->display('admin/collection/create-modal.html.twig');
+    }
+
+    public function collectionBlogAction($ctid = false)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+        if (!$app) exit();
+
+        $collectionControl = new AdminCollectionManage();
+
+        $categories = $collectionControl->getCollectionCategory();
+        $collection = $collectionControl->getCollectionList(array('collection.ctid' => intval($ctid)),1,1);
+        $views->assign('collection', $collection[0]);
+        $views->assign('categories', $categories);
+        $views->display('admin/collection/collection-modal.html.twig');
     }
 
     public function collectionDeleteAction($ctid = false)
@@ -610,10 +662,17 @@ class AdminController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+        if (!$app) exit();
+
         $collectionControl = new AdminCollectionManage();
 
+        if ($ctid and $data->isPost()) {
+           $collectionControl->deleteCollection($ctid);
+        }
 
-
+        exit();
     }
 
     public function collectionCategoryAction()
@@ -642,6 +701,7 @@ class AdminController extends \Yaf\Controller_Abstract
 
         $categories = $collectionControl->getCollectionCategory();
         $views->assign('categories',$categories);
+        $views->assign('app',$app);
         $views->display($display);
     }
 

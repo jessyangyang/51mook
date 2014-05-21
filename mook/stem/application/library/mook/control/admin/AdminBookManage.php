@@ -23,6 +23,16 @@ class AdminBookManage extends BookControllers
 {
 	protected $bookCategory;
     protected $bookChapter;
+
+     // Instance Self
+    protected static $instance;
+
+
+    public static function instance()
+    {
+        return self::$instance ? self::$instance : new AdminBookManage();
+    }
+
     /**
      * Instance construct
      */
@@ -267,7 +277,9 @@ class AdminBookManage extends BookControllers
         $data = array(
             'mid' => isset($datas['mid']) ? $datas['mid'] : false,
             'title' => isset($datas['title']) ? $datas['title'] : '',
-            'body' => isset($datas['body']) ? $datas['body'] : '');
+            'body' => isset($datas['body']) ? $datas['body'] : '',
+            'sort' => isset($datas['sort']) ? $datas['sort'] : ''
+        );
 
         $menus  = $this->booksMenuFilter($data);
 
@@ -354,6 +366,8 @@ class AdminBookManage extends BookControllers
         return $this->bookCategory->where("cid='$cid'")->fetchRow();
     }
 
+
+
     /**
      * [addCategory description]
      * @param boolean $datas [description]
@@ -399,6 +413,7 @@ class AdminBookManage extends BookControllers
         if ($limit and $page) {
            $page = $page - 1;
            $offset = $limit * $page;
+           $bid = $this->menu->escapeString($bid);
            return $this->menu->where("bid='$bid'")->order('sort')->limit("$offset,$limit")->fetchList();
         }
         return $this->menu->where("bid='$bid'")->order('sort')->fetchList();
@@ -412,9 +427,21 @@ class AdminBookManage extends BookControllers
     public function getMenusCountForBookID($bid)
     {
         $table = $this->menu->table;
+        $bid = $this->menu->escapeString($bid);
         $list = $this->menu->query("select count(*) from $table where bid='$bid'");
         if ($list) return $list[0]['count(*)'];
         return false;
+    }
+
+    /**
+     * [getMenuForTitle description]
+     * @param  [type] $title [description]
+     * @return [type]        [description]
+     */
+    public function getMenuForTitle($title)
+    {
+        $table = $this->menu->table;
+        return $this->menu->where(array('title' => $title))->fetchRow();
     }
 
 

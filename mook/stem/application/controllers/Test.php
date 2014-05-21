@@ -11,6 +11,8 @@
 use \mook\dao\Roles;
 use \local\rss\Feed;
 use \local\rss\DOMHtml;
+use \mook\control\common\BlogManage;
+use \mook\control\admin\AdminBookManage;
 
 class TestController extends \Yaf\Controller_Abstract 
 {
@@ -39,23 +41,28 @@ class TestController extends \Yaf\Controller_Abstract
     {
         $data = $this->getRequest();
 
+        $book = AdminBookManage::instance();
+
+        print_r($book->getCategoryForId(array('cid' => '1')));
         // $rss = Feed::loadRss('http://blog.sina.com.cn/rss/twocold.xml');
-        $dom = DOMHtml::loadHtml('http://blog.sina.com.cn/twocold');
-        echo "<pre>";
-        // foreach ($rss->item as $key => $value) {
-        //     if (isset($value->{'content:encoded'})){
-        //         echo $value->{'content:encoded'};
-        //     }
-        //     else
-        //     {
-        //         echo htmlSpecialChars($value->description);
-        //     }
+        // $dom = DOMHtml::loadHtml('http://blog.sina.com.cn/twocold');
+        // echo "<pre>";
+        // // foreach ($rss->item as $key => $value) {
+        // //     if (isset($value->{'content:encoded'})){
+        // //         echo $value->{'content:encoded'};
+        // //     }
+        // //     else
+        // //     {
+        // //         echo htmlSpecialChars($value->description);
+        // //     }
+        // // }
+        // $elements = $dom->query("//link[@title='RSS']");
+        // foreach ($elements as $key => $value) {
+        //     $value->getAttribute('href') and $uid = basename($value->getAttribute('href'),".xml");
+        //     print_r($uid);
         // }
-        $elements = $dom->query("//link[@title='RSS']");
-        foreach ($elements as $key => $value) {
-            $value->getAttribute('href') and $uid = basename($value->getAttribute('href'),".xml");
-            print_r($uid);
-        }
+        // 
+        // BlogManage::loadSinaBlog("http://blog.sina.com.cn/gaoweiweiusa");
         exit();
     }
 
