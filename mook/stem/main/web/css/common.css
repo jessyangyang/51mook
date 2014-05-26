@@ -1,0 +1,281 @@
+@charset "UTF-8";
+/* CSS Document */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600);
+*,*:before,*:after {
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	}
+html {
+    text-rendering:optimizeLegibility;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+body{
+	font-family: "Open Sans",Arial,"Hiragino Sans GB","Microsoft YaHei","微软雅黑","STHeiti","WenQuanYi Micro Hei",SimSun,sans-serif;
+	background:#F5F5F5 !important;
+	}
+	
+a {
+	color: #656871 !important;
+	text-decoration:none !important;
+	outline:none !important;
+}
+/**change boot**/
+
+.nav > li > a {
+	border-radius:0px !important;
+	}
+.nav > li > a:hover, .nav > li > a:focus{
+	background:#004A97 !important;
+	}
+.nav-pills > li + li {
+    margin-left: -1px !important;
+}
+
+
+.carousel-indicators .active {
+    background-color: #005AB9 !important;
+	border:none !important;
+	}
+	
+/**header nav**/
+	.m-navbar-header{
+		background:#005AB5 !important;
+		height:48px;
+		border-bottom:1px solid #004A97 !important;
+		box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25) !important;
+		position:relative;
+		}
+		
+	.m-navbar-header-white{
+		background:rgba(255, 255, 255, 0.95);
+		height:48px;
+		border-bottom:1px solid #EEEEEE !important;
+		box-shadow: none !important;
+		position:relative;
+		}
+		
+		
+		
+		
+	/**header nav h1**/
+
+	.m-navbar-header h1, .m-navbar-header-white h1{
+		position:absolute;
+		color:#FFFFFF;
+		font-size:18px;
+		z-index:10000;
+		left:-1000px;
+		}
+		
+	/**header nav list start**/
+	.m-user, .m-user ul, .m-saerch-wrapper, .m-saerch-wrapper ul, .m-function, .m-function ul, .m-return, .m-return ul{
+		height:49px;
+		padding:0 !important;
+		}	
+		
+	.m-user ul li, .m-saerch-wrapper ul li, .m-function ul li, .m-return ul li{
+		height:49px;
+		}
+	.m-user li, .m-saerch-wrapper li{
+		border-left:1px solid #004A97;
+		border-right:1px solid #004A97;
+		}
+		
+	.m-function li, .m-return li{
+		border-left:1px solid #EEEEEE;
+		border-right:1px solid #EEEEEE;
+		}	
+		
+		
+		
+	.m-user li:nth-child(1) {
+		border-left:none;
+		}
+	.m-user li:nth-last-child(1) {
+		border-left:1px solid #004A97;
+		border-right:none;
+		}
+		
+	.m-function li:nth-child(1) {
+		border-left:none;
+		}
+	.m-function li:nth-last-child(1) {
+		border-left:1px solid #EEEEEE;
+		border-right:none;
+		}
+		
+	.m-saerch-wrapper li:nth-last-child(1) {
+		border-right:none;
+		}
+	.m-saerch-wrapper li:nth-child(1) {
+		border-right:1px solid #004A97;
+		border-left:none !important;
+		}
+		
+	.m-return li:nth-last-child(1) {
+		border-right:none;
+		}
+	.m-return li:nth-child(1) {
+		border-right:1px solid #EEEEEE;
+		border-left:none !important;
+		}
+		
+		
+		
+	.m-user li a, .m-saerch-wrapper li a, .m-function li a, .m-return li a{
+		font-size:16px;
+		color:#FFFFFF !important;
+		padding:13px 20px 10px 20px !important;
+		height:49px;
+		}
+		
+	.m-user li a img, .m-saerch-wrapper li a img{
+		height:26px;
+		width:26px;
+		}
+	.m-fuction-nav{
+		transition: background 0.1s linear 0s;
+		}	
+	
+	.m-fuction-nav > li > a {
+		border-radius:0px !important;
+		}
+	.m-fuction-nav > li > a:hover, .nav > li > a:focus{
+		background:#FFFFFF !important;
+		}
+	.nav-pills > li + li {
+		margin-left: -1px !important;
+	}
+		
+	
+	
+	
+		
+	/**header nav end**/
+	
+	/**logo start**/	
+	.m-navbar-header .m-logo, .m-navbar-header-white .m-logo-green  {
+		left:46%;
+		position:absolute;
+		margin-top:10px;
+		}
+		
+		
+	.m-logo, .m-logo-green{	
+		color:#FFF;
+		width:91px;
+		height:30px;
+		text-shadow:none;
+		}
+	.m-logo	 {	
+		background:url(../images/mook-logo.png) no-repeat;
+		}
+	.m-logo-green{	
+		background:url(../images/mook-logo-green.png) no-repeat;
+		}		
+		
+	/**logo end**/	
+
+
+	/**recent book style**/	
+
+.m-book-cover, .m-book-cover-large {
+    background-color: #DDDDDD;
+    background-size: cover;
+    border-radius: 1px 6px 6px 1px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15), 1px 1px 2px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    min-height: 188px;
+    overflow: hidden;
+    position: relative;
+}
+
+.m-book-cover-large {
+    min-height: 310px;
+	}
+
+.m-book-cover a {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3);
+    border-radius: 0 6px 6px 0;
+    bottom: 0;
+    box-shadow: 4px 0 0 rgba(0, 0, 0, 0.25) inset;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: background 0.1s linear 0s;
+}
+.m-book-cover a:hover {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.15);
+}
+
+.m-book-cover hgroup {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 1px;
+    margin: 10px;
+    overflow: hidden;
+    padding: 10px;
+    position: relative;
+    z-index: 300;
+	opacity:0.9;
+}
+
+.m-book-cover a hgroup h3, .m-book-cover-large h3 {
+	font-size:14px;
+	font-weight:bold;
+	color:#000000;
+	margin-top:5px;
+	line-height:1.5em;
+	}
+.m-book-cover-large h3 {
+	font-size:18px !important;
+	}	
+.m-book-cover a hgroup h4 {
+	font-size:12px;
+	color:#666666;
+	margin:5px 0;
+	}
+	
+	
+	
+/** 进度条**/
+
+.m-progress-wrapper {
+	padding-top:5px;
+	}
+	
+.m-progress {
+    background-color: #C8C8C8;
+    border-radius: 40px;
+    height: 6px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.m-progress-number{
+	font-size:12px;
+	font-weight:bold;
+	color:#005AB9;
+	margin-right:10px;}
+
+.m-progress-bar{
+	background-color:#005AB9;
+	box-shadow:none !important;
+	}
+	
+	
+/**btn start**/
+
+.m-btn-defult{
+	background:#FF4D4D !important;
+	color:#FFFFFF !important;
+	border:none !important;
+	font-size:14px;
+	padding:5px 20px 5px 20px!important;
+	margin-top:20px;
+	}
+
+
+/**btn ends**/

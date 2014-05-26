@@ -32,7 +32,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
-        $views->assign('title',"mook");
+        $views->assign('title',"管理首页");
         $views->assign('app',$app);
         $views->display('admin/index/index.html.twig');
     }
@@ -46,7 +46,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
-        $views->assign('title',"mook");
+        $views->assign('title',"创建图书");
         $views->display('admin/index/new-book-table.html.twig');
     }
 
@@ -118,7 +118,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
-    	$views->assign('title','');
+    	$views->assign('title','用户添加');
     	$views->display('admin/user/create-modal.html.twig');
     }
 
@@ -138,7 +138,7 @@ class AdminController extends \Yaf\Controller_Abstract
             $user = $member->getUserForId($id);
         }
 
-    	$views->assign('title','');
+    	$views->assign('title','用户信息');
         $views->assign('user',$user);
     	$views->display('admin/user/show-modal.html.twig');
     }
@@ -159,7 +159,7 @@ class AdminController extends \Yaf\Controller_Abstract
             $user = $member->getUserForId($id);
         }
 
-        $views->assign('title','');
+        $views->assign('title','用户编辑');
         $views->assign('profile',$user);
         $views->display('admin/user/edit-modal.html.twig');
     }
@@ -183,7 +183,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $roles = new RolesControl();
         $rolelist = $roles->getUserRolesList();
 
-        $views->assign('title','');
+        $views->assign('title','用户权限');
         $views->assign('user',$user);
         $views->assign('roles',$rolelist);
         $views->assign('app',$app);
@@ -262,7 +262,7 @@ class AdminController extends \Yaf\Controller_Abstract
             }
         }
 
-        $views->assign('title','');
+        $views->assign('title','编辑用户头像');
         $views->display('admin/user/user-avatar-modal.html.twig');
     }
 
@@ -284,7 +284,7 @@ class AdminController extends \Yaf\Controller_Abstract
             $member->resetPassword($id, $data->getPost('newPassword'));
         }
 
-        $views->assign('title','');
+        $views->assign('title','用户密码修改');
         $views->assign('user',$user);
         $views->assign('app',$app);
         $views->display('admin/user/change-password-modal.html.twig');
@@ -313,7 +313,7 @@ class AdminController extends \Yaf\Controller_Abstract
             }
         }
 
-    	$views->assign('title','');
+    	$views->assign('title','用户组管理');
     	$views->assign('roles',$list);
         $views->assign('app',$app);
     	$views->display('admin/usergroups/index.html.twig');
@@ -337,7 +337,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $currentRole = $roleControl->getUserPermissionForId($rcid);
 
 
-        $views->assign('title','');
+        $views->assign('title','用户组信息');
         $views->assign('rolegroups',$rolegroups);
         $views->assign('currentRole',$currentRole);
         $views->display('admin/usergroups/show-modal.html.twig');
@@ -368,7 +368,7 @@ class AdminController extends \Yaf\Controller_Abstract
             $currentRole = $roleControl->getUserPermissionForId($rcid);
         }
 
-        $views->assign('title','');
+        $views->assign('title','用户组编辑');
         $views->assign('subtitle',$subtitle);
         $views->assign('rolegroups',$rolegroups);
         $views->assign('currentRole',$currentRole);
@@ -416,7 +416,7 @@ class AdminController extends \Yaf\Controller_Abstract
 
         $views->assign('paginator',$pages);
 
-    	$views->assign('title','');
+    	$views->assign('title','图书管理');
         $views->assign('books',$books);
         $views->assign('app',$app);
         $views->assign('category',$category);
@@ -433,7 +433,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
-        $views->assign('title','');
+        $views->assign('title','图书编辑');
         $views->assign('app',$app);
 
         $book = array();
@@ -503,7 +503,7 @@ class AdminController extends \Yaf\Controller_Abstract
         }
 
         $categories = $control->getCategory();
-        $views->assign('title','');
+        $views->assign('title','图书分类管理');
         $views->assign('app',$app);
         $views->assign('categories',$categories);
         $views->display($display);
@@ -529,7 +529,7 @@ class AdminController extends \Yaf\Controller_Abstract
         }
 
 
-        $views->assign('title','');
+        $views->assign('title','图书分类编辑');
         $views->assign('category',$category);
         $views->assign('type',$type);
         $views->assign('app',$app);
@@ -548,7 +548,6 @@ class AdminController extends \Yaf\Controller_Abstract
         $control = new AdminBookManage();
 
         if ($bcid > 0) {
-            $subtitle = '编辑';
             $control = new AdminBookManage();
             $category = $control->deleteCategoryForId($bcid);
         }
@@ -568,6 +567,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
+        $views->assign('title','Rss管理');
         $views->assign('app',$app);
         $views->display('admin/feed/index.html.twig');
     }
@@ -608,6 +608,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $category = $collectionControl->getCollectionCategory();
         $collection = $collectionControl->getCollectionList();
 
+        $views->assign('title','采集管理');
         $views->assign('category',$category);
         $views->assign('articles', $collection);
         $views->assign('app',$app);
@@ -635,6 +636,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $categories = $collectionControl->getCollectionCategory();
         $allowtype = $collectionControl->getCollectionAllowBlog();
         
+        $views->assign('title','采集编辑');
         $views->assign('type', $type);
         $views->assign('allows', $allowtype);
         $views->assign('categories', $categories);
@@ -705,6 +707,7 @@ class AdminController extends \Yaf\Controller_Abstract
         }
 
         $categories = $collectionControl->getCollectionCategory();
+        $views->assign('title','采集分类管理');
         $views->assign('categories',$categories);
         $views->assign('app',$app);
         $views->display($display);
@@ -729,6 +732,7 @@ class AdminController extends \Yaf\Controller_Abstract
             $category = $collectionControl->getCollectionCategoryForID($ccid);
         }
         
+        $views->assign('title','采集分类编辑');
         $views->assign('category', $category);
         $views->assign('type', $type);
         $views->display('admin/collectioncategory/post-modal.html.twig');

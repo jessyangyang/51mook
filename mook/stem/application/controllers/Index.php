@@ -27,18 +27,28 @@ class IndexController extends \Yaf\Controller_Abstract
 
         $bookControl = new AdminBookManage();
 
-        $books = $bookControl->getBookList(array("bf.verified" => 3,"bf.published" => 4),20,1);
+        $books1 = $bookControl->getBookList(array("bf.verified" => 3,"bf.published" => 4),8,1);
+
+        $books2 = $bookControl->getBookList(array("bf.verified" => 3,"bf.published" => 4),8,2);
         
-        $bookList = array();
+        $bookList1 = $bookList2 = array();
         $j = 0;
-        foreach ($books as $key => $value) {
+        foreach ($books1 as $key => $value) {
             if ($key%4 == 0) $j++;
-            $bookList[$j][] = $value;
+            $bookList1[$j][] = $value;
+        }
+
+        $j = 0;
+
+        foreach ($books2 as $key => $value) {
+            if ($key%4 == 0) $j++;
+            $bookList2[$j][] = $value;
         }
 
         $views->assign('title',"mook");
         $views->assign('app',$app);
-        $views->assign('books',$bookList);
+        $views->assign('books1',$bookList1);
+        $views->assign('books2',$bookList2);
         $views->display('index/index/index.html.twig');
     }
 

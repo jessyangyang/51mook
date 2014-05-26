@@ -8,12 +8,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta content="墨客 深度阅读内容" name="description">
+  <meta content="墨客Mook 深度阅读内容" name="description">
   <meta name="keywords" content="{% block keywords %}{% endblock %}" />
   <meta name="description" content="{% block description %}{% endblock %}" />
   {% block stylesheets %}
     <link href="http://cdn.bootcss.com/twitter-bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" media="screen" href="/assets/css/bootstrap-extends.css" />
+    <link rel="stylesheet" media="screen" href="/web/css/common.css" />
     <link rel="stylesheet" media="screen" href="/web/css/style.css" />
     <!--[if lt IE 8]>
       <link href="/assets/css/oldie.css" rel="stylesheet">
@@ -30,9 +31,8 @@
   {% block head_scripts %}{% endblock %}
 
 </head>
-<body {% if bodyClass|default('') %}class="{{ bodyClass }}"{% endif %}>
+<body>
 {% block body %}
-
   {% include 'index/header.html.twig' %}
   {% block content %}{% endblock %}
   

@@ -92,14 +92,14 @@ class AdminBookManage extends BookControllers
 
         $table = $this->book->table;
 
-        $list = $this->book->field("$table.bid,$table.cid,$table.title,$table.author,bc.name as category,$table.pubtime,$table.isbn,$table.press,bi.apple_price as price,$table.summary,bi.tags,bi.price,bf.verified,bf.published,m.username,ib.path as cover,im.path as usercover")
+        $list = $this->book->field("$table.bid,$table.cid,$table.title,$table.author,bc.name as category,$table.pubtime,$table.isbn,$table.press,bi.apple_price as price,$table.summary,bi.tags,bi.price,bf.verified,bf.published,m.username,ib.path as cover,ib.thumb, im.path as usercover")
             ->joinQuery('book_fields as bf',"$table.bid=bf.bid")
             ->joinQuery('book_info as bi',"$table.bid=bi.bid")
             ->joinQuery('book_category as bc',"$table.cid=bc.cid")
             ->joinQuery('images_book as ib',"$table.cover=ib.ibid")
             ->joinQuery('members as m','bf.uid=m.id')
             ->joinQuery('images_member as im','m.id=im.uid')
-            ->where($sql)->order("$table.published")
+            ->where($sql)->order("$table.published DESC")
             ->limit("$offset,$limit")->fetchList();
 
         if (is_array($list)) {
@@ -109,6 +109,9 @@ class AdminBookManage extends BookControllers
                 }
                 if (isset($value['cover']) and $value['cover']) {
                     $list[$key]['cover'] = ImagesManage::getRelativeImage($value['cover']);
+                }
+                if (isset($value['thumb']) and $value['thumb'] == 1) {
+                    $list[$key]['cover'] = ImagesManage::getRealCoverSize($value['cover'],'medium','jpg');
                 }
                 if (isset($value['published']) and $value['published']) {
                     $list[$key]['published'] = $this->changedBookStatus(intval($value['published']));
