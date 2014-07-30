@@ -203,7 +203,7 @@ class BookController extends \Yaf\Controller_Abstract
         $views->display('index/bookmanage/content-modal.html.twig');
     }
 
-    public function bookArticleContentAction($mid)
+    public function bookArticleContentAction($bid = false, $mid = false)
     {
         $views = $this->getView();
         $data = $this->getRequest();
@@ -257,13 +257,13 @@ class BookController extends \Yaf\Controller_Abstract
 
         if ($action == 'upload' and $data->isPost()) {
             
-            if ($filepath = $image->saveImagesArticle($data->getFiles('file'),$bid, $mid, $app['uid'],true,1,true)) {
+            if ($filepath = $image->saveImagesBookArticle($data->getFiles('file'),$bid, $mid, $app['uid'],true,1,true)) {
                 $rest->assign('filelink',ImagesManage::getRelativeImage($filepath));
                 $rest->response();
             }
         }
         elseif ($action == 'list') {
-           $list = $image->getArticleForID($bid);
+           $list = $image->getImagesBookArticleForID($bid);
            if ($list) {
                $images = array();
                foreach ($list as $key => $value) {

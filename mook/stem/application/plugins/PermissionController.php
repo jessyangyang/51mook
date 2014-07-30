@@ -50,7 +50,7 @@ class PermissionControllerPlugin extends Plugin_Abstract
 
         $rest = RegisterRest::initRegister();
         $this->current_key = $this->changedSystemAction($request->getControllerName(),$request->getActionName(),$rest);
-
+        
         if (!$this->current_key) 
         {
             $request->setControllerName('Index');

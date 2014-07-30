@@ -37,7 +37,8 @@
       <div class="navbar-collapse collapse">
 
         <ul class="nav navbar-nav">
-          <li {% if nav == 'course' %}class="active"{% endif %}><a href="/admin/books">图书</a></li>
+          <li {% if nav == 'books' %}class="active"{% endif %}><a href="/admin/books">图书</a></li>
+          <li {% if nav == 'course' %}class="active"{% endif %}><a href="/admin/course">课程</a></li>
           <li {% if nav == 'user' %}class="active"{% endif %}><a href="/admin/user">用户</a></li>
           <li {% if nav == 'content' %}class="active"{% endif %}><a href="/admin/feed">内容</a></li>
           <li {% if nav == 'system' %}class="active"{% endif %}><a href="/admin/system">系统</a></li>

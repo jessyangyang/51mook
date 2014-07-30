@@ -17,6 +17,7 @@ class RegisterRest extends \local\rest\Restful{
 
     public static function initRegister()
     {
+
         //*** Mook Admin 
         //***************/
         self::regRestURL('admin_index','/admin/index','admin','index','管理首页');
@@ -47,6 +48,14 @@ class RegisterRest extends \local\rest\Restful{
         self::regRestURL('admin_book_category_post','/admin/books/category/post/:bcid','admin','bookCategoryPost','编辑图书分类');
         self::regRestURL('admin_book_category_delete','/admin/books/category/delete/:bcid','admin','bookCategoryDelete','删除图书分类');
 
+        // admin course
+        self::regRestURL('admin_course_index','/admin/course/:limit/:page','admin','course','课程管理');
+        self::regRestURL('admin_course_post','/admin/course/post/:action/:cid/:id','admin','coursePost','课程操作');
+        self::regRestURL('admin_course_delete','/admin/course/delete/:cid','admin','courseDelete','课程删除');
+        self::regRestURL('admin_course_category','/admin/course/category','admin','courseCategory','课程分类');
+        self::regRestURL('admin_course_category_post','/admin/course/category/post/:ccid','admin','courseCategoryPost','编辑课程分类');
+        self::regRestURL('admin_course_category_delete','/admin/course/category/delete/:ccid','admin','courseCategoryDelete','删除课程分类');
+
         // admin feeds
         self::regRestURL('admin_feed_index','/admin/feed/:limit/:page','admin','feed','Rss管理');
 
@@ -71,11 +80,18 @@ class RegisterRest extends \local\rest\Restful{
          * Web System
          */
         self::regRestURL('web_index','/index','index','index','网站首页');
+        self::regRestURL('web_users','/u/:name','index','users','个人主页');
+        self::regRestURL('web_users_setting','/settings','index','setting','设置');
         self::regRestURL('web_login','/login','index','login','登录');
         self::regRestURL('web_register','/register','index','register','注册');
         self::regRestURL('web_register_check','/register/email/check','index','registerCheck','注册验证');
         self::regRestURL('web_logout','/logout','index','logout','退出');
         self::regRestURL('web_password_reset','/password/rest','index','resetPassword','找回密码');
+
+
+        // Course
+        self::regRestURL('course_create','/create','course','create',"新建课程");
+        self::regRestURL('course_course_index','/course/:bid/:title','course','course',"课程首页");
 
         // Books
         self::regRestURL('book_new','/book/new','book','bookNew','添加图书');
@@ -84,6 +100,14 @@ class RegisterRest extends \local\rest\Restful{
         self::regRestURL('book_article_delete','/book/:bid/manage/article/delete/:mid','book','bookArticleDelete','删除文章');
         self::regRestURL('book_article_content','/book/:bid/manage/article/content/:mid','book','bookArticleContent','文章');
         self::regRestURL('book_article_image','/book/:bid/manage/article/image/:mid/:action','book','bookArticleImage','文章');
+
+        // Lesson
+        self::regRestURL('lesson_new','/lesson/new','lesson','lessonNew','添加课程');
+        self::regRestURL('lesson_post','/lesson/:cid/manage/:action','lesson','lessonPost','课程管理');
+        self::regRestURL('lesson_article','/lesson/:cid/manage/article/:ccid','lesson','lessonArticle','编辑课程');
+        self::regRestURL('lesson_article_delete','/lesson/:cid/manage/article/delete/:ccid','lesson','lessonArticleDelete','删除课程');
+        self::regRestURL('lesson_article_content','/lesson/:cid/manage/article/content/:ccid','lesson','lessonArticleContent','编辑课程内容');
+        self::regRestURL('lesson_article_image','/lesson/:cid/manage/article/image/:ccid/:action','lesson','lessonArticleImage','课程内容图片');
 
         // Files Upload
         self::regRestURL('files_image_upload','/files/upload/:type','files','upload','更新图片');

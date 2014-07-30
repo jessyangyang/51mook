@@ -12,14 +12,18 @@
 namespace mook\control\common;
 
 use \lib\models\images\ImagesBook;
-use \lib\models\images\ImagesArticle;
+use \lib\models\images\ImagesBookArticle;
+use \lib\models\images\ImagesCourseArticle;
 use \lib\models\images\ImagesMember;
+use \lib\models\images\ImagesCourse;
 
 class ImagesManage extends \lib\dao\ImageControl 
 {
 	protected $images_book;
-    protected $images_article;
+    protected $images_book_article;
+    protected $images_course_article;
     protected $images_member;
+    protected $images_course;
 
     /**
      * Instance construct
@@ -28,8 +32,10 @@ class ImagesManage extends \lib\dao\ImageControl
     	parent::__construct();
 
     	$this->images_book = ImagesBook::instance();
-        $this->images_article = ImagesArticle::instance();
+        $this->images_book_article = ImagesBookArticle::instance();
+        $this->images_course_article = ImagesCourseArticle::instance();
         $this->images_member = ImagesMember::instance();
+        $this->images_course = ImagesCourse::instance();
     }
 
 
@@ -57,9 +63,9 @@ class ImagesManage extends \lib\dao\ImageControl
         return $this->images_member->where($sql)->fetchRow();
     }
 
-    public function getArticleForID($bid,$type = false)
+    public function getImagesBookArticleForID($bid,$type = false)
     {
-        $list =  $this->images_article->where("bid='$bid'")->order("dateline")->fetchList();
+        $list =  $this->images_book_article->where("bid='$bid'")->order("dateline")->fetchList();
 
         if (is_array($list)) {
             return $list;
@@ -67,7 +73,34 @@ class ImagesManage extends \lib\dao\ImageControl
         return false;
     }
 
+    public function getImagesCourseArticleForID($cid,$type = false)
+    {
+        $list =  $this->images_course_article->where("cid='$cid'")->order("dateline")->fetchList();
 
+        if (is_array($list)) {
+            return $list;
+        }
+        return false;
+    }
+
+    public function getImagesCourseForCID($cid, $type = 1)
+    {
+        if(!$cid) return false; 
+
+        $sql = "cid='$cid' AND class='$type'";
+        
+        return $this->images_course->where($sql)->fetchRow();
+    }
+
+    /**
+     * [saveImagesBook description]
+     * @param  [type]  $files [description]
+     * @param  [type]  $bid   [description]
+     * @param  [type]  $uid   [description]
+     * @param  integer $class [description]
+     * @param  boolean $thumb [description]
+     * @return [type]         [description]
+     */
     public function saveImagesBook($files, $bid, $uid, $class= 1, $thumb = false)
     {
         if ($filepath = $this->save($files, $uid, $path='book')) {
@@ -183,7 +216,68 @@ class ImagesManage extends \lib\dao\ImageControl
         }
     }
 
-    public function saveImagesArticle($files, $bid, $bmid, $uid, $retype = false, $class = 1, $thumb = false)
+
+    public function saveImagesCourse($files, $cid, $uid, $class= 1, $thumb = false)
+    {
+        if ($filepath = $this->save($files, $uid, $path='book')) {
+            $fields = array(
+                'cid' => $cid,
+                'uid' => $uid,
+                'class' => $class,
+                'title' => basename($files['name']),
+                'filename' => $this->images_course->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'type' => $files['type'],
+                'size' => $files['size'],
+                'path' => $this->images_course->escapeString($filepath),
+                'thumb' => 0,
+                'dateline' => UPDATE_TIME
+            );
+
+
+            if ($this->insertId = $this->images_course->insert($fields)) {
+                return $this->insertId;
+            }
+        }
+
+        return false;
+    }
+
+    public function saveImagesCourseFromCut($fileName, $x, $y, $width, $height, $uid, $cid, $class= 1, $thumb = false)
+    {
+        if ($fileName and $filepath = $this->saveImageFromSize($fileName, $x, $y, $width, $height, $uid, 'course', $cid)) {
+            $fields = array(
+                'cid' => $cid,
+                'uid' => $uid,
+                'class' => $class,
+                'title' => basename(pathinfo($fileName,PATHINFO_BASENAME)),
+                'filename' => $this->images_course->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'type' => 'image/' . pathinfo($filepath,PATHINFO_EXTENSION),
+                'size' => filesize(self::getRealPath($filepath)),
+                'path' => $this->images_course->escapeString($filepath),
+                'thumb' => $thumb ? 1 : 0,
+                'dateline' => UPDATE_TIME
+            );
+
+            if ($thumb) {
+               $this->makethumb(self::getRealPath($filepath),130,188,'small','jpeg');
+               $this->makethumb(self::getRealPath($filepath),216,310,'medium','jpeg');
+            }
+
+            if ($file = $this->getImagesCourseForCID($cid,1)) {
+                $fields['icid'] = $file['icid'];
+                if ($this->images_course->where("icid='". $file['icid'] ."'")->update($fields)) {
+                    self::unlink(self::getRealPath($file['path']));
+                    return $file['icid'];
+                }
+            }
+            else if ($this->insertId = $this->images_course->insert($fields)) {
+                return $this->insertId;
+            }
+        }
+    }
+
+
+    public function saveImagesBookArticle($files, $bid, $bmid, $uid, $retype = false, $class = 1, $thumb = false)
     {
         if ($filepath = $this->save($files, $uid, 'article', true)) {
             $fields = array(
@@ -191,10 +285,10 @@ class ImagesManage extends \lib\dao\ImageControl
                 'bmid' => $bmid,
                 'uid' => $uid,
                 'title' => basename($files['name']),
-                'filename' => $this->images_article->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'filename' => $this->images_book_article->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
                 'type' => $files['type'],
                 'size' => $files['size'],
-                'path' => $this->images_article->escapeString($filepath),
+                'path' => $this->images_book_article->escapeString($filepath),
                 'thumb' => $thumb ? 1 : 0,
                 'dateline' => UPDATE_TIME
             );
@@ -203,7 +297,7 @@ class ImagesManage extends \lib\dao\ImageControl
                $this->makethumb(self::getRealPath($filepath),100,144,'small','jpeg');
             }
 
-            $this->insertId = $this->images_article->insert($fields);
+            $this->insertId = $this->images_book_article->insert($fields);
 
             if ($retype == false) {
                 return $this->insertId;
@@ -215,6 +309,40 @@ class ImagesManage extends \lib\dao\ImageControl
 
         return false;
     }
+
+    public function saveImagesCourseArticle($files, $cid, $ccid, $uid, $retype = false, $class = 1, $thumb = false)
+    {
+        if ($filepath = $this->save($files, $uid, 'lesson', true)) {
+            $fields = array(
+                'cid' => $cid,
+                'ccid' => $ccid,
+                'uid' => $uid,
+                'title' => basename($files['name']),
+                'filename' => $this->images_course_article->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'type' => $files['type'],
+                'size' => $files['size'],
+                'path' => $this->images_course_article->escapeString($filepath),
+                'thumb' => $thumb ? 1 : 0,
+                'dateline' => UPDATE_TIME
+            );
+
+            if ($thumb) {
+               $this->makethumb(self::getRealPath($filepath),100,144,'small','jpeg');
+            }
+
+            $this->insertId = $this->images_course_article->insert($fields);
+
+            if ($retype == false) {
+                return $this->insertId;
+            }
+            else {
+                return $filepath;
+            }
+        }
+
+        return false;
+    }
+
 
     public function saveImageMemberFromPath($filepath, $uid, $class= 1, $thumb = false)
     {
@@ -304,17 +432,6 @@ class ImagesManage extends \lib\dao\ImageControl
             'scaledHeight' => $tHeight,
             'naturalWidth' => $file[0],
             'naturalHeight' => $file[1]);
-    }
-
-    public static function getRealCoverSize($filepath, $size = 'small', $type = false)
-    {
-        $path = self::getRealPath($filepath);
-        if (!is_file($path)) return false;
-
-        $tmp = pathinfo($filepath);
-        $type = $type ? $type : $tmp['extension'];
-        $filename = explode(".",$tmp['basename']);
-        return self::getRelativeImage($tmp['dirname'] . "/" . $filename[0] . "_$size." . $type);
     }
 
 }

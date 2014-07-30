@@ -21,6 +21,13 @@ class MessageManage
     	
     }
 
+    /**
+     * [createResponse description]
+     * @param  [type] $display [description]
+     * @param  [type] $title   [description]
+     * @param  [type] $message [description]
+     * @return [type]          [description]
+     */
     public static function createResponse($display,$title,$message)
     {
         $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
@@ -30,5 +37,23 @@ class MessageManage
             'referer' => $referer);
         $display->assign('message',$message);
         $display->display('base/message.html.twig');
+    }
+
+    /**
+     * [redirect description]
+     * @param  boolean $url [description]
+     * @return [type]       [description]
+     */
+    public static function redirect($url = false)
+    {
+        if ($url) {
+           header('Location: /' . $url);
+        }
+        else
+        {
+            $url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/';
+            header('Location:' . $url);
+        }
+        exit();
     }
 }

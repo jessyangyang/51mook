@@ -87,7 +87,16 @@ class MembersManage extends MembersControl
                 'role_id' => self::ROLE_NORMAL,
             	'permission' => $permission);
 
-            if ($avatarId) $app['cover'] = ImagesManage::getRelativeImage($avatarId);
+            if ($imgUrl and $avatarId) 
+            {
+                $images = new ImagesManage();
+                $cover = $imagrs->getImagesMemberForID($avatarId);
+                if ($cover) {
+                    $app['cover_small'] = ImagesManage::getRealCoverSize($cover['path']);
+                    $app['cover_medium'] = ImagesManage::getRealCoverSize($cover['path'],"medium");
+                    $app['cover'] = ImagesManage::getRelativeImage($cover['path']);
+                }
+            }
 
             $this->session->set('app',$app);
 
@@ -96,20 +105,26 @@ class MembersManage extends MembersControl
         return false;
     }
 
-    public static function getCurrentUser()
+    public function getCurrentMember()
     {
         if (!$this->session->has("app")) return false;
 
         $table = $this->members->table;
 
-        $list = $this->members->field("$table.id,$table.email,$table.username,$table.published,$table.role_id,r.permission")
+        $list = $this->members->field("$table.id,$table.email,$table.username,$table.published,$table.role_id,r.permission,mi.avatar_id as cover")
             ->joinQuery("user_role_permission as r","$table.role_id=r.urid")
-            ->where($sql)->order("$table.published")->fetchList();
+            ->joinQuery("member_info as mi","mi.id=$table.id")
+            ->joinQuery("images_member as im","im.imid=mi.avatar_id")
+            ->order("$table.published DESC")->limit("1")->fetchList();
 
         if (is_array($list)) {
-        	$info = $this->memberInfo->where("id='". $list[0]['id']."'")->fetchRow();
-            if (isset($info['avatar_id']) and $info['avatar_id']) $list[0]['cover'] = ImagesManage::getRelativeImage($info['avatar_id']);
-            else $list[0]['cover'] = false;
+            foreach ($list as $key => $value) {
+                if (isset($value['cover']) and $value['cover']) {
+                    $list[$key]['cover_small'] = ImagesManage::getRealCoverSize($value['cover']);
+                    $list[$key]['cover_medium'] = ImagesManage::getRealCoverSize($value['cover'],"medium");
+                    $list[$key]['cover'] = ImagesManage::getRelativeImage($value['cover']);
+                }
+            }
             return $list[0];
         }
 
@@ -156,7 +171,11 @@ class MembersManage extends MembersControl
                 $role = $roles->getRolePermissionForId($row['role_id']);
                 $permission = $role ? $role['permission'] : false; 
 
-        		$info = $this->memberInfo->where("id='". $row['id']."'")->fetchRow();
+                $info_table = $this->memberInfo->table;
+        		$info = $this->memberInfo->field("$info_table.id, $info_table.avatar_id, im.path as cover")
+                            ->joinQuery("images_member as im","im.imid=$info_table.avatar_id")
+                            ->where("$info_table.id='". $row['id']."'")
+                            ->order("$info_table.last_dateline DESC")->limit("1")->fetchList();
 
         		$app = array(
 	            	'uid'=> $row['id'],
@@ -173,7 +192,16 @@ class MembersManage extends MembersControl
 
 	            $this->memberInfo->where("id='". $row['id'] ."'")->update($infoArr);
 
-        		if (isset($info['avatar_id']) and $info['avatar_id']) $app['cover'] = ImagesManage::getRelativeImage($info['avatar_id']);
+        		if (is_array($info))
+                {
+                    foreach ($info as $key => $value) {
+                        if (isset($value['avatar_id']) and $value['avatar_id']) {
+                            $app['cover_small'] = ImagesManage::getRealCoverSize($value['cover']);
+                            $app['cover_medium'] = ImagesManage::getRealCoverSize($value['cover'],"medium");
+                            $app['cover'] = ImagesManage::getRelativeImage($value['cover']);
+                        }
+                    }
+                }
 
                 if ($row['role_id'] <= 3) $app['super'] = true;
 

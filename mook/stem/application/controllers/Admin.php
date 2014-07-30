@@ -13,6 +13,7 @@ use \lib\dao\RolesControl;
 use \mook\dao\Roles;
 use \mook\control\admin\AdminUserManage;
 use \mook\control\admin\AdminBookManage;
+use \mook\control\admin\AdminCourseManage;
 use \mook\control\admin\AdminCollectionManage;
 use \mook\control\index\MembersManage;
 use \mook\control\common\ImagesManage;
@@ -548,11 +549,124 @@ class AdminController extends \Yaf\Controller_Abstract
         $control = new AdminBookManage();
 
         if ($bcid > 0) {
-            $control = new AdminBookManage();
             $category = $control->deleteCategoryForId($bcid);
         }
 
+        $categories = $control->getCategory();
+
+        $views->assign('categories',$categories);
         $views->display('admin/bookcategory/tbody.html.twig');
+    }
+
+    /**
+     * [CourseAction description]
+     * @param integer $limit [description]
+     * @param integer $page  [description]
+     */
+    public function CourseAction($limit = 15, $page = 1)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+
+        $courseControl = AdminCourseManage::instance();
+
+        $course = $courseControl->getCourseList(false,$limit, $page);
+        $category = $courseControl->getCategory();
+
+        $pages = new pagesControl('/admin/books',$courseControl->getCourseCount(),$limit,$page);
+
+        $views->assign('paginator',$pages);
+
+        $views->assign('title','课程管理');
+        $views->assign('app',$app);
+        $views->assign('courses',$course);
+        $views->assign('category',$category);
+        $views->display('admin/course/index.html.twig');
+
+    }
+
+
+    public function courseCategoryAction()
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+
+        $courseControl = AdminCourseManage::instance();
+
+        $display = 'admin/coursecategory/index.html.twig';
+
+        if ($data->isPost()) {
+
+            $type = $data->getPost('type');
+
+            if ( $type == 'create') {
+               $courseControl->addCategory($data->getPost());
+            }
+            else if ($type == 'edit') {
+               $courseControl->updateCategory($data->getPost('ccid'),$data->getPost());
+            }
+            $display = 'admin/coursecategory/tbody.html.twig';
+        }
+
+        $categories = $courseControl->getCategory();
+        $views->assign('title','课程分类管理');
+        $views->assign('app',$app);
+        $views->assign('categories',$categories);
+        $views->display($display);
+    }
+
+    public function courseCategoryPostAction($ccid = false)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+        if (!$app) exit();
+
+        $category = false;
+        $type = 'create';
+
+        if ($ccid > 0) {
+            $subtitle = '编辑';
+            $courseControl = AdminCourseManage::instance();
+            $category = $courseControl->getCategoryForId($ccid);
+            $type = 'edit';
+        }
+
+
+        $views->assign('title','图书分类编辑');
+        $views->assign('category',$category);
+        $views->assign('type',$type);
+        $views->assign('app',$app);
+        $views->display('admin/coursecategory/post-modal.html.twig');
+    }
+
+    public function courseCategoryDeleteAction($ccid = false)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+        if (!$app) exit();
+
+        $courseControl = AdminCourseManage::instance();
+
+        if ($ccid > 0) {
+            $category = $courseControl->deleteCategoryForId($ccid);
+        }
+
+        $categories = $courseControl->getCategory();
+
+        $views->assign('categories',$categories);
+        $views->display('admin/coursecategory/tbody.html.twig');
     }
 
     /**

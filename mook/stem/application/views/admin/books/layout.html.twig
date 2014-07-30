@@ -1,13 +1,13 @@
 {% extends "admin/layout.html.twig" %}
 
-{% set nav = 'course' %}
+{% set nav = 'books' %}
 
 {% block content %}
   <div class="col-md-2">
     {% block sidebar %}
       <div class="list-group">
-        <a href="/admin/books" class="list-group-item {% if menu == 'course' %}active{% endif %}">图书管理</a>
-        <a href="/admin/books/category" class="list-group-item {% if menu == 'category' %}active{% endif %}" >分类管理</a>
+        <a href="/admin/books" class="list-group-item {% if menu == 'book' %}active{% endif %}">图书管理</a>
+        <a href="/admin/books/category" class="list-group-item {% if menu == 'book_category' %}active{% endif %}" >分类管理</a>
 
         <a href="" class="list-group-item {% if menu == 'course-order' %}active{% endif %}">交易管理</a>
 

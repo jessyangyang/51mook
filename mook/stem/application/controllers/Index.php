@@ -25,31 +25,79 @@ class IndexController extends \Yaf\Controller_Abstract
         $members = new MembersManage();
         $app = $members->getCurrentSession();
 
+        $display = "index/index/index.html.twig";
+
         $bookControl = new AdminBookManage();
 
-        $books1 = $bookControl->getBookList(array("bf.verified" => 3,"bf.published" => 4),8,1);
 
-        $books2 = $bookControl->getBookList(array("bf.verified" => 3,"bf.published" => 4),8,2);
-        
-        $bookList1 = $bookList2 = array();
-        $j = 0;
-        foreach ($books1 as $key => $value) {
-            if ($key%4 == 0) $j++;
-            $bookList1[$j][] = $value;
+        if ($app) {
+           $display = "index/index/play.html.twig";
         }
-
-        $j = 0;
-
-        foreach ($books2 as $key => $value) {
-            if ($key%4 == 0) $j++;
-            $bookList2[$j][] = $value;
+        else
+        {
+            $books = $bookControl->getBookList(array("bf.verified" => 3,"bf.published" => 4),16,1);
+            $views->assign('books',$books);
         }
 
         $views->assign('title',"mook");
         $views->assign('app',$app);
-        $views->assign('books1',$bookList1);
-        $views->assign('books2',$bookList2);
-        $views->display('index/index/index.html.twig');
+        $views->display($display);
+    }
+
+    public function usersAction($name = false)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+
+        $member = array();
+        
+        preg_match("/^[a-zA-Z0-9]+/", $name , $matches);
+
+        if (!$matches)
+        {
+            header('Location: /');
+            exit();
+        }
+
+        $name = $matches[0];
+
+        $member = $members->getMemberForName(trim($name));
+
+        if ($app and strnatcasecmp($name,$app['username'])) {
+            $member = $members->getCurrentMember();
+        }
+        
+        if (!$member) {
+            header('Location: /');
+            exit();
+        }
+
+        $views->assign('title',"mook");
+        $views->assign('app',$app);
+        $views->assign('user',$member);
+        $views->display("index/index/users.html.twig");
+
+    }
+
+    public function settingAction()
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+
+        if (!$app) {
+            header('Location: /');
+            exit();
+        }
+
+        $views->assign('title',"mook");
+        $views->assign('app',$app);
+        $views->display("index/index/settings.html.twig");
     }
 
     public function loginAction()
@@ -57,7 +105,7 @@ class IndexController extends \Yaf\Controller_Abstract
     	$views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
 
@@ -68,7 +116,6 @@ class IndexController extends \Yaf\Controller_Abstract
 
 
         if ($data->isPost()) {
-        	$members = new MembersManage();
         	if ($uid = $members->login($data->getPost('email'),$data->getPost('password')))
         	{
         		header('Location: /');
@@ -81,7 +128,7 @@ class IndexController extends \Yaf\Controller_Abstract
         }
 
         $views->assign('title',"mook");
-        $views->display('index/login/index.html.twig');
+        $views->display('index/auth/login.html.twig');
     }
 
     public function registerAction()
