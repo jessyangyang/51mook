@@ -554,6 +554,25 @@ class ImageControl extends \local\image\Images
         return $imagePath['server']['imagesBook'].$path;
     }
 
+    /**
+     * [getRealCoverSize description]
+     * 
+     * @param  [type]  $filepath [description]
+     * @param  string  $size     [description]
+     * @param  boolean $type     [small medium large]
+     * @return [type]            [description]
+     */
+    public static function getRealCoverSize($filepath, $size = 'small', $type = false)
+    {
+        $path = self::getRealPath($filepath);
+        if (!is_file($path)) return false;
+
+        $tmp = pathinfo($filepath);
+        $type = $type ? $type : $tmp['extension'];
+        $filename = explode(".",$tmp['basename']);
+        return self::getRelativeImage($tmp['dirname'] . "/" . $filename[0] . "_$size." . $type);
+    }
+
 
         /**
      * Get BookImage Row

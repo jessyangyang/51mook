@@ -1,0 +1,211 @@
+{% extends 'index/layout.html.twig' %}
+{% block content %}
+
+<!--account information start-->
+    <div class="m-split-view" id="uber-wrap">
+        <div class="container">
+            <div class="row">
+            <!--book information starts-->
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="m-flow-title">
+                        <div class="m-profile">
+                            <a class="m-avatar" href="#"><img src="{{ user.cover }}"></a>
+                            <h2><a href="#">{{ user.username }}<span class="icon-m-pencil edit"></span></a></h2>
+                            <p class="small"><a href="account-information-setting21.html">编辑个人签名档<span class="icon-m-pencil edit"></span></a></p>
+                        </div>
+                        <!--button starts-->
+                        <div class="m-actions">
+                            <a class="btn grey" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Tooltip on top"><span class="icon-m-cog"></span>设置</a>
+                        </div>
+                        <!--button ends-->
+                        <!--blockquote starts-->
+                        <!--blockquote nav starts-->
+                        <ul class="nav nav-tabs m-Library-nav-tabs m-remove-magin">
+                            <li class="active"><a href="#points" data-toggle="tab">点数</a></li>
+                            <li><a href="#badge" data-toggle="tab">徽章</a></li>
+                            <li><a href="#student" data-toggle="tab">学生</a></li>
+                        </ul>
+                        <!--blockquote nav ends-->
+                        <!--blockquote content starts-->
+                        <div class="tab-content">
+                            <!--blockquote introduction starts-->
+                            <div class="tab-pane fade in active" id="points">
+                                <p>很少有人像苍井空这样，身上被赋予了那么多的文化符号和时代特征。喜欢她的人都明白她做过什么，但这种喜欢是一种挑衅和叛逆式的欣赏。这场从文化人引领的潮流，造就了苍井空在微博上独一无二的话题性，使她成为了在中国最受欢迎、受众最广的AV女优，没有之一。</p> 
+                                <div class="m-book-introduction">
+                                    <a class="m-avatar" href="#"><img src="images/cony_sun.jpg"></a>
+                                    <p>这场从文化人引领的潮流，造就了苍井空在微博上独一无二的话题性，使她成为了在中国最受欢迎、受众最广的AV女优，没有之一。 </p>
+                                    <p class="small">— <a href="#">Cony_sun</a></p>
+                                </div>
+                            </div>
+                            <!--blockquote introduction starts-->
+                            <div class="tab-pane fade in" id="badge">
+                                <div id="donut-empty">
+                                    <p>
+                                        <b>Along the way we might reward you with some badges.</b>
+                                        <br> Gibbon is not a game but we do like to reward our hardworking students and top teachers with cool stuff!
+                                    </p>
+                                </div>
+                            </div>
+                            <!--blockquote introduction ends-->
+                            <div class="tab-pane fade in" id="student">
+                                <div id="donut-empty">
+                                    <p>
+                                        <b>No students yet?</b>
+                                        <br>Everybody has something to teach, we love to hear what you have to share. Remember you don't have to be a genius to start a learning flow, just share some articles, blogs, or video's that helped you get on your feet.
+                                    </p>
+                                    <a href="#" class="btn m-btn-defult">
+                                        <span class="icon-m-add-mook"></span>
+                                        创建课程
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--blockquote content ends-->
+                        <!--blockquote ends-->
+                    </div>
+            </div>
+            <!--book information ends-->
+            <!--book cata starts-->
+                <div class="col-lg-6 col-md-6 col-sm-6 pull-right">
+                    <h6>
+                        <span>
+                            学习的图书
+                        </span>
+                    </h6>
+                    <ul class="m-tiny-cover-list">
+                        <li class="m-create">
+                            <a href="#">
+                                <span class="icon-m-add-mook"></span>
+                                <b>创建<br>课程</b>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="m-book-cell">
+                                <div class="m-book-cover" style="background-image:url(images/cover1.png)">
+                                    <a href="#">
+                                        <span class="m-title">
+                                            左宗棠的新疆攻略
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="m-book-cell">
+                                <div class="m-book-cover" style="background-image:url(images/cover2.png)">
+                                    <a href="#">
+                                        <span class="m-title">
+                                            左宗棠的新疆攻略
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="m-book-cell">
+                                <div class="m-book-cover" style="background-image:url(images/cover3.png)">
+                                    <a href="#">
+                                        <span class="m-title">
+                                            左宗棠的新疆攻略
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="m-book-cell">
+                                <div class="m-book-cover" style="background-image:url(images/cover4.png)">
+                                    <a href="#">
+                                        <span class="m-title">
+                                            左宗棠的新疆攻略
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="m-book-cell">
+                                <div class="m-book-cover" style="background-image:url(images/cover5.png)">
+                                    <a href="#">
+                                        <span class="m-title">
+                                            左宗棠的新疆攻略
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <h6>
+                        <span>
+                            创建的图书
+                        </span>
+                    </h6>
+                    <ul class="m-tiny-cover-list">
+                        <li class="m-create">
+                            <a href="Library-add.html">
+                                <span class="icon-m-view-library"></span>
+                                <b>浏览<br>文库</b>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="m-book-cell">
+                                <div class="m-book-cover" style="background-image:url(images/cover6.png)">
+                                    <a href="#">
+                                        <span class="m-title">
+                                            左宗棠的新疆攻略
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="m-book-cell">
+                                <div class="m-book-cover" style="background-image:url(images/cover7.png)">
+                                    <a href="#">
+                                           <span class="m-title">
+                                                左宗棠的新疆攻略
+                                            </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="m-book-cell">
+                                <div class="m-book-cover" style="background-image:url(images/cover8.png)">
+                                    <a href="#">
+                                        <span class="m-title">
+                                            左宗棠的新疆攻略
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="m-book-cell">
+                                <div class="m-book-cover" style="background-image:url(images/cover9.png)">
+                                    <a href="#">
+                                        <span class="m-title">
+                                            左宗棠的新疆攻略
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="m-book-cell">
+                                <div class="m-book-cover" style="background-image:url(images/cover17.png)">
+                                    <a href="#">
+                                        <span class="m-title">
+                                            左宗棠的新疆攻略
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            <!--book cata ends-->
+            </div>
+        </div>
+    <!--account information ends-->
+{% endblock %}

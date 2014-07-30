@@ -1,0 +1,73 @@
+{% extends 'index/lessonmanage/layout.html.twig' %}
+
+{% block title %}基本信息 - {{ parent() }}{% endblock %}
+
+{% set side_nav = 'base' %}
+{% set script_controller = 'lesson-manage/base' %}
+{% block main %}
+
+<div class="panel panel-default panel-col">
+	<div class="panel-heading">基本信息</div>
+	<div class="panel-body">
+		<form class="form-horizontal" id="course-form" method="post">
+
+		  {{ web_macro.flash_messages() }}
+
+			<div class="form-group">
+				<label class="col-md-2 control-label">课程名</label>
+				<div class="col-md-8 controls">
+					<input type="text" id="course_title" name="title" required="required" class="form-control" value="{{ course.title|default('') }}">
+					<div class="help-block" style="display:none;"></div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-2 control-label">简介</label>
+				<div class="col-md-8 controls">
+					<textarea id="course_subtitle" name="summary" required="required" class="form-control">{{ course.subtitle|default('') }}</textarea>
+					<div class="help-block" style="display:none;"></div>
+				</div>
+			</div>
+
+			<div class="form-group">
+			  <label class="col-md-2 control-label">类型</label>
+			  <div class="col-md-8 controls">
+			  	<p class="form-control width-input-large">{% if course.private == 0 %}公开课程{% else %}私人课程{% endif %}</p>
+			  	<div class="help-block">不可修改</div>
+			  </div>
+			</div>
+
+			<div class="form-group">
+			  <label class="col-md-2 control-label">标签</label>
+			  <div class="col-md-8 controls">
+			  	<input type="text" id="course_tags" name="tags" required="required" class="form-control" tabindex="-1" value="{{ course.tags|join(' ') }}" data-explain="标签用空格区分。">
+			  	<div class="help-block">标签用空格区分</div>
+			  </div>
+			</div>
+
+
+			<div class="form-group">
+			  <label class="col-md-2 control-label">分类</label>
+			  <div class="col-md-8 controls">
+			    <select class="form-control width-input width-input-large" required="required" name="cid" id="course_categoryId">
+			    	{% for category in categories %}
+			    		<option value="{{ category.cid }}" {% if category.cid == course.cid %}selected{% endif %}>{{ category.name }}</option>
+			    	{% endfor %}
+			    </select>
+			  	<div class="help-block" style="display:none;"></div>
+			  </div>
+			</div>
+
+		  <div class="form-group">
+		    <div class="col-md-offset-2 col-md-8 controls">
+		    	<button class="btn btn-fat btn-primary" id="course-create-btn" type="submit">保存</button>
+		    </div>
+		  </div>
+
+		  <input type="hidden" name="_csrf_token" value="">
+
+		</form>
+	</div>
+</div>
+
+{% endblock %}

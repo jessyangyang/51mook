@@ -1,0 +1,54 @@
+{% extends 'index/layout.html.old.twig' %}
+
+{% block title %}课程管理 - {{ parent() }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" media="screen" href="/web/css/web.css" />
+<link rel="stylesheet" media="screen" href="/web/css/member.css" />
+{% include 'index/lesson/header.html.twig' %}
+
+<div class="row">
+  <div class="col-md-3">
+    {% block side %}
+      {% set side_nav = side_nav|default(null) %}
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="list-group-panel">
+            <div class="list-group-heading">课程信息</div>
+            <div class="list-group">
+              <a class="list-group-item {% if side_nav == 'base' %}active{% endif %}" href="/lesson/{{course.cid}}/manage/base">基本信息</a>
+              <a class="list-group-item {% if side_nav == 'picture' %}active{% endif %}" href="/lesson/{{course.cid}}/manage/picture">封面图片</a>
+              <a class="list-group-item {% if side_nav == 'chapter' %}active{% endif %}" href="/lesson/{{course.cid}}/manage/chapter">课程管理</a>
+              {# <a class="list-group-item {% if side_nav == 'files' %}active{% endif %}" href="/book/1/manage/files">文件管理</a> #}
+            </div>
+          </div><!-- /list-group-block -->
+
+          <div class="list-group-panel">
+            <div class="list-group-heading">课程设置</div>
+            <div class="list-group">
+              <a class="list-group-item {% if side_nav == 'price' %}active{% endif %}" href="/lesson/{{course.cid}}/manage/price">价格设置</a>
+              <a class="list-group-item {% if side_nav == 'teachers' %}active{% endif %}" href="">设置</a>
+              <a class="list-group-item {% if side_nav == 'students' %}active{% endif %}" href="">管理</a>
+            </div>
+          </div>
+
+ {#          <div class="list-group-panel" style="display:none">
+            <div class="list-group-heading">题库</div>
+            <div class="list-group">
+              <a class="list-group-item {% if side_nav == 'question' %}active{% endif %}" href="">题目管理</a>
+              <a class="list-group-item {% if side_nav == 'question_category' %}active{% endif %}" href="">题目类别管理</a>
+              <a class="list-group-item {% if side_nav == 'testpaper' %}active{% endif %}" href="">试卷管理</a>
+              <a class="list-group-item {% if side_nav == 'testCheck' %}active{% endif %}" href="">试卷批阅</a>
+            </div>
+          </div> #}
+
+        </div>
+
+      </div>
+    {% endblock %}
+  </div>
+  <div class="col-md-9">
+    {% block main %}{% endblock %}
+  </div>
+</div>
+{% endblock %}

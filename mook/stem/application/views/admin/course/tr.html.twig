@@ -1,0 +1,62 @@
+<tr id="course-tr-{{ course.cid }}">
+  <td>{{ course.cid }}</td>
+  <td>
+    <a href="" target="_blank"><strong>{{ course.title }}</strong></a>
+    <br>
+    <span class="text-muted text-sm">分类：{{ course.category|default('--') }}</span>
+    {% if course.recommended %}
+      <span class="label label-default">荐:{{ course.recommendedTime|date('Y-m-d') }} / 序号:{{ course.recommendedSeq }}</span>
+    {% endif %}
+  </td>
+  <td>
+    {{ course.dateline|date('Y年n月d日') }}<br>
+    <span class="text-muted text-sm">{{course.published}}</span>
+  </td>
+  <td><span class="text-muted">{{course.verified}}</span></td>
+  <td>
+    <a data-url="" data-target="#modal" data-toggle="modal" role="show-user" href="javascript:;">{{course.username}}</a>
+    <br>
+    <span class="text-muted text-sm">{{ course.dateline|date('Y-n-d H:i') }}</span>
+  </td>
+  <td>
+    <div class="btn-group">
+      <a class="btn btn-default btn-sm" href="/lesson/{{ course.cid }}/manage/base" target="_blank">管理</a>
+      <a href="#" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span></a>
+      <ul class="dropdown-menu pull-right">
+          <li><a class="recommend-course" href="#modal" data-toggle="modal" data-url=""><span class="glyphicon glyphicon-hand-up"></span> 推荐图书</a></li>
+          {% if course.recommended %}
+            <li><a class="cancel-recommend-course" href="javascript:" data-url=""><span class="glyphicon glyphicon-hand-right"></span> 取消推荐</a></li>
+          {% endif %}
+
+          <li><a href="" target="_blank"><span class="glyphicon glyphicon-eye-open"></span> 预览</a></li>
+
+          <li class="divider"></li>
+
+          {% if course.published == '等待审核' %}
+            <li><a class="publish-book" href="javascript:" data-url="/admin/course/post/publish/{{ course.cid }}/2" title="审核图书"><span class="glyphicon"></span> 审核图书</a></li>
+          {% elseif course.published == '审核中' %}
+            <li><a class="publish-book" href="javascript:" data-url="/admin/course/post/publish/{{ course.cid }}/4" title="审核通过"><span class="glyphicon glyphicon-ok"></span> 审核通过</a></li>
+            <li><a class="publish-book" href="javascript:" data-url="/admin/course/post/publish/{{ course.cid }}/3" title="审核失败"><span class="glyphicon glyphicon-remove-circle"></span> 审核失败</a></li>
+            <li><a class="publish-book" href="javascript:" data-url="/admin/course/post/publish/{{ course.cid }}/1" title="重新审核"><span class="glyphicon glyphicon-repeat"></span> 重新审核</a></li>
+          {% elseif course.published == '审核失败' %}
+            <li><a class="publish-book" href="javascript:" data-url="/admin/course/post/publish/{{ course.cid }}/1" title="重新审核"><span class="glyphicon"></span> 重新审核</a></li>
+          {% elseif course.published == '审核通过' %}
+            <li><a class="publish-book" href="javascript:" data-url="/admin/course/post/publish/{{ course.cid }}/1" title="重新审核"><span class="glyphicon glyphicon-repeat"></span> 重新审核</a></li>
+          {% endif %}
+
+          <li class="divider"></li>
+
+          {% if course.verified == '未发布' or course.verified == '已下架' %}
+            <li><a class="verify-book" href="javascript:" data-url="/admin/course/post/verify/{{ course.cid }}/3" title="发布图书"><span class="glyphicon glyphicon-ok-circle"></span> 发布图书</a></li>
+          {% else %}
+            <li><a class="verify-book" href="javascript:" data-url="/admin/course/post/verify/{{ course.cid }}/1" title="下架图书"><span class="glyphicon glyphicon-ban-circle"></span> 下架图书</a></li>
+          {% endif %}
+
+          <li class="divider"></li>
+
+          <li><a class="delete-book" href="javascript:" data-url="/admin/course/delete/{{course.cid}}"><span class="glyphicon glyphicon-trash"></span> 删除图书</a></li>
+      </ul>
+    </div>
+  </td>
+</tr>

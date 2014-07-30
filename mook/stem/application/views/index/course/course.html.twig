@@ -1,0 +1,163 @@
+{% extends 'index/layout.html.twig' %}
+
+{% set script_controller = 'course/course' %}
+
+{% block content %}
+<!--account information start-->
+    <div class="m-split-view" id="uber-wrap">
+    	<div class="container">
+			<div class="row">
+			<!--book information starts-->
+        		<div class="col-lg-6 col-md-6 col-sm-6">
+					<div class="m-flow-title">
+						<h2>{{ course.title }}</h2>
+						<p class="small">
+                            by
+                            <a href="#">ScottChyi</a>
+							<span>•</span>
+							4篇
+							<span>•</span>
+							<a href="#">美食</a>
+						</p>
+						<!--button starts-->
+						<div class="m-actions">
+							<div class="btn-group">
+								<button type="button" class="btn grey"   data-reveal-id="editbookinfo" data-animation="fade"  data-toggle="modal" data-target="#editbookinfo"><span class="icon-m-pencil"></span>编辑</button>
+							</div>	
+							<div class="btn-group">
+								<button type="button" class="btn grey"><span class="icon-m-weibo"></span>微博分享</button>
+							</div>				
+							<div class="btn-group">
+								<button type="button" class="btn grey"><span class="icon-m-weixin"></span>微信分享</button>
+							</div>				
+						</div>
+						<!--button ends-->
+						<!--blockquote starts-->
+						<!--blockquote nav starts-->
+						<ul class="nav nav-tabs m-Library-nav-tabs m-remove-magin">
+                            <li class="active"><a href="#start" data-toggle="tab">开始</a></li>
+                            <li><a href="#information" data-toggle="tab">信息</a></li>
+                            <li><a href="#reading-man" data-toggle="tab">学生</a></li>
+						</ul>
+						<!--blockquote nav ends-->
+						<!--blockquote content starts-->
+						<div class="tab-content">
+							<!--blockquote introduction starts-->
+							<div class="tab-pane fade in active" id="start">
+                                <ol class="m-steps">
+                                    <li>
+                                        <span class="m-number">1</span>
+                                        <h4>Install Tools</h4>
+                                        <p>Welcome to your brand new Learning Flow. To help you gather the best resources from the web we’ve built some great tools for you. Install the
+                                            <b><a href="#">browser plugins</a></b> for Chrome, Firefox or Safari.<br>Or drag the button below to your bookmarks bar:</p>
+                                        <a class="btn small black">+ Gibbon</a>
+                                    </li>
+                                    <li>
+                                        <span class="m-number">2</span>
+                                        <h4>Collect resources</h4>
+                                        <p> Start collecting links, articles and videos that are great to learn "
+                                            <b>烘培</b>
+                                            ". Copy/paste the url in the bar on the right, or use the bookmark tool to add them to your flow. Make sure to add a personal note for your students why they have to learn it.</p>
+                                    </li>
+                                    <li>
+                                        <span class="m-number">3</span>
+                                        <h4>Invite students</h4>
+                                        <p>Now that you have the basics for your learning flow it’s time for people to start learning, you can invite students via email or your social networks.</p>
+                                        <a class="btn social"  href="#">
+                                            <span class="color-sina">
+                                                <span class="icon-m-weibo"></span>
+                                            </span>
+                                            分享到微博
+                                        </a>
+                                        <a class="btn social" href="#">
+                                            <span class="color-qq">
+                                                <span class="icon-m-qq"></span>
+                                            </span>
+                                            分享到微信
+                                        </a>
+                                    </li>
+                                </ol>
+							</div>
+                            <!--blockquote introduction starts-->
+                            <div class="tab-pane fade in" id="information">
+                                <p>很少有人像苍井空这样，身上被赋予了那么多的文化符号和时代特征。喜欢她的人都明白她做过什么，但这种喜欢是一种挑衅和叛逆式的欣赏。这场从文化人引领的潮流，造就了苍井空在微博上独一无二的话题性，使她成为了在中国最受欢迎、受众最广的AV女优，没有之一。</p>
+                                <div class="m-book-introduction">
+                                    <a class="m-avatar" href="#"><img src="images/cony_sun.jpg"></a>
+                                    <p><b>Cony_sun</b></p>
+                                    <p>这场从文化人引领的潮流，造就了苍井空在微博上独一无二的话题性，使她成为了在中国最受欢迎、受众最广的AV女优，没有之一。 </p>
+                                </div>
+                            </div>
+                            <!--blockquote introduction ends-->
+							<div class="tab-pane fade in" id="reading-man">
+                                <p class="small">Share your learning flow on social media to get students.</p>
+                                <ul class="social-login">
+                                    <li>
+                                        <a class="btn social"  href="#">
+                                            <span class="color-sina">
+                                                <span class="icon-m-weibo"></span>
+                                            </span>
+                                            分享到微博
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn social" href="#">
+                                            <span class="color-qq">
+                                                <span class="icon-m-qq"></span>
+                                            </span>
+                                            分享到微信
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+						</div>
+						<!--blockquote content ends-->
+						<!--blockquote ends-->
+					</div>
+           	</div>
+			<!--book information ends-->
+			<!--book cata starts-->
+        		<div class="col-lg-6 col-md-6 col-sm-6 pull-right">
+					<ul class="list-unstyled m-catalog">
+                        <li class="m-input">
+                            <form id="add" method="post" action="" class="open">
+                                <input type="hidden">
+                                <label for="link-url-id">add new <span class="point"></span></label>
+                                <input id="link-url-id" type="text" value="http://…" name="link">
+                                <textarea>Tell your students why they have to learn this...</textarea>
+                                <div class="form-actions" style="display: block">
+                                    <p class="small pull-left">
+                                        <a class="cancel" href="#">Never mind</a>
+                                        <span>•</span>
+                                        <a href="#">Bookmark Tool</a>
+                                    </p>
+                                    <button class="btn">Add this</button>
+                                </div>
+                            </form>
+                        </li>
+                        <li class="empty">
+                            <p class="small">
+                                Great to have you on board as a teacher!<br>
+                                Start collecting links, articles and videos that are great to learn
+                                <b>烘培</b>
+                                .
+                                <br>
+                                <br>
+                                Happy teaching!
+                            </p>
+						</li>
+                        <li class="loader">
+                            <span class="m-dot">
+                                <img alt="loading" src="https://d3i5ls5z2ayn6d.cloudfront.net/img/loader.gif">
+                            </span>
+                            <h2>获取链接地址中...</h2>
+                        </li>
+                    </ul>
+           	    </div>
+			<!--book cata ends-->
+			</div>
+		</div>
+	<!--account information ends-->
+    </div>
+
+
+{% endblock %}

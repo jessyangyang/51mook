@@ -257,14 +257,17 @@ class MembersControl
         $offset = $page == 1 ? 0 : ($page - 1)*$limit; 
         $table = $this->members->table;
 
-        $list = $this->members->field("$table.id,$table.email,$table.username,$table.published,$table.role_id,r.name as role_name,mi.ip,mi.last_ip,mi.avatar_id as cover,mi.last_dateline as dateline")
+        $list = $this->members->field("$table.id,$table.email,$table.username,$table.published,$table.role_id,r.name as role_name,mi.ip,mi.last_ip,im.path as cover,mi.last_dateline as dateline")
             ->joinQuery("user_role as r","$table.role_id=r.id")
             ->joinQuery('member_info as mi',"$table.id=mi.id")
+            ->joinQuery('images_member as im',"im.imid=mi.avatar_id")
             ->where($sql)->order("$table.id")->limit("$offset,$limit")->fetchList();
 
         if (is_array($list)) {
             foreach ($list as $key => $value) {
                 if (isset($value['cover']) and $value['cover']) {
+                    $list[$key]['cover_small'] = ImageControl::getRealCoverSize($list[$key]['cover']);
+                    $list[$key]['cover_medium'] = ImageControl::getRealCoverSize($list[$key]['cover'],"medium");
                     $list[$key]['cover'] = ImageControl::getRelativeImage($value['cover']);
                 }
             }
@@ -272,5 +275,13 @@ class MembersControl
         }
 
         return false;
+    }
+
+    public function getMemberForName($username)
+    {
+        $member = $this->getMembersList(array('members.username' => $username));
+        if ($member) {
+            return $member[0];
+        }
     }
 }

@@ -1,138 +1,93 @@
 {% extends 'index/index/layout.html.twig' %}
 {% block content %}
 
-<div class="container">
-  <!--recent start-->
-    <div class="m-recently-book-list-wrapper">
-    <!--rencently read book-->
-    <div class="m-recently-read">
-      <div class="m-my-recently-read">
-        <div class="m-column-title">
-          <h2>我最近的阅读列表</h2>                
-        </div>
-        <div class="m-recently-book-list">
-          <div id="carousel-history-generic" class="carousel slide m-carousel-history" data-ride="carousel" data-interval="false">
-            <div class="carousel-inner">
-              <div class="item active">
-                <ul>
-                <li>
-                  <div class="m-progress-number pull-left">40%</div>
-                  <div class="m-progress-wrapper">                       
-                    <div class="m-progress">
-                    <div class="progress-bar m-progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                    <span class="sr-only">40% Complete (success)</span>
-                    </div></div></div>
-                  <div class="m-recently-book-cell">                                                    
-                      <div class="m-book-cover" style="background-image:url(images/cover5.png)">
-                        <a href="#"><hgroup><h3>“百年孤独体”的中国门徒们</h3><h4>beebike</h4></hgroup></a>
-                      </div></div></li>                   
-                </ul></div></div>            
-            <!-- Controls -->
-            <a class="left m-carousel-control" href="#carousel-history-generic" data-slide="prev">
-              <span class="glyphicon glyphicon-chevron-left"></span></a>
-            <a class="right m-carousel-control" href="#carousel-history-generic" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right"></span></a>                    
-          </div></div></div>        
-    </div>
-    <!--rencently read book end-->
-    <!--AD-->
-    <div class="m-ad-wrapper">
-      <div class="m-promotions m-mini_promo">
-        <!--广告 start-->
-        <div id="carousel-banner-generic" class="carousel slide" data-ride="carousel">
-          <div class="m-column-title"><h2>移动墨客</h2></div>
-          <!-- Indicators -->
-          <ol class="carousel-indicators m-carousel-indicators">
-              <li data-target="#carousel-banner-generic" data-slide-to="0" class="active"></li>
-              <li data-target="#carousel-banner-generic" data-slide-to="1"></li>
-              <li data-target="#carousel-banner-generic" data-slide-to="2"></li>
-          </ol>
-          <!-- Wrapper for slides -->
-          <div class="carousel-inner">
-            <div class="item active">
-              <a href="#"><div  class="m-promotion m-subscribe-image"></div></a>
-              <a href="#">
-                <div class="carousel-caption m-ad-caption">
-                <p>使用你的手机或平板电脑里的浏览器来阅读墨客。</p>
-                <button type="button" class="btn btn-default m-btn-defult">查看详情</button>
-                </div></a>
-            </div>
+
+<!--unlogin-lgimg-container start-->
+      <div class="m-hompage-unlogin-wrapper">
+      <div class="m-hompage-unlogin-overlay">
+        <div class="m-overlay-unlogin-row">
+          <div class="text-center">
+            <h1><span class="icon-m-mo"></span><span class="icon-m-oker"></span></h1>
+            <h1>叙述真实的中国故事</h1>
+                        <div class="btn-box">
+                            <button type="button" class="btn block" data-toggle="modal" data-target="#id_login">加入墨客</button>
+                        </div>
           </div>
-        </div><!--广告 ends-->
-        </div></div>
-    <!--AD ends-->
+        </div>
+      </div>
+    </div>
+  <!--unlogin-lgimg-container end-->
+
+<!--book-list start-->
+<section id="m-featured-home">
+  <div class="container m-index-covers-wrapper">
+    <div class="row">
+      <h2 class="col-lg-12">热门</h2>
+      {% for book in books %}
+      <div class="col-lg-3 col-sm-4 col-md-3">
+        <div class="m-book-cell">                                                    
+            <div class="m-book-cover m-book-cover-large" style="background-image:url({{ book.cover }})">
+              <a href="#">
+                <hgroup>
+                  <h3>{{ book.title }}</h3>
+                  <img class="m-avatar" src="{{ book.usercover }}">
+                  <h4>{{ book.username }}</h4>
+                </hgroup></a>
+          </div></div></div>
+      {% endfor %}
+    </div>
   </div>
-  <!--recent-book end-->
-  <!--book-list start-->
-  <div class="m-book-list-wrapper">
-    <div id="carousel-hot-generic" class="carousel slide" data-ride="carousel" data-interval="false">
-      <div class="m-column-title">
-      <h2>热门</h2>
-      </div>
-            
-      <div class="carousel-inner">
-        {% for keygroup, value in books1 %}
-        <div class="item {% if keygroup == 1 %}active{% endif %}">
-            <div class="book-new-{{ keygroup }} m-book-list">
-                <ul>
-                  {% for book in value %}
-                    <li class="col-lg-2 col-sm-3 col-md-2">
-                      <div class="m-book-cell">                                                    
-                        <div class="m-book-cover m-book-cover-large" style="background-image:url({{ book.cover }})">
-                        <a href="#"><hgroup><h3>{{ book.title }}</h3><h4>{{ book.username }}</h4></hgroup></a>
-                        </div></div>            
-                    </li>
-                  {% endfor %}
-                  </ul>
-            </div>
-         </div>
-        {% endfor %}
-      </div>               
-            
-      <a class="left m-carousel-control" href="#carousel-hot-generic" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
-        <a class="right m-carousel-control" href="#carousel-hot-generic" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>    
+</section>
+
+    <section id="m-testimonials" >
+      <div class="container m-index-author-wrapper">
+      <div class="row">
+        <h2 class="col-lg-12 text-center">Never Lose Your Passion</h2>
+        <div class="col-lg-6">
+          <div>
+                    <a class="m-avatar m-index-avatar" href="#"><img src="/web/img/default/homly.jpg"></a>
+                    <p>资历一无是处，一个产品可能做了几年，十几年，结果注定是起了个大早，赶了个晚集。  </p>
+                    <p class="small">— <a href="#">Homly Cheung</a></p>
+          </div>                         
+        </div>
+        <div class="col-lg-6">
+          <div>
+                    <a class="m-avatar m-index-avatar" href="#"><img src="/web/img/default/cony_sun.jpg"></a>
+                    <p>脚踩地，走起！ </p>
+                    <p class="small">— <a href="#">Cony_sun</a></p>
+          </div>                         
+        </div>
+        <div class="col-lg-6">
+          <div>
+                    <a class="m-avatar m-index-avatar" href="#"><img src="/web/img/default/jess.jpg"></a>
+                    <p>兔子 兔子～～  </p>
+                    <p class="small">— <a href="#">jess</a></p>
+          </div>                         
+        </div>
+        <div class="col-lg-6">
+          <div>
+                    <a class="m-avatar m-index-avatar" href="#"><img src="/web/img/default/scott.jpg"></a>
+                    <p>你与我同饮同欢乐同相爱同戴花环； 我疯狂时你疯狂，我清醒时你清醒。</p>
+                    <p class="small">— <a href="#">ScottChyi</a></p>
+          </div>                         
+        </div>
       </div>
     </div>
-
-    <div class="clearfix"></div>
-      <!--book-list end-->
-
-    <div class="m-book-list-wrapper ">
-    <div id="carousel-new-generic" class="carousel slide" data-ride="carousel" data-interval="false">
-      <div class="m-column-title">
-        <h2>最新上架</h2>
-      </div>
-            
-      <div class="carousel-inner">
-        {% for keygroup, value in books2 %}
-        <div class="item {% if keygroup == 1 %}active{% endif %}">
-            <div class="book-new-{{ keygroup }} m-book-list">
-                <ul>
-                  {% for book in value %}
-                    <li class="col-lg-2 col-sm-3 col-md-2">
-                      <div class="m-book-cell">                                                    
-                        <div class="m-book-cover m-book-cover-large" style="background-image:url({{ book.cover }})">
-                        <a href="#"><hgroup><h3>{{ book.title }}</h3><h4>{{ book.username }}</h4></hgroup></a>
-                        </div></div>            
-                    </li>
-                  {% endfor %}
-                  </ul>
-            </div>
-         </div>
-        {% endfor %}
-      </div>            
-            
-      <a class="left m-carousel-control" href="#carousel-new-generic" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
-        <a class="right m-carousel-control" href="#carousel-new-generic" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>    
+    </section>
+    <section id="home-signup">
+      <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <div class="m-join-now">
+            <button type="button" class="btn pull-right" data-toggle="modal" data-target="#id_login">加入墨客</button>
+            <h2 class="pull-left">Let's learn from each other.</h2>
+          </div>
+        </div>
       </div>
     </div>
-</div>
+    </section>
+
+    {% include 'index/index/login.html.twig' %}
+    {% include 'index/index/register.html.twig' %}
+
 {% endblock %}

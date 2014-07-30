@@ -1,23 +1,63 @@
 <!--header start-->
-	<header>
-        <div class="navbar navbar-default navbar-fixed-top m-navbar-header" role="navigation">
-        	<h1>墨客 beta</h1>
-        	<div class="m-saerch-wrapper pull-left">
-				<ul class="nav nav-pills">
-					<li><a href="#"><img src="/assets/img/default/search.png"></a></li>
-					<li><a href="#">墨客文库</a></li>
-				</ul>
-			</div>
-        	<div>
-            <a class="m-logo" href="#"></a>
-			</div>
-        	<div class="m-user pull-right">
-				<ul class="nav nav-pills">
-					<li><a href="#"><img src="/assets/img/default/avatar-default-medium.png"></a></li>
-					<li><a href="#">登录</a></li>
-					<li><a href="#">注册</a></li>
-				</ul>
-           </div>
-        </div>    
+    <header>
+        <div id="top-nav" class="navbar navbar-fixed-top" role="navigation">
+            <h1 id="mook-Logo">
+                <a href="#">Mook</a>
+            </h1>
+            <ul class="nav nav-pills">
+                <li class="pull-left m-search">
+                    <form action="/search-result.html" method="get">
+                        <span class="icon-m-search"></span>
+                        <input type="text" value="" name="">
+                    </form>
+                </li>
+                <li class="pull-left">
+                    <a class="text" href="#">墨客文库</a>
+                </li>
+                {% if app %}
+                <li class="pull-right">
+                    <a class="text" href="#" id="id_profile" data-toggle="dropdown">
+                        <span class="m-avatar">
+                            <img src="{{ app.cover_small }}">
+                        </span>
+                    </a>
+                    <div class="dropdown-menu" role="menu" aria-labelledby="id_profile">
+                        <a role="menuitem" tabindex="-1" href="#">
+                            <span class="icon-m-user"></span>
+                            文章列表
+                        </a>
+                        <a role="menuitem" tabindex="-1" href="/settings">
+                            <span class="icon-m-cog"></span>
+                            设置
+                        </a>
+                        <a role="menuitem" tabindex="-1" href="/logout">
+                            退出登录
+                        </a>
+                    </div>
+                </li>
+                <li class="pull-right dropdown">
+                    <a href="#" id="id_add" data-toggle="dropdown">
+                        <span class="icon-m-add-mook"></span>
+                    </a>
+                    <div class="dropdown-menu" role="menu" aria-labelledby="id_add">
+                        <a role="menuitem" tabindex="-1" href="/create">
+                            <span class="icon-m-cog"></span>
+                            创建列表
+                        </a>
+                        <a role="menuitem" tabindex="-1" href="#">
+                            <span class="icon-m-cog"></span>
+                            添加章节
+                        </a>
+                        <a role="menuitem" tabindex="-1" href="#">
+                            工具插件
+                        </a>
+                    </div>
+                </li>
+                {% else %}
+                <li class="pull-right"><a class="text" href="#" data-reveal-id="login" data-animation="fade"  data-toggle="modal" data-target="#id_login">登录</a></li>
+                <li class="pull-right"><a class="text" href="#" data-reveal-id="signup" data-animation="fade"  data-toggle="modal" data-target="#id_signup">注册</a></li>
+                {% endif %}
+            </ul>
+        </div>
     </header>
-	<!--header end-->
+    <!--header end-->

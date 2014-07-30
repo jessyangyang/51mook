@@ -1,0 +1,51 @@
+{% extends 'index/layout.html.twig' %}
+
+{% block keywords %}{% endblock %}
+{% block description %}{% endblock %}
+
+{% block body %}
+  	<div id="uber-wrap" class="m-default-view">
+        <div class="container">
+            <div class="outer-box">
+                <div class="inner-box">
+                    <h1 id="logo"><a>墨客</a></h1>
+                    <div id="clean-login">
+                        <h2 class="text-center">登录</h2>
+                            <form id="login-form" class="form-horizontal" method="post" action="/login">
+                                <ul class="social-login">
+                                    <li>
+                                    	<a class="btn social"  href="#"><span class="color-sina"><span class="icon-m-weibo"></span></span>使用微博登录</a></li>
+                                    <li>
+                                    	<a class="btn social" href="#"><span class="color-weixin"><span class="icon-m-weixin"></span></span>使用微信登录</a></li>
+                                    <li>
+                                    	<a class="btn social"  href="#"><span class="color-lin"><span class="icon-m-linked-in"></span></span>使用 Linked in 登录</a></li>
+                                    <li>
+                                    	<a class="btn social"  href="#"><span class="color-qq"><span class="icon-m-qq"></span></span>使用QQ登录</a></li>
+                                </ul>
+                                <p class="or"><span>OR</span></p>
+                                <div class="form-group form-group-box">
+                                    <label for="email" >E-mail：</label>
+                                    <input class="form-control" id="email" type="text" name="email" tabindex="1" maxlength="75">
+                                    <p class="help-block"></p>
+                                </div>
+                                <div class="form-group form-group-box">
+                                    <label for="password">密码：<a class="pull-right" href="#">忘记密码</a></label>
+                                    <input class="form-control" id="password" type="password" name="password" tabindex="2">
+                                    <p class="help-block"></p>
+                                </div>
+                                <p class="checkbox">
+                                    <label for="id_tos"><input id="id_tos" type="checkbox" name="tos">记住我</label>
+                                </p>
+                                <div class="form-actions">
+                                    <span class="pull-left"><a href="/register">还没有用户？点此注册</a></span>
+                                    <button type="submit" class="btn">登录</button>
+                                </div>
+                            </form>
+                        </div></div></div></div>
+		</div>
+  {% include 'index/footer.html.twig' %}
+  {% block bottom %}{% endblock %}
+  <div id="modal" class="modal"></div>
+{% endblock %}
+
+{% set script_controller = 'auth/login' %}

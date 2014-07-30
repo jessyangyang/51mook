@@ -1,0 +1,246 @@
+{% extends 'index/layout.html.twig' %}
+{% block content %}
+
+<!--account information start-->
+    <div class="container m-setting-wrapper">
+			<div class="row narrow">
+				<h2 class="col-lg-12">账户设置</h2>
+				<!--account nav-tab start-->
+				<div class="col-lg-12">
+					<ul class="nav nav-tabs m-setting-nav-tabs">
+						<li class="active"><a href="#edit-information" data-toggle="tab">个人信息</a></li>
+						<li><a href="#change-password" data-toggle="tab">账户设置</a></li>
+						<li><a href="#billing" data-toggle="tab">账户升级</a></li>
+                        <li><a href="#notifications" data-toggle="tab">邮件设置</a></li>
+                    </ul>
+				</div>
+				<!--account nav-tab ends-->
+				<!--account content start-->
+				<div class="tab-content col-lg-12">
+					<div class="tab-pane fade in active" id="edit-information">
+						<form role="form">
+							<!--account author photo end-->
+                  		<div class="m-author-avatar-box text-center">
+								<a class="m-avatar m-author-avatar" onclick="uploadavatar.click()" href="#">
+									<img src="{{ app.cover }}">
+								</a> 
+            					<button href="#" onclick="uploadavatar.click()" class="btn m-btn-defult grey"><span class="icon-m-user-normal-photo"></span>修改头像</button>
+								<input type="file" id="uploadavatar"> 
+                  		</div>
+							<!--account author photo end-->
+                            <p>
+                                <label for="id_username">昵称</label>
+                                <input id="id_username" type="text" name="username" maxlength="256" value="">
+                            </p>
+                            <p>
+                                <label for="id_homepage">个人主页</label>
+                                <input id="id_homepage" value="" type="text" name="homepage" maxlength="256">
+                            </p>
+                            <p>
+                                <label for="id_weibo">微博</label>
+                                <input id="id_weibo" value="@" type="text" name="name" maxlength="256">
+                            </p>
+                            <p>
+                                <label for="id_about">签名档</label>
+                                <textarea id="id_about" rows="10" name="about" cols="40"></textarea>
+                            </p>
+                			<button type="button" class="btn m-btn-green pull-right">保存修改</button>
+						</form>
+					</div>
+					<div class="tab-pane fade in" id="change-password">
+						<form role="form">
+                            <ul class="action-list">
+                                <li>
+                                    <a class="btn grey icon-only pull-right" href="#" data-reveal-id="change-email" data-animation="fade"  data-toggle="modal" data-target="#change-email"><span class="icon-m-pencil"></span></a>
+                                    <span class="icon-m-envelope bullet"></span>
+                                    <p>
+                                        电子邮箱：
+                                        {{ app.email }}
+                                    </p>
+                                </li>
+                                <li>
+                                    <a class="btn grey icon-only pull-right" href="#"  data-reveal-id="change-email" data-animation="fade"  data-toggle="modal" data-target="#change-my-password"><span class="icon-m-pencil"></span></a>
+                                    <span class="icon-m-lock bullet"></span>
+                                    <p>
+                                        密码：
+                                        ●●●●●●●●
+                                    </p>
+                                </li>
+                                <li>
+                                    <a class="btn pull-right" href="#">连接</a>
+                                    <span class="icon-m-weibo bullet"></span>
+                                    <p>
+                                        用您的新浪微博连接墨客
+                                    </p>
+                                </li>
+                                <li>
+                                    <a class="btn pull-right" href="#">连接</a>
+                                    <span class="icon-m-linked-in bullet"></span>
+                                    <p>
+                                        用您的Linked in连接墨客
+                                    </p>
+                                </li>
+                                <li>
+                                    <a class="btn pull-right" href="#">连接</a>
+                                    <span class="icon-m-qq bullet"></span>
+                                    <p>
+                                        用您的QQ空间连接墨客
+                                    </p>
+                                </li>
+                            </ul>
+                            <br>
+                            <p class="small text-center">
+                                <a class="popup red tip" original-title="Please don't go... we'll miss you... :-(" href="/logout">退出您的账户</a>
+                            </p>
+						</form>
+					</div>
+					<div class="tab-pane fade in" id="billing">
+						<p><b>Private Flows</b> are great for companies, teams, workshops and study-groups. Only you and the students you personally invite are able to see and join this Learning Flow. In the private flows you can track the learning progress of your students and have closed discussions. <a href="#">Learn more »</a></p>
+						<table>
+							<thead>
+								<tr>
+									<th>计划</th>
+									<th>价格</th>
+									<th>学生人数</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+                         		<tr>
+                                    <td><p>免费</p></td>
+                                    <td><p>￥0元/月</p></td>
+                                    <td><p>-</p></td>
+                                    <td class="text-right"><p>您的状态</p></td>
+                         		</tr>
+                         		<tr>
+                                    <td><p>爱迪生</p></td>
+                                    <td><p>￥150元/月</p></td>
+                                    <td><p>10</p></td>
+                                    <td class="text-right"><a href="#" class="btn">升级</a></td>
+                         		</tr>
+                         		<tr>
+                                    <td><p>牛顿</p></td>
+                                    <td><p>￥400元/月</p> </td>
+                                    <td><p>25</p></td>
+                                    <td class="text-right"><a href="#" class="btn">升级</a></td>
+                         		</tr>
+                         		<tr>
+                                    <td><p>爱因斯坦</p></td>
+                                    <td><p>￥750元/月</p></td>
+                                    <td><p>50</p> </td>
+                                    <td class="text-right"><a href="#" class="btn loading">升级</a></td>
+                         		</tr>
+							</tbody>
+						</table>
+					</div>
+                    <div class="tab-pane fade in" id="notifications">
+                        <form role="form">
+                            <ul class="action-list">
+                                <li>
+                                    <span class="icon-m-envelope bullet"></span>
+                                    <p>
+                                        接收所学课程更新的通知
+                                        <span class="pull-right">
+                                            <input id="id_AllClass_update" type="checkbox" name="AllClass_update" checked="checked">
+                                        </span>
+                                    </p>
+                                </li>
+                                <li>
+                                    <span class="icon-m-envelope bullet"></span>
+                                    <p>
+                                        接收每周学习计划
+                                        <span class="pull-right">
+                                            <input id="id_learningPlan_update" type="checkbox" name="learningPlan_update" checked="checked">
+                                        </span>
+                                    </p>
+                                </li>
+                                <li>
+                                    <span class="icon-m-envelope bullet"></span>
+                                    <p>
+                                        接收精选课程更新消息
+                                        <span class="pull-right">
+                                            <input id="id_learningPlan_update" type="checkbox" name="learningPlan_update" checked="checked">
+                                        </span>
+                                    </p>
+                                </li>
+                                <li>
+                                    <span class="icon-m-envelope bullet"></span>
+                                    <p>当有新的学生加入我的课程时通知我</p>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+
+                </div>
+				<!--account content end-->
+			</div>
+    </div>
+	<!--account information ends-->
+    <footer>
+    	<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<span class="icon-m-mo"></span><span class="icon-m-oker"></span>
+					<p class="small ">We are a community of people that want to learn from each other by collecting and sharing the knowledge from the web.<br>
+					Be Good Get Better</p>
+				</div>
+				<div class="col-lg-3">dadsa</div>
+				<div class="col-lg-3">dadsa</div>
+				<div class="col-lg-3">dadsa</div>
+			</div>
+		</div>
+    </footer>
+
+    <!-- change email -->
+    <form role="form">
+        <div class="modal fade" id="change-email" tabindex="-1" role="dialog" aria-labelledby="ChangelEmailLabel" aria-hidden="true">
+            <div class="modal-dialog m-modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header m-modal-header text-center">
+                        <h4 class="modal-title" id="ChangelEmailLabel">修改邮箱</h4>
+                    </div>
+                    <div class="modal-body m-modal-body">
+                        <p>
+                            <label for="id_email">新邮箱地址：</label>
+                            <input id="id_email" type="text" name="email" maxlength="256">
+                        </p>
+                    </div>
+                    <div class="modal-footer m-modal-footer">
+                        <span class="pull-left"><a href="#" data-dismiss="modal" aria-hidden="true">取消</a></span>
+                        <a href="#" class="btn">确 定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </form>
+
+    <!-- change password -->
+    <!-- Modal -->
+    <form role="form">
+        <div class="modal fade" id="change-my-password" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog m-modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header m-modal-header text-center">
+                        <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+                    </div>
+                    <div class="modal-body m-modal-body">
+                        <p>
+                            <label for="old-password">旧密码：</label>
+                            <input id="old-password" type="password" name="password" maxlength="256">
+                        </p>
+                        <p>
+                            <label for="new-password">新密码：</label>
+                            <input id="new-password" type="password" name="password" maxlength="256">
+                        </p>
+                    </div>
+                    <div class="modal-footer m-modal-footer">
+                        <span class="pull-left"><a href="#" data-dismiss="modal" aria-hidden="true">取消</a></span>
+                        <a href="#" class="btn">确 定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </form>
+    <!-- change password end -->
+
+{% endblock %}
