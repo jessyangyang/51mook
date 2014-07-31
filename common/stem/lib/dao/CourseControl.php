@@ -81,6 +81,7 @@ class CourseControl {
      */
     public function updateCourse($cid,$fields = array())
     {
+        print_r($fields);
         if(!is_array($fields) or isset($fields['cid'])) return false;
         return $this->course->where("cid='$cid'")->update($fields);
     }

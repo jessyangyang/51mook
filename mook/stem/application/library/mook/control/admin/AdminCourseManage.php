@@ -92,7 +92,7 @@ class AdminCourseManage extends CourseControl
 
         $table = $this->course->table;
 
-        $list = $this->course->field("$table.cid,$table.title,$table.ccid,$table.uid,$table.private,$table.verified,$table.dateline,$table.modified,$table.summary,$table.tags,$table.price,cc.name as category, m.username,ic.path as cover,ic.thumb, im.path as usercover")
+        $list = $this->course->field("$table.cid,$table.title,$table.ccid,$table.uid,$table.private,$table.published,$table.verified,$table.dateline,$table.modified,$table.summary,$table.tags,$table.price,cc.name as category, m.username,ic.path as cover,ic.thumb, im.path as usercover")
             ->joinQuery('course_category as cc',"$table.ccid=cc.ccid")
             ->joinQuery('images_course as ic',"$table.cover=ic.icid")
             ->joinQuery('members as m',"$table.uid=m.id")
@@ -394,9 +394,9 @@ class AdminCourseManage extends CourseControl
         isset($data['title']) and $filter['title'] = $data['title'];
         isset($data['uid']) and $filter['uid'] = $data['uid'];
         isset($data['private']) and $filter['private'] = $data['private'];
-        isset($data['published']) and $filter['published'] = strtotime($data['published']);
+        isset($data['published']) and $filter['published'] = $data['published'];
         isset($data['verified']) and $filter['verified'] = $data['verified'];
-        isset($data['dateline']) and $filter['dateline'] = $data['dateline'];
+        isset($data['dateline']) and $filter['dateline'] = strtotime($data['dateline']);
         isset($data['modified']) and $filter['modified'] = $data['modified'];
         isset($data['summary']) and $filter['summary'] = $data['summary'];
         isset($data['cover']) and $filter['cover'] = $data['cover'];

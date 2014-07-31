@@ -563,7 +563,7 @@ class AdminController extends \Yaf\Controller_Abstract
      * @param integer $limit [description]
      * @param integer $page  [description]
      */
-    public function CourseAction($limit = 15, $page = 1)
+    public function courseAction($limit = 15, $page = 1)
     {
         $views = $this->getView();
         $data = $this->getRequest();
@@ -576,7 +576,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $course = $courseControl->getCourseList(false,$limit, $page);
         $category = $courseControl->getCategory();
 
-        $pages = new pagesControl('/admin/books',$courseControl->getCourseCount(),$limit,$page);
+        $pages = new pagesControl('/admin/course',$courseControl->getCourseCount(),$limit,$page);
 
         $views->assign('paginator',$pages);
 
@@ -586,6 +586,58 @@ class AdminController extends \Yaf\Controller_Abstract
         $views->assign('category',$category);
         $views->display('admin/course/index.html.twig');
 
+    }
+
+    public function coursePostAction($action = false,$cid = false, $id = false)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+        if (!$app) exit(); 
+
+        $views->assign('title','图书编辑');
+        $views->assign('app',$app);
+
+        $course = array();
+
+        if ($action and $cid and $id) {
+            $courseControl = AdminCourseManage::instance();
+            switch ($action) {
+                case 'publish':
+                    $courseControl->updateCourse($cid, array('published' => $id));
+                    break;
+                case 'verify':
+                    $courseControl->updateCourse($cid, array('verified' => $id));
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+            $course = $courseControl->getCourseRow(array('course.cid' => $cid));
+        }
+
+        $views->assign('course',$course);
+        $views->display('admin/course/tr.html.twig');
+    }
+
+    public function courseDeleteAction($cid = false)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+        if (!$app) exit(); 
+
+        $courseControl = AdminCourseManage::instance();
+
+        if ($cid) {
+            $courseControl->deleteCourse($cid);
+        }
+
+        exit();
     }
 
 
