@@ -351,9 +351,9 @@ class AdminCourseManage extends CourseControl
            $cid = $this->course_chapter->escapeString($cid);
            $list =  $this->course_chapter->where("cid='$cid'")->order('sort')->limit("$offset,$limit")->fetchList();
         }
-        $list =  $this->course_chapter->where("cid='$cid'")->order('sort')->fetchList();
+        $list = $this->course_chapter->where("cid='$cid'")->order('sort')->fetchList();
 
-        if (count($list) > 0) {
+        if (is_array($list) and count($list) > 0) {
             foreach ($list as $key => $value) {
                 if (isset($value['url']) and $value['url']) {
                     $url = parse_url($value['url']);
