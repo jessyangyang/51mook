@@ -44,7 +44,7 @@ class MembersManage extends MembersControl
      * @param String , $img , image url
      * @return Boolean
      */
-    public function register($email,$username,$password,$imgUrl = false)
+    public function register($email,$username,$password,$imgUrl = false,$is_session = true)
     {
         $email = addslashes($email);
 
@@ -55,7 +55,8 @@ class MembersManage extends MembersControl
             'published' => UPDATE_TIME,
             'role_id' => self::ROLE_NORMAL
         );
-        if ($this->isRegistered($email) or $this->getCurrentSession()) return false;
+            
+        if ($this->isRegistered($email)) return false;
 
         if ($userId = $this->members->insert($arr)) {
 
@@ -76,16 +77,10 @@ class MembersManage extends MembersControl
                 'avatar_id' => $avatarId,
                 'ip' => Registry::get('common')->ip());
 
+
             $this->memberInfo->insert($infoArr);
 
-            $app = array(
-            	'uid'=> $userId,
-            	'email' => $email,
-            	'username' => $username,
-            	'cover' => false,
-            	'super' => false,
-                'role_id' => self::ROLE_NORMAL,
-            	'permission' => $permission);
+            $app = array();
 
             if ($imgUrl and $avatarId) 
             {
@@ -98,7 +93,18 @@ class MembersManage extends MembersControl
                 }
             }
 
-            $this->session->set('app',$app);
+
+            if ($is_session) {
+                $app['uid'] = $userId;
+                $app['email'] = $email;
+                $app['username'] = $username;
+                $app['cover'] = false;
+                $app['super'] = false;
+                $app['role_id'] = self::ROLE_NORMAL;
+                $app['permission'] = $permission;
+
+                $this->session->set('app',$app);
+            }
 
             return true;
         }

@@ -82,10 +82,9 @@ class AdminController extends \Yaf\Controller_Abstract
         $rolelist = $roles->getUserRolesList();
 
         if ($data->isPost()) {
-
             switch ($data->getPost('type')) {
                 case 'create':
-                    $members->register($data->getPost('email'),$data->getPost('name'),$data->getPost('password'),false);
+                    $members->register($data->getPost('email'),$data->getPost('name'),$data->getPost('password'),false,false);
                     break;
                 case 'edit':
                     # code...
