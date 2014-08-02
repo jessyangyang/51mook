@@ -16,7 +16,7 @@ define(function(require, exports, module) {
         });
 
         validator.addItem({
-            element: '[name="description"]',
+            element: '[name="summary"]',
             required: true,
             rule: 'minlength{min:10}'
         });
@@ -27,7 +27,7 @@ define(function(require, exports, module) {
         });
 
         validator.addItem({
-            element: '[name="roles"]',
+            element: '[name="private"]',
             required: true
         });
     };

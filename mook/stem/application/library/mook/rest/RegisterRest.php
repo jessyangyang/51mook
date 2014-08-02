@@ -91,7 +91,7 @@ class RegisterRest extends \local\rest\Restful{
 
         // Course
         self::regRestURL('course_create','/create','course','create',"新建课程");
-        self::regRestURL('course_course_index','/course/:bid/:title','course','course',"课程首页");
+        self::regRestURL('course_course_index','/course/:cid/:title','course','course',"课程首页");
 
         // Books
         self::regRestURL('book_new','/book/new','book','bookNew','添加图书');

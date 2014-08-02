@@ -9,7 +9,7 @@
  */
 
 use \mook\control\index\MembersManage;
-use \mook\control\admin\AdminBookManage;
+use \mook\control\admin\AdminCourseManage;
 use \mool\control\pagesControl;
 use \local\rest\Restful;
 use \Yaf\Registry;
@@ -27,7 +27,7 @@ class IndexController extends \Yaf\Controller_Abstract
 
         $display = "index/index/index.html.twig";
 
-        $bookControl = new AdminBookManage();
+        $controlControl = AdminCourseManage::instance();
 
 
         if ($app) {
@@ -35,8 +35,8 @@ class IndexController extends \Yaf\Controller_Abstract
         }
         else
         {
-            $books = $bookControl->getBookList(array("bf.verified" => 3,"bf.published" => 4),16,1);
-            $views->assign('books',$books);
+            $course = $controlControl->getCourseList(array("course.verified" => 3,"course.published" => 4),16,1);
+            $views->assign('courses',$course);
         }
 
         $views->assign('title',"mook");

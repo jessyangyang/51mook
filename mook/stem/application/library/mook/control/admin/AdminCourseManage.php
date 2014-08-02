@@ -16,7 +16,7 @@ use \lib\dao\CourseControl;
 use \lib\models\course\Course;
 use \lib\models\course\CourseChapter;
 use \lib\models\course\CourseCategory;
-
+use \local\common\Pinyin;
 use \Yaf\Registry;
 
 class AdminCourseManage extends CourseControl
@@ -92,10 +92,11 @@ class AdminCourseManage extends CourseControl
 
         $table = $this->course->table;
 
-        $list = $this->course->field("$table.cid,$table.title,$table.ccid,$table.uid,$table.private,$table.published,$table.verified,$table.dateline,$table.modified,$table.summary,$table.tags,$table.price,cc.name as category, m.username,ic.path as cover,ic.thumb, im.path as usercover")
+        $list = $this->course->field("$table.cid,$table.title,$table.ccid,$table.uid,$table.private,$table.published,$table.verified,$table.dateline,$table.modified,$table.summary,$table.tags,$table.price,cc.name as category, m.username,ic.path as cover,ic.thumb, im.path as usercover, mi.summary as usersummary")
             ->joinQuery('course_category as cc',"$table.ccid=cc.ccid")
             ->joinQuery('images_course as ic',"$table.cover=ic.icid")
             ->joinQuery('members as m',"$table.uid=m.id")
+            ->joinQuery('member_info as mi',"m.id=mi.id")
             ->joinQuery('images_member as im','m.id=im.uid')
             ->where($sql)->order("$table.dateline DESC")
             ->limit("$offset,$limit")->fetchList();
@@ -343,13 +344,35 @@ class AdminCourseManage extends CourseControl
      */
     public function getChapterForCID($cid, $limit = false, $page = false)
     {
+        $list = array();
         if ($limit and $page) {
            $page = $page - 1;
            $offset = $limit * $page;
            $cid = $this->course_chapter->escapeString($cid);
-           return $this->course_chapter->where("cid='$cid'")->order('sort')->limit("$offset,$limit")->fetchList();
+           $list =  $this->course_chapter->where("cid='$cid'")->order('sort')->limit("$offset,$limit")->fetchList();
         }
-        return $this->course_chapter->where("cid='$cid'")->order('sort')->fetchList();
+        $list =  $this->course_chapter->where("cid='$cid'")->order('sort')->fetchList();
+
+        if (count($list) > 0) {
+            foreach ($list as $key => $value) {
+                if (isset($value['url']) and $value['url']) {
+                    $url = parse_url($value['url']);
+                    $list[$key]['host'] = $url['host'];
+                }
+                else
+                {
+                    $list[$key]['host'] = $_SERVER['HTTP_HOST'];
+                }
+                $list[$key]['host'] = preg_replace('/www./','',$list[$key]['host']);
+
+                $list[$key]['studytime'] = 0;
+                if (isset($value['body']) and $value['body']) {
+                    $list[$key]['studytime'] = round(mb_strlen($value['body'], 'UTF-8') / 300);
+                }
+            }
+            return $list;
+        }
+        return false;
     }
 
     public function getChapterCountForCID($cid)
@@ -382,7 +405,7 @@ class AdminCourseManage extends CourseControl
     }
 
 
-         /**
+    /**
      * [courseFilter description]
      * @param  [type] $data [description]
      * @return [type]       [description]
@@ -427,5 +450,19 @@ class AdminCourseManage extends CourseControl
         isset($data['body']) and $filter['body'] = $data['body'];
         if (count($filter) > 0) return $filter;
         return false; 
+    }
+
+    /**
+     * [convert description]
+     * @param  [type] $string [description]
+     * @param  string $code   [description]
+     * @return [type]         [description]
+     */
+    public function convert($string, $code = "utf-8")
+    {
+        $pinyin = Pinyin::instance();
+        $string = $pinyin->convert($string, $code);
+        if ($string) return $string;
+        return false;
     }
 }

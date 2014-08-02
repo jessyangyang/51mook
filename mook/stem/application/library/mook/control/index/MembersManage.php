@@ -111,7 +111,7 @@ class MembersManage extends MembersControl
 
         $table = $this->members->table;
 
-        $list = $this->members->field("$table.id,$table.email,$table.username,$table.published,$table.role_id,r.permission,mi.avatar_id as cover")
+        $list = $this->members->field("$table.id,$table.email,$table.username,$table.published,$table.role_id,r.permission,mi.avatar_id as cover, mi.summary")
             ->joinQuery("user_role_permission as r","$table.role_id=r.urid")
             ->joinQuery("member_info as mi","mi.id=$table.id")
             ->joinQuery("images_member as im","im.imid=mi.avatar_id")

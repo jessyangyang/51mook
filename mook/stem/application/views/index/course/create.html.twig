@@ -10,15 +10,15 @@
                 <div class="col-lg-12"><h2>创建</h2></div>
                 <div class="col-lg-12">
                     <p>在墨客里创建课程非常简单，根据您的课程主题，您只需要将网页的最好的文章与视频收集到这里。</p>
-                    <form id="course-create-form" class="form-horizontal" method="post" enctype="multipart/form-data" action="/create">
+                    <form id="course-create-form" class="form-horizontal" method="post" enctype="multipart/form-data">
                         <div class="form-group form-group-box">
                             <label for="title">标题:</label>
                             <input id="title" type="text" name="title" maxlength="256">
                             <span class="help help-block">简明概述您创建的课程名称.</span>
                         </div>
                         <div class="form-group form-group-box">
-                            <label for="description">摘要:</label>
-                            <textarea id="description" rows="10" name="description" cols="40"></textarea>
+                            <label for="summary">摘要:</label>
+                            <textarea id="summary" rows="10" name="summary" cols="40"></textarea>
                             <span class="help help-block">详细的介绍你的课程信息.</span>
                         </div>
                         <div class="form-group form-group-box">
@@ -28,11 +28,11 @@
                         </div>
                         <div class="form-group form-group-box">
                             <ul class="radio">
-                            <li><p><label><input type="radio" id="roles" checked="" value="1" name="roles"><span></span>公开</label>
+                            <li><p><label><input type="radio" id="roles" checked="" value="1" name="private"><span></span>公开</label>
                                 <span class="help">任何人都能够加入课程学习.</span></p>
                             </li>
                             <li>
-                                <p><label><input type="radio" id="roles" value="2" name="roles"><span></span>个人</label>
+                                <p><label><input type="radio" id="roles" value="2" name="private"><span></span>个人</label>
                                 <span class="help">
                                     私人课程必须您亲自邀请才能加入. 要创建私人课程，您必须升级为高级帐号. <br>
                                     <b>免费</b> 升级 <b>高级 ￥150/月</b>.

@@ -10,7 +10,7 @@
 
 use \mook\control\index\MembersManage;
 use \mook\control\index\MessageManage;
-use \mook\control\admin\AdminBookManage;
+use \mook\control\admin\AdminCourseManage;
 use \mool\control\pagesControl;
 use \local\rest\Restful;
 use \Yaf\Registry;
@@ -43,19 +43,19 @@ class CourseController extends \Yaf\Controller_Abstract
         if (!$app) exit(); 
 
         if ($data->isPost()) {
-        	$bookControl = new AdminBookManage();
-            if ($bid = $bookControl->createBook($app['uid'] , $data->getPost())){
-                header('Location: /' . $app . '/');
-                exit();
+        	$courseControl = AdminCourseManage::instance();
+            if ($cid = $courseControl->createCourse($app['uid'] , $data->getPost())){
+               header("Location: /course/$cid/" . $courseControl->convert($data->getPost("title")));
+               exit();
             }
         }
 
-        $views->assign('title',"mook");
-        $views->assign('app',$app);
+        $views->assign('title', "mook");
+        $views->assign('app', $app);
         $views->display("index/course/create.html.twig");
     }
 
-    public function courseAction($bid , $title)
+    public function courseAction($cid , $title)
     {
     	$views = $this->getView();
         $data = $this->getRequest();
@@ -63,15 +63,19 @@ class CourseController extends \Yaf\Controller_Abstract
         $members = new MembersManage();
         $app = $members->getCurrentSession();
 
-        $bookControl = new AdminBookManage();
+        $courseControl = AdminCourseManage::instance();
 
-        $course = $bookControl->getBookRow(array('books.bid' => $bid));
+        $course = $courseControl->getCourseRow(array('course.cid' => $cid));
+        $articles = $courseControl->getChapterForCID($cid);
 
-        print_r($course);
+        $owner = false;
+        if ($app['uid'] == $course['uid']) $owner = true;
 
         $views->assign('title',"mook");
         $views->assign('course', $course);
-        $views->assign('app',$app);
+        $views->assign('menus', $articles);
+        $views->assign('app', $app);
+        $views->assign('owner', $owner);
         $views->display("index/course/course.html.twig");
     }
 }

@@ -13,11 +13,11 @@
 						<h2>{{ course.title }}</h2>
 						<p class="small">
                             by
-                            <a href="#">ScottChyi</a>
+                            <a href="#">{{ course.username }}</a>
 							<span>•</span>
-							4篇
+							{{ menus|length }}篇
 							<span>•</span>
-							<a href="#">美食</a>
+							<a href="#">{{ course.category }}</a>
 						</p>
 						<!--button starts-->
 						<div class="m-actions">
@@ -43,6 +43,7 @@
 						<!--blockquote content starts-->
 						<div class="tab-content">
 							<!--blockquote introduction starts-->
+                            {% if owner %}
 							<div class="tab-pane fade in active" id="start">
                                 <ol class="m-steps">
                                     <li>
@@ -78,13 +79,14 @@
                                     </li>
                                 </ol>
 							</div>
+                            {% endif %}
                             <!--blockquote introduction starts-->
                             <div class="tab-pane fade in" id="information">
-                                <p>很少有人像苍井空这样，身上被赋予了那么多的文化符号和时代特征。喜欢她的人都明白她做过什么，但这种喜欢是一种挑衅和叛逆式的欣赏。这场从文化人引领的潮流，造就了苍井空在微博上独一无二的话题性，使她成为了在中国最受欢迎、受众最广的AV女优，没有之一。</p>
+                                <p>{{ course.summary }}</p>
                                 <div class="m-book-introduction">
-                                    <a class="m-avatar" href="#"><img src="images/cony_sun.jpg"></a>
-                                    <p><b>Cony_sun</b></p>
-                                    <p>这场从文化人引领的潮流，造就了苍井空在微博上独一无二的话题性，使她成为了在中国最受欢迎、受众最广的AV女优，没有之一。 </p>
+                                    <a class="m-avatar" href="#"><img src="{{ course.usercover }}"></a>
+                                    <p><b>{{ course.username }}</b></p>
+                                    <p>{{ course.usersummary }}</p>
                                 </div>
                             </div>
                             <!--blockquote introduction ends-->
@@ -121,33 +123,45 @@
                         <li class="m-input">
                             <form id="add" method="post" action="" class="open">
                                 <input type="hidden">
-                                <label for="link-url-id">add new <span class="point"></span></label>
+                                <label for="link-url-id">新链接<span class="point"></span></label>
                                 <input id="link-url-id" type="text" value="http://…" name="link">
-                                <textarea>Tell your students why they have to learn this...</textarea>
+                                <textarea>简明概要您的课程...</textarea>
                                 <div class="form-actions" style="display: block">
                                     <p class="small pull-left">
-                                        <a class="cancel" href="#">Never mind</a>
-                                        <span>•</span>
-                                        <a href="#">Bookmark Tool</a>
+                                        <a class="cancel" href="#">取消</a>
                                     </p>
-                                    <button class="btn">Add this</button>
+                                    <button class="btn">添加</button>
                                 </div>
                             </form>
                         </li>
+                        {% if menus %}
+                        {% for menu in menus %}
+                        <li>
+                            <span class="m-next">next<span class="point"></span></span>
+                            <span class="m-dot"><span class="icon-m-article-cata"></span></span>
+                            <h2><a href="#">{{ menu.title }}</a></h2>
+                            <p class="small m-meta">
+                                <a href="#">{{ menu.host }}</a>
+                                <span> • </span>
+                                <a href="#">9 学生</a>
+                                <span> • </span>
+                                <a href="#">{{ menu.studytime }} 分钟</a>
+                            </p>
+                        </li>
+                        {% endfor %}
+                        {% else %}
                         <li class="empty">
                             <p class="small">
-                                Great to have you on board as a teacher!<br>
-                                Start collecting links, articles and videos that are great to learn
-                                <b>烘培</b>
-                                .
-                                <br>
-                                <br>
-                                Happy teaching!
+                                您现在已经是一名老师了！<br>
+                                马上收集链接、文章和视频，开始学习 
+                                <b> {{ course.title }} </b> . 
+                                <br><br>祝你快乐教学!
                             </p>
-						</li>
+                        </li>
+                        {% endif %}
                         <li class="loader">
                             <span class="m-dot">
-                                <img alt="loading" src="https://d3i5ls5z2ayn6d.cloudfront.net/img/loader.gif">
+                                <img alt="loading" src="/web/img/default/loading.gif">
                             </span>
                             <h2>获取链接地址中...</h2>
                         </li>

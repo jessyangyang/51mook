@@ -85,7 +85,7 @@ class AdminUserManage
     {
         $table = $this->members->table;
 
-        $list = $this->members->field("$table.id,$table.email,$table.username,$table.published,$table.role_id,mi.avatar_id as cover,mi.sex,mi.birthday,mi.phone,mi.conntry,mi.province,mi.city,mi.address,mi.ip,mi.last_ip,mi.last_dateline,ur.name as role_name")
+        $list = $this->members->field("$table.id,$table.email,$table.username,$table.published,$table.role_id,mi.avatar_id as cover,mi.sex,mi.birthday,mi.phone,mi.conntry,mi.province,mi.city,mi.address,mi.ip,mi.last_ip,mi.last_dateline,mi.summary,ur.name as role_name")
                 ->joinQuery('member_info as mi',"mi.id=$table.id")
                 ->joinQuery('user_role as ur',"ur.id=$table.role_id")
                 ->where("$table.id='$uid'")->order("$table.published")->fetchList();
@@ -237,6 +237,7 @@ class AdminUserManage
         isset($data['city']) and $filter['city'] = $data['city'];
         isset($data['address']) and $filter['address'] = $data['address'];
         isset($data['ip']) and $filter['ip'] = $data['ip'];
+        isset($data['summary']) and $filter['summary'] = $data['summary'];
         isset($data['last_ip']) and $filter['last_ip'] = $data['last_ip'];
         isset($data['last_dateline']) and $filter['last_dateline'] = $data['last_dateline'];
         if (count($filter) > 0) return $filter;

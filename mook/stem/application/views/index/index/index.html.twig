@@ -18,20 +18,20 @@
     </div>
   <!--unlogin-lgimg-container end-->
 
-<!--book-list start-->
+<!--course-list start-->
 <section id="m-featured-home">
   <div class="container m-index-covers-wrapper">
     <div class="row">
       <h2 class="col-lg-12">热门</h2>
-      {% for book in books %}
+      {% for course in courses %}
       <div class="col-lg-3 col-sm-4 col-md-3">
         <div class="m-book-cell">                                                    
-            <div class="m-book-cover m-book-cover-large" style="background-image:url({{ book.cover }})">
+            <div class="m-book-cover m-book-cover-large" style="background-image:url({{ course.cover }})">
               <a href="#">
                 <hgroup>
-                  <h3>{{ book.title }}</h3>
-                  <img class="m-avatar" src="{{ book.usercover }}">
-                  <h4>{{ book.username }}</h4>
+                  <h3>{{ course.title }}</h3>
+                  <img class="m-avatar" src="{{ course.usercover }}">
+                  <h4>{{ course.username }}</h4>
                 </hgroup></a>
           </div></div></div>
       {% endfor %}
