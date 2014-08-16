@@ -4,8 +4,8 @@ define(function(require, exports, module) {
 
         $(document).on('click.modal.data-api', '[data-toggle="modal"]', function(e) {
             var $this = $(this),
-                href = $this.attr('href'),
-                url = $(this).data('url');
+            href = $this.attr('href'),
+            url = $(this).data('url');
             if (url) {
                 var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, '')));
                 $target.html('').load(url);

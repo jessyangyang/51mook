@@ -50,7 +50,7 @@ class MembersManage extends MembersControl
 
         $arr = array(
             'email' => $email,
-            'username' => addslashes($username),
+            'username' => $this->members->escapeString($username),
             'password' => md5($this->members->escapeString($password)),
             'published' => UPDATE_TIME,
             'role_id' => self::ROLE_NORMAL

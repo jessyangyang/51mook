@@ -16,7 +16,12 @@ html {
 }
 
 body {
-    font-family: "Open Sans",Arial,"Hiragino Sans GB","Microsoft YaHei","微软雅黑","STHeiti","WenQuanYi Micro Hei",SimSun,sans-serif;}
+    font-family: "Open Sans",Arial,"Hiragino Sans GB","Microsoft YaHei","微软雅黑","STHeiti","WenQuanYi Micro Hei",SimSun,sans-serif;
+}
+
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
 
 a {
 	color: #656871 ;
@@ -141,6 +146,17 @@ form p {
     margin-bottom: 1.4rem;
 }
 
+span.error {
+    background-color: #f8f8d4;
+    border-radius: 2px;
+    color: rgba(0, 0, 0, 0.6);
+    display: none;
+    font-size: 1em;
+    font-weight: 600;
+    margin: 6px 0 3px;
+    padding: 5px;
+    text-align: center;
+}
 
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
     background-color: inherit;
@@ -332,7 +348,7 @@ a.btn.small {
 }
 
 .btn.loading, button.loading, .btn.teal.loading, button.teal.loading, .btn.black.loading, button.black.loading, .btn.grey.loading, button.grey.loading, .btn.blue.loading, button.blue.loading {
-    background: url(../images/loading.gif) no-repeat scroll center center #dadada;
+    background: url('../img/default/loading.gif') no-repeat scroll center center #dadada;
     color: rgba(255, 255, 255, 0);
 }
 a.btn.teal, button.teal {
@@ -590,7 +606,7 @@ h1#mook-Logo {
 }
 
 h1#mook-Logo a {
-    background-image:url(../images/mook-logo-white.png);
+    background-image:url('../img/default/mook-logo-white.png');
     background-size: 70px 25px;
     display: block;
     height: 25px;
@@ -599,7 +615,7 @@ h1#mook-Logo a {
 }
 
 #top-nav.reading h1#mook-Logo a {
-    background:url(../images/mook-logo-grey.png) no-repeat scroll 0 0 / 70px 25px rgba(0, 0, 0, 0);
+    background:url('../img/default/mook-logo-grey.png') no-repeat scroll 0 0 / 70px 25px rgba(0, 0, 0, 0);
 }
 
 .nav-pills > li + li {
@@ -684,6 +700,27 @@ h1#mook-Logo a {
     margin: 10px 8px 10px 10px;
     overflow: hidden;
     padding: 6px 6px 8px;
+}
+
+ul.flow-numbers {
+    bottom: 14px;
+    left: 22px;
+    position: absolute;
+    right: 21px;
+    z-index: 1000;
+}
+
+ul.flow-numbers li {
+    color: #fff;
+    float: left;
+    font-size: 1em;
+    font-weight: 700;
+    margin: 0 20px 0 0;
+}
+
+ul.flow-numbers li span {
+    font-size: 12px;
+    margin: -1px 4px 0 0;
 }
 
 /**account information start**/

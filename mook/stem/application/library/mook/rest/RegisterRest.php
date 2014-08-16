@@ -80,6 +80,7 @@ class RegisterRest extends \local\rest\Restful{
          * Web System
          */
         self::regRestURL('web_index','/index','index','index','网站首页');
+        self::regRestURL('web_flows','/flows','index','flows','网站文库');
         self::regRestURL('web_users','/u/:name','index','users','个人主页');
         self::regRestURL('web_users_setting','/settings','index','setting','设置');
         self::regRestURL('web_login','/login','index','login','登录');
@@ -92,6 +93,8 @@ class RegisterRest extends \local\rest\Restful{
         // Course
         self::regRestURL('course_create','/create','course','create',"新建课程");
         self::regRestURL('course_course_index','/course/:cid/:title','course','course',"课程首页");
+        self::regRestURL('course_article','/course/:cid/:ccid/:title','course','article',"文章页");
+        self::regRestURL('course_add_link','/course/add/link/:cid','course','linkAdd','添加链接');
 
         // Books
         self::regRestURL('book_new','/book/new','book','bookNew','添加图书');

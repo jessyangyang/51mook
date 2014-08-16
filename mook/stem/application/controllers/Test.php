@@ -11,6 +11,7 @@
 use \mook\dao\Roles;
 use \local\rss\Feed;
 use \local\rss\DOMHtml;
+use \local\common\Readability;
 use \mook\control\common\BlogManage;
 use \mook\control\admin\AdminBookManage;
 
@@ -21,18 +22,26 @@ class TestController extends \Yaf\Controller_Abstract
     {
         $display = $this->getView();
         $data = $this->getRequest();
-        $roles = array(
-            'admin' => array(
-                'model' => 1,
-                'custom' => array(
-                    'admin_index',
-                    'admin_post'
-                    )),
-            'web' => array(
-                'model' => 0,
-                'custom' => false));
-        echo "<pre>";
+
+        $common =  \Yaf\Registry::get('common');
+
+        $html = $common->curl_request('http://www.dowebok.com/120.html');
+
+        $readability = new Readability($html->response);
+        $data = $readability->getContent();
         print_r($data);
+        // $roles = array(
+        //     'admin' => array(
+        //         'model' => 1,
+        //         'custom' => array(
+        //             'admin_index',
+        //             'admin_post'
+        //             )),
+        //     'web' => array(
+        //         'model' => 0,
+        //         'custom' => false));
+        // echo "<pre>";
+        // print_r($data);
 
         exit();
     }

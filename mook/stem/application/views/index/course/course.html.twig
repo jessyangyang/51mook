@@ -1,6 +1,6 @@
 {% extends 'index/layout.html.twig' %}
 
-{% set script_controller = 'course/course' %}
+{% set script_controller = 'course/chapters' %}
 
 {% block content %}
 <!--account information start-->
@@ -48,22 +48,19 @@
                                 <ol class="m-steps">
                                     <li>
                                         <span class="m-number">1</span>
-                                        <h4>Install Tools</h4>
-                                        <p>Welcome to your brand new Learning Flow. To help you gather the best resources from the web we’ve built some great tools for you. Install the
-                                            <b><a href="#">browser plugins</a></b> for Chrome, Firefox or Safari.<br>Or drag the button below to your bookmarks bar:</p>
-                                        <a class="btn small black">+ Gibbon</a>
+                                        <h4>墨客是什么</h4>
+                                        <p>墨客是一个专注社会化学习的社区，是互相学习的最简单方法。我们认为，有价值的知识早已存在于网络上，只是需要有人来引导你发现它们而已。墨客使你通过采集文章、链接、视频教程甚至书本上学到的任何东西，并把这些资料有效组织在一起，<b><a href="#">创建学习列表</a></b>，就可以开始简单高效的学习之路。在墨客，你既可以是学员也可以是教练。</p>
+                                        <a class="btn small black">+ Mook</a>
                                     </li>
                                     <li>
                                         <span class="m-number">2</span>
-                                        <h4>Collect resources</h4>
-                                        <p> Start collecting links, articles and videos that are great to learn "
-                                            <b>烘培</b>
-                                            ". Copy/paste the url in the bar on the right, or use the bookmark tool to add them to your flow. Make sure to add a personal note for your students why they have to learn it.</p>
+                                        <h4>收集内容</h4>
+                                        <p> 开始收集各种链接，文章是视频制作成一本课程 "<b>设计</b>"。复制/粘贴您的链接到右边的输入框，点击“添加”就可以收入到您的课程中了。</p>
                                     </li>
                                     <li>
                                         <span class="m-number">3</span>
-                                        <h4>Invite students</h4>
-                                        <p>Now that you have the basics for your learning flow it’s time for people to start learning, you can invite students via email or your social networks.</p>
+                                        <h4>邀请学生</h4>
+                                        <p>现在你可以通过邮件和微博发送给你的学生，让他们参与进来</p>
                                         <a class="btn social"  href="#">
                                             <span class="color-sina">
                                                 <span class="icon-m-weibo"></span>
@@ -91,7 +88,7 @@
                             </div>
                             <!--blockquote introduction ends-->
 							<div class="tab-pane fade in" id="reading-man">
-                                <p class="small">Share your learning flow on social media to get students.</p>
+                                <p class="small">分享您的学习内容，让更多的人加入</p>
                                 <ul class="social-login">
                                     <li>
                                         <a class="btn social"  href="#">
@@ -119,33 +116,34 @@
 			<!--book information ends-->
 			<!--book cata starts-->
         		<div class="col-lg-6 col-md-6 col-sm-6 pull-right">
-					<ul class="list-unstyled m-catalog">
-                        <li class="m-input">
-                            <form id="add" method="post" action="" class="open">
-                                <input type="hidden">
+                    <div class="m-input">
+                            <span class="error"><span></span></span>
+                            <form id="add-form" class="form-horizontal" method="post" action="/course/add/link/{{ course.cid }}">
                                 <label for="link-url-id">新链接<span class="point"></span></label>
-                                <input id="link-url-id" type="text" value="http://…" name="link">
-                                <textarea>简明概要您的课程...</textarea>
+                                <input id="link-url-id" type="text" value="" name="_link" placeholder="http://…">
+                                <textarea  placeholder="简明概要您的课程..." name="_summary"></textarea>
                                 <div class="form-actions" style="display: block">
                                     <p class="small pull-left">
-                                        <a class="cancel" href="#">取消</a>
+                                        <a id="link-cancel" class="cancel" href="#">取消</a>
                                     </p>
-                                    <button class="btn">添加</button>
+                                    <button type="submit" class="btn">添加</button>
                                 </div>
                             </form>
-                        </li>
+                    </div>
+					<ul class="list-unstyled m-catalog">
                         {% if menus %}
                         {% for menu in menus %}
                         <li>
                             <span class="m-next">next<span class="point"></span></span>
                             <span class="m-dot"><span class="icon-m-article-cata"></span></span>
-                            <h2><a href="#">{{ menu.title }}</a></h2>
+                            <span class="m-move"><span class="icon-m-envelope"></span></span>
+                            <h2><a href="/course/{{ menu.cid }}/{{ menu.ccid }}/{{ menu.ptitle }}">{{ menu.title }}</a></h2>
                             <p class="small m-meta">
-                                <a href="#">{{ menu.host }}</a>
+                                <a href="{{ menu.url }}">{{ menu.host }}</a>
                                 <span> • </span>
-                                <a href="#">9 学生</a>
+                                <a href="#">{{ menu.student|default(0) }} 学生</a>
                                 <span> • </span>
-                                <a href="#">{{ menu.studytime }} 分钟</a>
+                                <a href="#">{{ menu.studytime|default(0) }} 分钟</a>
                             </p>
                         </li>
                         {% endfor %}
@@ -159,12 +157,6 @@
                             </p>
                         </li>
                         {% endif %}
-                        <li class="loader">
-                            <span class="m-dot">
-                                <img alt="loading" src="/web/img/default/loading.gif">
-                            </span>
-                            <h2>获取链接地址中...</h2>
-                        </li>
                     </ul>
            	    </div>
 			<!--book cata ends-->

@@ -109,10 +109,10 @@ class ImagesManage extends \lib\dao\ImageControl
                 'uid' => $uid,
                 'class' => $class,
                 'title' => basename($files['name']),
-                'filename' => $this->images_member->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'filename' => pathinfo($filepath,PATHINFO_BASENAME),
                 'type' => $files['type'],
                 'size' => $files['size'],
-                'path' => $this->images_book->escapeString($filepath),
+                'path' => $filepath,
                 'thumb' => 0,
                 'dateline' => UPDATE_TIME
             );
@@ -134,10 +134,10 @@ class ImagesManage extends \lib\dao\ImageControl
                 'uid' => $uid,
                 'class' => $class,
                 'title' => basename(pathinfo($fileName,PATHINFO_BASENAME)),
-                'filename' => $this->images_book->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'filename' => pathinfo($filepath,PATHINFO_BASENAME),
                 'type' => 'image/' . pathinfo($filepath,PATHINFO_EXTENSION),
                 'size' => filesize(self::getRealPath($filepath)),
-                'path' => $this->images_book->escapeString($filepath),
+                'path' => $filepath,
                 'thumb' => $thumb ? 1 : 0,
                 'dateline' => UPDATE_TIME
             );
@@ -167,10 +167,10 @@ class ImagesManage extends \lib\dao\ImageControl
                 'uid' => $uid,
                 'class' => $class,
                 'title' => basename($files['name']),
-                'filename' => $this->images_member->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'filename' => pathinfo($filepath,PATHINFO_BASENAME),
                 'type' => $files['type'],
                 'size' => $files['size'],
-                'path' => $this->images->escapeString($filepath),
+                'path' => $filepath,
                 'thumb' => 0,
                 'dateline' => UPDATE_TIME
             );
@@ -190,10 +190,10 @@ class ImagesManage extends \lib\dao\ImageControl
                 'uid' => $uid,
                 'class' => $class,
                 'title' => basename(pathinfo($fileName,PATHINFO_BASENAME)),
-                'filename' => $this->images_member->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'filename' => pathinfo($filepath,PATHINFO_BASENAME),
                 'type' => 'image/' . pathinfo($filepath,PATHINFO_EXTENSION),
                 'size' => filesize(self::getRealPath($filepath)),
-                'path' => $this->images_member->escapeString($filepath),
+                'path' => $filepath,
                 'thumb' => $thumb ? 1 : 0,
                 'dateline' => UPDATE_TIME
             );
@@ -225,10 +225,10 @@ class ImagesManage extends \lib\dao\ImageControl
                 'uid' => $uid,
                 'class' => $class,
                 'title' => basename($files['name']),
-                'filename' => $this->images_course->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'filename' => pathinfo($filepath,PATHINFO_BASENAME),
                 'type' => $files['type'],
                 'size' => $files['size'],
-                'path' => $this->images_course->escapeString($filepath),
+                'path' => $filepath,
                 'thumb' => 0,
                 'dateline' => UPDATE_TIME
             );
@@ -250,10 +250,10 @@ class ImagesManage extends \lib\dao\ImageControl
                 'uid' => $uid,
                 'class' => $class,
                 'title' => basename(pathinfo($fileName,PATHINFO_BASENAME)),
-                'filename' => $this->images_course->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'filename' => pathinfo($filepath,PATHINFO_BASENAME),
                 'type' => 'image/' . pathinfo($filepath,PATHINFO_EXTENSION),
                 'size' => filesize(self::getRealPath($filepath)),
-                'path' => $this->images_course->escapeString($filepath),
+                'path' => $filepath,
                 'thumb' => $thumb ? 1 : 0,
                 'dateline' => UPDATE_TIME
             );
@@ -285,10 +285,10 @@ class ImagesManage extends \lib\dao\ImageControl
                 'bmid' => $bmid,
                 'uid' => $uid,
                 'title' => basename($files['name']),
-                'filename' => $this->images_book_article->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'filename' => pathinfo($filepath,PATHINFO_BASENAME),
                 'type' => $files['type'],
                 'size' => $files['size'],
-                'path' => $this->images_book_article->escapeString($filepath),
+                'path' => $filepath,
                 'thumb' => $thumb ? 1 : 0,
                 'dateline' => UPDATE_TIME
             );
@@ -318,10 +318,10 @@ class ImagesManage extends \lib\dao\ImageControl
                 'ccid' => $ccid,
                 'uid' => $uid,
                 'title' => basename($files['name']),
-                'filename' => $this->images_course_article->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'filename' => pathinfo($filepath,PATHINFO_BASENAME),
                 'type' => $files['type'],
                 'size' => $files['size'],
-                'path' => $this->images_course_article->escapeString($filepath),
+                'path' => $filepath,
                 'thumb' => $thumb ? 1 : 0,
                 'dateline' => UPDATE_TIME
             );
@@ -351,10 +351,10 @@ class ImagesManage extends \lib\dao\ImageControl
                 'uid' => $uid,
                 'class' => $class,
                 'title' => basename($files['name']),
-                'filename' => $this->images_member->escapeString(pathinfo($filepath,PATHINFO_BASENAME)),
+                'filename' => pathinfo($filepath,PATHINFO_BASENAME),
                 'type' => $files['type'],
                 'size' => $files['size'],
-                'path' => $this->images->escapeString($filepath),
+                'path' => $filepath,
                 'thumb' => 0,
                 'dateline' => UPDATE_TIME
             );

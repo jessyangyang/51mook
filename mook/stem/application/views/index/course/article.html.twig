@@ -1,0 +1,107 @@
+{% extends 'index/course/layout.html.twig' %}
+{% block content %}
+
+	<!--content start-->
+    <div class="container" id="uber-wrap">
+    	<div class="row narrow">
+            <div class="col-lg-12">
+                <div id="meta">
+                    <p id="m-teacher" class="small">
+                        <a href="#" class="m-avatar"><img src="{{ course.usercover }}"></a>
+                        <a href="#">{{ course.username }}</a>
+                        <br>
+                        <a href="#">{{ course.usersummary|default('这家伙很懒') }}</a>
+                    </p>
+                    <div class="m-note">
+                        <p>{{ article.summary|default('...')}}</p>
+                        <span class="m-triangle"></span>
+                    </div>
+                    <div class="m-header">
+                        <h2>{{ article.title }}</h2>
+                        <p><a href="{{ article.url }}" target="_blank">{{ article.host }}</a></p>
+                    </div>
+                    <article>
+                    	{% autoescape false %}
+                        {{ article.body }}
+                        {% endautoescape %}
+                        {% if app %}
+                        <div class="m-actions">
+                            <a href="#" class="btn iconized">未学习</a>
+                            <a href="#" class="btn trans m-social-icon icon-only"><span class="icon-m-weibo"></span></a>
+                            <a href="#" class="btn trans m-social-icon icon-only"><span class="icon-m-weixin"></span></a>
+                        </div>
+                        {% else %}
+                        <p class="m-boxed text-center">
+                            <a class="" href="#" data-reveal-id="login" data-animation="fade"  data-toggle="modal" data-target="#id_login">登录</a>
+                            或
+                            <a class="" href="#" data-reveal-id="signup" data-animation="fade"  data-toggle="modal" data-target="#id_signup">注册</a>
+                            来阅读全文
+                        </p>
+                        {% endif %}
+                    </article>
+                    {% if prev %}<a id="mook-prev" href="/course/{{ prev.cid }}/{{ prev.ccid }}/{{ prev.ptitle }}"><span class="icon-m-arrow-left"></span></a>{% endif %}
+                    {% if next %}<a id="mook-next" href="/course/{{ next.cid }}/{{ next.ccid }}/{{ next.ptitle }}"><span class="icon-m-arrow-right"></span></a>{% endif %}
+                </div>
+            </div>
+		</div>
+    </div>
+	<!--content end-->
+	<!--next article footer-->
+    {% if app %}
+    {% if next %}
+    <section id="read-next">
+        <div class="row narrow">
+            <div class="col-lg-12">
+                <h6><span>下一篇</span></h6>
+                <ul id="toc" class="list-unstyled">
+                    <li>
+                        <span class="m-dot"></span>
+                        <h2>
+                            <a href="/course/{{ next.cid }}/{{ next.ccid }}/{{ next.ptitle }}">{{ next.title }}</a>
+                        </h2>
+                        <p class="m-meta small">
+                            <a href="{{ next.url }}">{{ next.host }}</a>
+                            <span>•</span>
+                            <a href="/course/{{ course.cid }}/{{ course.ptitle }}/#reading-man">{{ next.student|default('0') }} 学习过</a>
+                            <span>•</span>
+                            <a href="{{ next.url }}">{{ next.studytime }} 分钟</a>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    {% else %}
+    <section id="teaser">
+        <div class="row narrow">
+            <div class="col-lg-6">
+                <div class="m-book-cell">
+                    <div class="m-book-cover m-book-cover-large" style="background-image:url({{ course.cover }})">
+                        <a href="#">
+                            <hgroup>
+                                <h3>{{ course.title }}</h3>
+                                <img class="m-avatar" src="{{ course.usercover }}">
+                                <h4>{{ course.username }}</h4>
+                            </hgroup>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <p class="big">互相学习在墨客是如此简单，创建和添加链接可以学习任何东西。</p>
+                <br>
+                <div class="m-actions">
+                    <div class="btn-group">
+                        <a class="btn" data-reveal-id="login" data-animation="fade"  data-toggle="modal" data-target="#id_login">加入墨客</a>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn teal" href="index-unlogin.html">了解更多</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <!--next article footer-->
+{% endblock %}

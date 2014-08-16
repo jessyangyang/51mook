@@ -295,7 +295,6 @@ class AdminBookManage extends BookControllers
 
             if ($this->menu->where("id='". $data['mid'] ."'")->update($menus))
             {
-                $body = $this->bookChapter->escapeString($data['body']);
                 if ($bookmenu = $this->bookChapter->where("menu_id='". $data['mid'] ."'")->fetchRow()) {
                     $this->bookChapter->where("menu_id='". $bookmenu['menu_id'] ."'")->update(array('body'=> $body));
                     $this->menu->commit();
@@ -315,7 +314,6 @@ class AdminBookManage extends BookControllers
             $this->menu->begin();
 
             if ($mid = $this->menu->insert($menus)) {
-                $body = $this->bookChapter->escapeString($data['body']);
                 $aid = $this->bookChapter->insert(array('menu_id' => $mid,'body' => $body));
                 if ($aid) {
                     $this->menu->commit();

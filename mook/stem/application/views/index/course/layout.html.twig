@@ -4,11 +4,8 @@
 {% block description %}{% endblock %}
 
 {% block body %}
-  {% include 'index/index/header.html.twig' %}
+  {% include 'index/course/header.html.twig' %}
   {% block content %}{% endblock %}
-  {% include 'index/footer.html.twig' %}
   {% block bottom %}{% endblock %}
   <div id="modal" class="modal"></div>
 {% endblock %}
-
-{% set bodyClass = 'homepage' %}

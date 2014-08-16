@@ -63,6 +63,10 @@ class MemberInfo extends \local\db\ORM
             'type' => 'varchar',
             'default' => 0,
             'comment' => 'ip'),
+        'summary' => array(
+            'type' => 'varchar',
+            'default' => 0,
+            'comment' => 'summary'),
         'last_ip' => array(
             'type' => 'varchar',
             'default' => 0,

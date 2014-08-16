@@ -49,7 +49,7 @@ a.m-follow:hover span, a.m-follow.yes span {
 
 
 .m-hompage-unlogin-wrapper{
-	background:url(../images/bg-avatars2.jpg) repeat scroll left top rgba(0, 0, 0, 0);
+	background:url('../img/default/bg-avatars2.jpg') repeat scroll left top rgba(0, 0, 0, 0);
 	min-height:400px;
 }
 
@@ -170,6 +170,7 @@ p#m-teacher {
     line-height: 1.8rem;
     padding-left: 42px;
     position: relative;
+    min-height: 50px;
 }
 
 p#m-teacher a.m-avatar{
@@ -288,10 +289,8 @@ a#mook-prev span, a#mook-next span {
     color: #AAAAAA;
     display: block;
     font-size: 18px;
-    left: 50%;
     position: absolute;
     top: 50%;
-    transform: translate(-50%, -50%);
     width: 60px;
 }
 
@@ -721,7 +720,7 @@ ul.m-author-booklist {
 /**书籍 详细介绍 分裂页面 开始**/
 
 .m-split-view {
-    background: url(../images/bg-body.png) repeat-y scroll center center #FFFFFF;
+    background: url('../img/default/bg-body.png') repeat-y scroll center center #FFFFFF;
 }
 
 .m-split-view .container .row {
@@ -814,11 +813,29 @@ ul.m-author-booklist {
 .m-catalog li {
 	border-top: 1px solid #EEEEEE;
 	position: relative;
+    width: 100%;
 	transition: background 0.15s linear 0s;
 }
 
 .m-catalog li a {
     text-decoration: none;
+}
+
+.m-catalog li.ui-sortable-helper {
+    background-color: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    z-index: 2000;
+}
+
+.m-catalog li.placeholder {
+    position: relative;
+    border: 2px dashed #fe5a54;
+    border-radius: 3px;
+    height: 120px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
 
 
@@ -835,6 +852,24 @@ ul.m-author-booklist {
     text-align: center;
     top: 29px;
     width: 30px;
+}
+
+.m-catalog li .m-move {
+    bottom: 0;
+    color: #fff;
+    cursor: move;
+    font-size: 22px;
+    padding-top: 32px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    transition: background-color 0.15s linear 0s, color 0.15s linear 0s;
+    width: 30px;
+}
+
+.m-catalog li:hover .m-move {
+    color: #999;
 }
 
 .m-catalog li .m-next {
@@ -933,11 +968,11 @@ ul.m-author-booklist {
 }
 
 /**添加链接 开始**/
-.m-catalog  li.m-input{
+div.m-input{
     border-top: 0 none;
     z-index: 1000;
 }
-#add {
+#add-form {
     background-color: #FAFAFA;
     height: 46px;
     margin-bottom: 10px;
@@ -946,7 +981,7 @@ ul.m-author-booklist {
     position: relative;
 }
 
-#add label {
+#add-form label {
     background-color: #F56363;
     border-radius: 2px 0 0 2px;
     color: #FFFFFF;
@@ -962,7 +997,7 @@ ul.m-author-booklist {
     z-index: 300;
 }
 
-#add label .point {
+#add-form label .point {
     border-bottom: 20px solid rgba(0, 0, 0, 0);
     border-left: 12px solid #F46161;
     border-top: 20px solid rgba(0, 0, 0, 0);
@@ -974,14 +1009,14 @@ ul.m-author-booklist {
     width: 0;
 }
 
-#add.open {
+#add-form.open {
     border-radius: 3px 3px 0 0;
     height: inherit;
     margin-bottom: 0;
 }
 
 
-#add input[type="text"], #add textarea{
+#add-form input[type="text"], #add-form textarea{
     border: 1px solid #DDDDDD;
     border-radius: 2px;
     box-sizing: border-box;
@@ -994,30 +1029,30 @@ ul.m-author-booklist {
     width: 100%;
 }
 
-#add input[type="text"] {
+#add-form input[type="text"] {
     margin-bottom: 5px;
     padding-left: 90px;
 }
 
-textarea,  #add textarea {
+textarea,  #add-form textarea {
     height: 5em;
     padding: 10px;
     resize: vertical;
 }
 
-#add.open input[type="text"] {
+#add-form.open input[type="text"] {
     border-radius: 2px 2px 0 0;
     margin-bottom: 0;
     padding-left: 10px;
     z-index: 100;
 }
 
-#add.open textarea {
+#add-form.open textarea {
     border-radius: 0 0 2px 2px;
     border-top: 0 none;
 }
 
-#add.open label {
+#add-form.open label {
     background-color: #ddd;
     display: none;
 }
@@ -1034,7 +1069,7 @@ textarea,  #add textarea {
     margin: 8px 0 0;
 }
 
-#add .form-actions {
+#add-form .form-actions {
     border: 0 none;
     margin: 0;
     padding: 5px 0;
@@ -1042,7 +1077,7 @@ textarea,  #add textarea {
     text-align: right;
 }
 
-#add .form-actions p.pull-left {
+#add-form .form-actions p.pull-left {
     margin: 12px 0 0 14px;
 }
 
@@ -1414,7 +1449,7 @@ h1#logo {
 }
 
 h1#logo a {
-    background-image:url(../images/mook-logo-white.png);
+    background-image:url('../img/default/mook-logo-white.png');
     background-size: 70px 25px;
     display: block;
     height: 25px;

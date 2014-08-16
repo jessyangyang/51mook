@@ -1,0 +1,24 @@
+<!--header start-->
+
+
+    <header>
+        <div id="top-nav" class="navbar navbar-fixed-top reading" role="navigation">
+            <h1 id="mook-Logo">
+                <a href="#">Mook</a>
+            </h1>
+            <ul class="nav nav-pills">
+                <li class="pull-left">
+                    <a class="icon" href="/course/{{ course.cid }}/{{ course.ptitle }}"><span class="icon-m-return-back"></span></a>
+                </li>
+                {% if app %}
+                <li class="pull-right">
+                    <a class="icon" href="{{ article.url }}"><span class="icon-m-globe"></span></a>
+                </li>
+                {% else %}
+                <li class="pull-right"><a class="text accounts" href="#" data-url="/login" data-animation="fade"  data-target="#id_login">登录</a></li>
+                <li class="pull-right"><a class="text accounts" href="#" data-url="/register" data-animation="fade" data-target="#id_register">注册</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </header>
+	<!--header end-->

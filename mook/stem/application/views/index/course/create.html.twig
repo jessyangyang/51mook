@@ -22,9 +22,19 @@
                             <span class="help help-block">详细的介绍你的课程信息.</span>
                         </div>
                         <div class="form-group form-group-box">
-                            <label for="tags">选择分类标签:</label>
-                            <input id="tags" type="text" name="tags" class="autocomplete-light-text-widget" data-bootstrap="normal" data-autocomplete-url="/autocomplete/TagAutocomplete/" data-autocomplete-placeholder="输入你想要的词汇，会自动搜索您需要的" data-autocomplete-minimum-characters="1" data-autocomplete-choice-selector="[data-value]" autocomplete="off" placeholder="输入你想要的词汇，会自动搜索您需要的" data-widget-ready="1">
-                            <span class="help help-block">您可以选择三个标签，或者手动添加，用空格隔开。例如: "用户体验 IOS"</span>
+                        <label for="category">选择分类:</label>
+                        <select class="form-control" name='ccid'>
+                            {% if categories %}
+                            {% for category in categories %}
+                            {% if category.ccid > 0 %}
+                            <option value="{{ category.ccid }}">{{ category.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                            {% else %}
+                            <option value="0">默认分类</option>
+                            {% endif %}
+                        </select>
+                        <span class="help help-block">根据您的内容选择分类</span>
                         </div>
                         <div class="form-group form-group-box">
                             <ul class="radio">

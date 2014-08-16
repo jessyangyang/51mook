@@ -44,6 +44,54 @@ class IndexController extends \Yaf\Controller_Abstract
         $views->display($display);
     }
 
+    public function flowsAction()
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = new MembersManage();
+        $app = $members->getCurrentSession();
+
+        $controlControl = AdminCourseManage::instance();
+
+        $categories = $controlControl->getCategory();
+
+        $page = $data->getQuery('page') ? $data->getQuery('page') - 1 : 0;
+        $category = $data->getQuery('category') ? $data->getQuery('category') : '';
+
+        if ($category and $page) {
+            $datas = $controlControl->getCourseGroup(array("course.cid" => $category, "course.verified" => 3,"course.published" => 4),40,$page);
+        }
+
+        $course = $controlControl->getCourseGroup(array("course.verified" => 3,"course.published" => 4),160,1);
+        $news = $controlControl->getCourseList(array("course.verified" => 3,"course.published" => 4),30,1);
+        $hots = $controlControl->getCourseList(array("course.verified" => 3,"course.published" => 4),30,1,"cf.student DESC");
+
+        $views->assign('title',"mook");
+        $views->assign('app',$app);
+        $views->assign('courses',$course);
+        $views->assign('categories', $categories);
+        $views->assign('news', $news);
+        $views->assign('hots', $hots);
+
+        $views->display("index/index/flows.html.twig");
+    }
+
+
+    public function articleAction($ccid)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+
+        $views->assign('title',"mook");
+        $views->assign('app',$app);
+        $views->assign('user',$member);
+        $views->display("index/course/artice.html.twig");
+    }
+
     public function usersAction($name = false)
     {
         $views = $this->getView();
@@ -51,6 +99,7 @@ class IndexController extends \Yaf\Controller_Abstract
 
         $members = MembersManage::instance();
         $app = $members->getCurrentSession();
+        $controlControl = AdminCourseManage::instance();
 
         $member = array();
         
@@ -75,8 +124,11 @@ class IndexController extends \Yaf\Controller_Abstract
             exit();
         }
 
+        $course = $controlControl->getCourseList(array('course.uid' => $member['id']), 100, 1);
+
         $views->assign('title',"mook");
         $views->assign('app',$app);
+        $views->assign('courses',$course);
         $views->assign('user',$member);
         $views->display("index/index/users.html.twig");
 
@@ -116,6 +168,9 @@ class IndexController extends \Yaf\Controller_Abstract
 
 
         if ($data->isPost()) {
+            if ($data->getPost('account') == '1') {
+                $views->display('index/index/login.html.twig');
+            }
         	if ($uid = $members->login($data->getPost('email'),$data->getPost('password')))
         	{
         		header('Location: /');
@@ -145,6 +200,9 @@ class IndexController extends \Yaf\Controller_Abstract
         }
 
         if ($data->isPost()) {
+            if ($data->getPost('account') == '1') {
+                $views->display('index/index/register.html.twig');
+            }
         	$username = explode('@',$data->getPost('email'));
         	if ($uid = $members->register($data->getPost('email'),$username[0],$data->getPost('password'),false)) {
         		header('Location: /');

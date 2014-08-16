@@ -2,6 +2,7 @@ define(function(require, exports, module) {
 	window.$ = window.jQuery = require('jquery');
 	require('bootstrap');
 	require('common/bootstrap-modal-hack');
+	require('common/auth');
 
 	exports.load = function(name) {
 		if (window.app.jsPaths[name.split('/', 1)[0]] == undefined) {
@@ -53,7 +54,7 @@ define(function(require, exports, module) {
 		$('body').prepend(message);
 	}
 
-	$( document ).ajaxSend(function(a, b, c) {
+	$(document).ajaxSend(function(a, b, c) {
 		if (c.type == 'POST') {
 			b.setRequestHeader('X-CSRF-Token', $('meta[name=csrf-token]').attr('content'));
 		}

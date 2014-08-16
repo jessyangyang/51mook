@@ -111,7 +111,7 @@ class ImageControl extends \local\image\Images
                 'filename' => $this->fileName,
                 'type' => $files['type'],
                 'size' => $files['size'],
-                'path' => $this->images->escapeString($filepath),
+                'path' => $filepath,
                 'thumb' => 0,
                 'published' => time()
             );
@@ -234,7 +234,7 @@ class ImageControl extends \local\image\Images
             'filename' => $this->fileName,
             'type' => "image/".$pathinfo['extension'],
             'size' => strlen($data),
-            'path' => $this->images->escapeString($this->_file),
+            'path' => $this->_file,
             'thumb' => 0,
             'published' => time()
             );

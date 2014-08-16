@@ -132,7 +132,7 @@ class LessonController extends \Yaf\Controller_Abstract
                     break;
             }
 
-            $book = $courseControl->getCourseRow(array('course.cid' => $cid));
+            $course = $courseControl->getCourseRow(array('course.cid' => $cid));
         }
 
         switch ($action) {

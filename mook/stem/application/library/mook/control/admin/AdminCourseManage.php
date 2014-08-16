@@ -17,6 +17,7 @@ use \lib\models\course\Course;
 use \lib\models\course\CourseChapter;
 use \lib\models\course\CourseCategory;
 use \local\common\Pinyin;
+use \mook\control\common\LinkManage;
 use \Yaf\Registry;
 
 class AdminCourseManage extends CourseControl
@@ -73,7 +74,7 @@ class AdminCourseManage extends CourseControl
      * @param  integer $page   [description]
      * @return [type]          [description]
      */
-    public function getCourseList($option = array(),$limit = 10,$page = 1)
+    public function getCourseList($option = array(),$limit = 10,$page = 1, $order = false)
     {
         $sql = '';
 
@@ -92,19 +93,25 @@ class AdminCourseManage extends CourseControl
 
         $table = $this->course->table;
 
-        $list = $this->course->field("$table.cid,$table.title,$table.ccid,$table.uid,$table.private,$table.published,$table.verified,$table.dateline,$table.modified,$table.summary,$table.tags,$table.price,cc.name as category, m.username,ic.path as cover,ic.thumb, im.path as usercover, mi.summary as usersummary")
+        $order = $order ? $order : "$table.dateline DESC";
+
+        $list = $this->course->field("$table.cid,$table.title,$table.ccid,$table.uid,$table.private,$table.published,$table.verified,$table.dateline,$table.modified,$table.summary,$table.tags,$table.price,cc.name as category, m.username,ic.path as cover,ic.thumb, im.path as usercover, mi.summary as usersummary, cf.click as clickcount, cf.student as studentcount, cf.chapters as chapterscount")
             ->joinQuery('course_category as cc',"$table.ccid=cc.ccid")
+            ->joinQuery('course_fields as cf',"$table.cid=cf.cid")
             ->joinQuery('images_course as ic',"$table.cover=ic.icid")
             ->joinQuery('members as m',"$table.uid=m.id")
             ->joinQuery('member_info as mi',"m.id=mi.id")
             ->joinQuery('images_member as im','m.id=im.uid')
-            ->where($sql)->order("$table.dateline DESC")
+            ->where($sql)->order($order)
             ->limit("$offset,$limit")->fetchList();
 
         if (is_array($list)) {
             foreach ($list as $key => $value) {
                 if (isset($value['usercover']) and $value['usercover']) {
                     $list[$key]['usercover'] = ImagesManage::getRealCoverSize($value['usercover']);
+                }
+                if (isset($value['title']) and $value['title']) {
+                    $list[$key]['ptitle'] = $this->convert($value['title']);
                 }
                 if (isset($value['cover']) and $value['cover']) {
                     $list[$key]['cover'] = ImagesManage::getRelativeImage($value['cover']);
@@ -137,6 +144,20 @@ class AdminCourseManage extends CourseControl
         return false;
     }
 
+    public function getCourseGroup($option = array(),$limit = 10,$page = 1)
+    {
+        $list = $this->getCourseList($option, $limit, $page);
+
+        if ($list) {
+            $datas = array();
+            foreach ($list as $key => $value) {
+                if($value['cid'] > 0) $datas[$value['category']][] = $value;
+            }
+            return $datas;
+        }
+        return $datas;
+    }
+
     /**
      * [createCourse description]
      * @param boolean $data [description]
@@ -146,6 +167,7 @@ class AdminCourseManage extends CourseControl
         if (!$data and !$uid) return false;
 
         $course = $this->courseFilter($data);
+        $fields = $this->courseFieldsFilter($data);
 
         if ($course) {
 
@@ -155,9 +177,11 @@ class AdminCourseManage extends CourseControl
             $course['uid'] = $uid;
 
             $this->course->begin();
-            $cid = $this->addCourse($course);
-
-            if($cid) {
+            if ($cid = $this->addCourse($course)) {
+                if ($fields) {
+                    $fields['cid'] = $cid;
+                    $this->course_fields->insert($fields);
+                }
                 $this->course->commit();
                 return $cid;
             }
@@ -176,10 +200,25 @@ class AdminCourseManage extends CourseControl
         if (!$cid) return false;
 
         $courseFilter = $this->courseFilter($data);
+        $fields = $this->courseFieldsFilter($data);
 
         if ($courseFilter and count($courseFilter) > 0) {
             $courseFilter['modified'] = UPDATE_TIME;
-            return $this->course->where("cid='$cid'")->update($courseFilter);
+            $this->course->begin();
+            if ($this->course->where("cid='$cid'")->update($courseFilter)) {
+                if ($fields) {
+                    if ($this->getCourseFields($cid)) {
+                        $this->course_fields->where("cid='$cid'")->update($fields);
+                    }
+                    else
+                    {
+                        $fields['cid'] = $cid;
+                        $this->course_fields->insert($fields);
+                    }
+                }
+                $this->course->commit();
+            }
+            $this->course->rollback();
         }
         return false;
     }
@@ -197,6 +236,7 @@ class AdminCourseManage extends CourseControl
 
             if ($this->course->where("cid=$cid")->delete())
             {
+                $this->course_fields->where("cid=$cid")->delete();
                 $this->course->commit();
                 return true;
             }
@@ -217,7 +257,22 @@ class AdminCourseManage extends CourseControl
     {
         $table = $this->course_chapter->table;
         $list =  $this->course_chapter->where("ccid='$ccid'")->fetchRow();
-        return $list ? $list : false;
+        if (is_array($list)) {
+            if (isset($list['url']) and $list['url']) {
+                $url = parse_url($list['url']);
+                $list['host'] = $url['host'];
+            }
+            else
+            {
+                $list['host'] = $_SERVER['HTTP_HOST'];
+            }
+            if (isset($list['title']) and $list['title']) {
+                $list['ptitle'] = $this->convert($list['title']);
+            }
+            $list['host'] = preg_replace('/www./','',$list['host']);
+            return $list;
+        }
+        return false;
     }
 
     /**
@@ -235,10 +290,13 @@ class AdminCourseManage extends CourseControl
             'title' => isset($datas['title']) ? $datas['title'] : '',
             'url' => isset($datas['url']) ? $datas['url'] : '',
             'body' => isset($datas['body']) ? $datas['body'] : '',
+            'summary' => isset($datas['summary']) ? $datas['summary'] : '',
+            'wordcount' => isset($datas['wordcount']) ? $datas['wordcount'] : 0,
             'sort' => isset($datas['sort']) ? $datas['sort'] : ''
         );
 
         $chapter  = $this->courseChapterFilter($data);
+
 
         if ($chapter) $chapter['cid'] = $cid;
 
@@ -258,8 +316,11 @@ class AdminCourseManage extends CourseControl
             $chapter['modified'] = UPDATE_TIME;
 
             $this->course_chapter->begin();
+
+
             if ($ccid = $this->course_chapter->insert($chapter)) {
                 $this->course_chapter->commit();
+                $this->updateCourseFields(array('chapters' => '+'), $cid);
                 return $ccid;
             }
             $this->course_chapter->rollback();
@@ -270,16 +331,210 @@ class AdminCourseManage extends CourseControl
 
     public function deleteArticle($ccid)
     {
-        if ($this->getArticleForID($ccid)) {
+        if ($article = $this->getArticleForID($ccid)) {
             $this->course_chapter->begin();
             if ($this->course_chapter->where("ccid='$ccid'")->delete()) {
                 $this->course_chapter->commit();
+                $this->updateCourseFields(array('chapters' => '-'), $article['cid']);
                 return true;
             }
             $this->course_chapter->rollback();
         }
         return false;
     }
+
+
+
+    /*Student*/
+
+    /**
+     * [getCourseStudentList description]
+     * @param  array  $option [description]
+     * @return [type]         [description]
+     */
+    public function getCourseStudentList($option = array())
+    {
+        $sql = '';
+
+        if (is_array($option) or $option)
+        {
+            $i = 1;
+            $count = count($option);
+            foreach ($option as $key => $value) {
+                if($i == $count) $sql .= "$key='" . $value . "'";
+                else $sql .= "$key='" . $value . "' AND ";
+                $i ++;
+            }
+        }
+
+        $table = $this->course_student->table;
+
+        $list = $this->course_student->field("$table.csid,$table.uid,$table.cid,$table.dateline")
+            ->where($sql)->order("$table.dateline DESC")->fetchList();
+
+        return $list;
+    }
+
+    public function createCourseStudent($datas)
+    {
+        if (!$datas) return false;
+
+        $arr = array(
+            'uid' => $datas['uid'],
+            'cid' => $datas['uid'],
+            'dateline' => UPDATE_TIME);
+
+        return $this->course_student->insert($arr);
+    }
+
+    public function deleteCourseStudentForId($csid)
+    {
+        return $this->course_student->where("csid='$csid'")->delete();
+    }
+
+    public function getCourseStudyList($option = array())
+    {
+        $sql = '';
+
+        if (is_array($option) or $option)
+        {
+            $i = 1;
+            $count = count($option);
+            foreach ($option as $key => $value) {
+                if($i == $count) $sql .= "$key='" . $value . "'";
+                else $sql .= "$key='" . $value . "' AND ";
+                $i ++;
+            }
+        }
+
+        $table = $this->course_study->table;
+
+        $list = $this->course_study->field("$table.csid,$table.ccid,$table.dateline")
+            ->where($sql)->order("$table.dateline DESC")->fetchList();
+
+        return $list;
+    }
+
+    public function createCourseStudy($datas)
+    {
+        if (!$datas) return false;
+
+        $arr = array(
+            'ccid' => $datas['ccid'],
+            'dateline' => UPDATE_TIME);
+
+        return $this->course_study->insert($arr);
+    }
+
+    public function deleteCourseStudyForId($csid)
+    {
+        return $this->course_study->where("csid='$csid'")->delete();
+    }
+
+    public function getCourseFields($cid = false)
+    {
+        if ($cid) {
+            return $this->course_fields->where("cid='$cid'")->fetchRow();
+        }
+        else
+        {
+            return $this->course_fields->fetchList();
+        }
+        return false;
+    }
+
+    public function createCourseFields($datas = array(), $cid)
+    {
+        if (!$datas and !$cid) return false;
+
+        $fields = $this->courseFieldsFilter($datas);
+
+        $this->course_fields->begin();
+        $list = $this->getCourseFields($cid);
+
+        if (!$list){
+            $fields['cid'] = $cid;
+            $this->course_fields->insert($fields);
+            $this->course_fields->commit();
+            return true;
+        }
+        else if ($this->course_fields->where("cid='$cid'")->update($fields)) {
+            $this->course_fields->commit();
+            return true;
+        }
+
+        $this->course_fields->rollback();
+        return false;
+    }
+
+    /**
+     * [updateCourseFields update integer field value]
+     *
+     * array (
+     *     'student':"+", // "+" student + 1 , "-" student - 1
+     *     'chapters': "-",
+     *     'click': '+' 
+     * )
+     * 
+     * @param  array  $datas [description]
+     * @return [type]        [description]
+     */
+    public function updateCourseFields($datas = array(), $cid )
+    {
+        if (!$datas and !$cid) return false;
+
+        $fields = $this->courseFieldsFilter($datas);
+
+        $list = array(
+            'student' => 0,
+            'chapters' => 0,
+            'click' => 0);
+
+
+        $chapters = $this->getCourseFields($cid);
+
+        if (!$chapters) {
+            $this->course_fields->begin();
+            $cid = $this->course_fields->insert(array('cid' => $cid));
+            $this->course_fields->commit();
+        }
+        else
+        {
+            $list = $chapters;
+            unset($list['cid']);
+        }
+
+        $count = $this->getChapterCountForCID($cid);
+
+        foreach ($fields as $key => $value) {
+            switch ($value) {
+                case '+':
+                    $list[$key] = $count + 1;
+                    break;
+                case '-':
+                    $list[$key] = $count == 0 ? 0 : $count - 1;
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+        }
+
+        $this->course_fields->begin();
+        if ($this->course_fields->where("cid=$cid")->update($list)) {
+            $this->course_fields->commit();
+            return true;
+        }    
+        $this->course_fields->rollback();
+        return false;
+    }
+
+    public function deleteCourseFieldsForId($cid)
+    {
+        return $this->course_fields->where("cid='$cid'")->delete();
+    }
+
+
 
     /*Category*/
 
@@ -289,7 +544,7 @@ class AdminCourseManage extends CourseControl
      */
     public function getCategory()
     {
-    	return $this->course_category->fetchList();
+    	return $this->course_category->order("sort")->fetchList();
     }
 
     public function getCategoryCount()
@@ -369,6 +624,10 @@ class AdminCourseManage extends CourseControl
                 if (isset($value['body']) and $value['body']) {
                     $list[$key]['studytime'] = round(mb_strlen($value['body'], 'UTF-8') / 300);
                 }
+
+                if (isset($value['title']) and $value['title']) {
+                    $list[$key]['ptitle'] = $this->convert($value['title']);
+                }
             }
             return $list;
         }
@@ -446,8 +705,22 @@ class AdminCourseManage extends CourseControl
         isset($data['modified']) and $filter['modified'] = $data['modified'];
         isset($data['url']) and $filter['url'] = $data['url'];
         isset($data['wordcount']) and $filter['wordcount'] = $data['wordcount'];
-        isset($data['summary']) and $filter['summary'] = $data['summary'];
         isset($data['body']) and $filter['body'] = $data['body'];
+        if (count($filter) > 0) return $filter;
+        return false; 
+    }
+
+    /**
+     * [courseFieldsFilter description]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    public function courseFieldsFilter($data)
+    {
+        $filter = array();
+        isset($data['click']) and $filter['click'] = $data['click'];
+        isset($data['student']) and $filter['student'] = $data['student'];
+        isset($data['chapters']) and $filter['chapters'] = $data['chapters'];
         if (count($filter) > 0) return $filter;
         return false; 
     }
@@ -463,6 +736,34 @@ class AdminCourseManage extends CourseControl
         $pinyin = Pinyin::instance();
         $string = $pinyin->convert($string, $code);
         if ($string) return $string;
+        return false;
+    }
+
+
+    public function addLinkToArticle($cid, $url, $summary = false)
+    {
+        $htmls = LinkManage::link($url);
+
+        if (!$htmls) return false;
+
+        $count = $this->getChapterCountForCID($cid);
+
+
+        $datas = array(
+            'title' => $htmls['title'],
+            'url' => $url,
+            'body' => $htmls['content'],
+            'wordcount' => $htmls['word_count'],
+            'summary' => $summary,
+            'sort' => $count ? $count : 0
+        );
+
+        $ccid = $this->createArticle($cid, $datas);
+
+        if ($ccid) {
+            return $this->getArticleForID($ccid);
+        }
+
         return false;
     }
 }

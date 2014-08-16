@@ -12,6 +12,15 @@ namespace mook;
 
 class common
 {
+
+    // Instance Self
+    protected static $instance;
+
+    public static function instance()
+    {
+        return self::$instance ? self::$instance : new common();
+    }
+
     /**
      * Create a random 32 character MD5 token
      *
@@ -90,14 +99,14 @@ class common
         $defaults = array(
             CURLOPT_HEADER => 0,
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_TIMEOUT => 5,
+            CURLOPT_TIMEOUT => 15
         );
 
         // Connection options override defaults if given
         curl_setopt_array($ch, (array) $options + $defaults);
 
         // Create a response object
-        $object = new stdClass;
+        $object = new \stdClass;
 
         // Get additional request info
         $object->response = curl_exec($ch);

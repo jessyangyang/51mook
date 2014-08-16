@@ -13,6 +13,9 @@ namespace lib\dao;
 use \lib\models\course\Course;
 use \lib\models\course\CourseChapter;
 use \lib\models\course\CourseCategory;
+use \lib\models\course\CourseStudent;
+use \lib\models\course\CourseStudy;
+use \lib\models\course\CourseFields;
 
 use \lib\dao\ImageControl;
 
@@ -30,9 +33,13 @@ class CourseControl {
     const COURSE_VERIFIED_STATE = 3;
 
 
-    public $course;
-    public $course_chapter;
-    public $course_category;
+    protected $course;
+    protected $course_chapter;
+    protected $course_category;
+    protected $course_student;
+    protected $course_study;
+    protected $course_fields;
+
 
 
     /**
@@ -43,6 +50,9 @@ class CourseControl {
         $this->course = Course::instance();
         $this->course_chapter = CourseChapter::instance();
         $this->course_category = CourseCategory::instance();
+        $this->course_student = CourseStudent::instance();
+        $this->course_study = CourseStudy::instance();
+        $this->course_fields = CourseFields::instance();
         $this->images = new ImageControl();
     }
 
@@ -56,6 +66,9 @@ class CourseControl {
         $this->course = NULL;
         $this->course_chapter = NULL;
         $this->course_category = NULL;
+        $this->course_student = NULL;
+        $this->course_study = NULL;
+        $this->course_fields = NULL;
         $this->images = NULL;
     }
 

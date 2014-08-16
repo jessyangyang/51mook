@@ -1,0 +1,123 @@
+{% extends 'index/layout.html.twig' %}
+{% block content %}
+	<!--search result book-list start-->
+    	<div class="container m-library-wrapper">
+    		<div class="row">
+				<h2 class="col-lg-12">墨客文库</h2>
+				<div class="col-lg-12">
+					<ul class="nav nav-tabs m-Library-nav-tabs">
+						<li class="active"><a href="#popular" data-toggle="tab">热门</a></li>
+  						<li><a href="#new" data-toggle="tab">最新上架</a></li>
+  						{% if categories %}
+  						{% for category in categories%}
+  						{% if category.ccid > 0%}
+  						<li class="category-list-{{ category.sort }}"><a href="#{{ category.name }}" data-toggle="tab">{{ category.name }}</a></li>
+  						{% endif %}
+  						{% endfor %}
+  						{% endif %}
+					</ul>
+				</div>
+				<!-- Tab panes -->
+				<div class="tab-content col-lg-12">
+					<div class="tab-pane fade in active" id="popular">
+						{% if hots%}
+						{% for hot in hots %}
+						<div class="col-lg-3 col-sm-4 col-md-3">
+							<div class="m-book-cell">                                                    
+								<div class="m-book-cover m-book-cover-large" style="background-image:url({{ hot.cover }})">
+									<a href="/course/{{ hot.cid }}/{{ hot.ptitle }}">
+										<hgroup>
+											<h3>{{ hot.title }}</h3>
+											<img class="m-avatar" src="{{ hot.usercover }}">
+											<h4>{{ hot.username }}</h4>
+										</hgroup>
+										 <ul class="flow-numbers">
+                                            <li>
+                                                <span class="icon-m-user"></span>{{ hot.studentcount|default(0) }}
+                                            </li>
+                                            <li>
+                                                <span class="icon-m-article-cata"></span>{{ hot.chapterscount|default(0) }}
+                                            </li>
+                                        </ul>
+									</a>
+								</div>
+							</div>   					
+						</div>
+						{% endfor %}
+						<div class="col-lg-12 col-sm-12 col-md-12 text-center m-show-more">
+                            <a href="#" class="btn grey">显示更多</a>
+                            <div style="display: none">
+                                <img alt="loading" src="images/loading.gif">
+                            </div>
+                        </div>
+						{% endif %}
+                  	</div>
+					<!-- Tab panes -->
+					<div class="tab-pane fade" id="new">
+						{% if news %}
+						{% for new in news%}
+						<div class="col-lg-3 col-sm-4 col-md-3">
+							<div class="m-book-cell">                                                    
+								<div class="m-book-cover m-book-cover-large" style="background-image:url({{ new.cover }})">
+									<a href="/course/{{ new.cid }}/{{ new.ptitle }}">
+										<hgroup>
+											<h3>{{ new.title }}</h3>
+											<img class="m-avatar" src="{{ new.usercover }}">
+											<h4>{{ new.username }}</h4>
+										</hgroup>
+										 <ul class="flow-numbers">
+                                            <li>
+                                                <span class="icon-m-user"></span>{{ new.studentcount|default(0) }}
+                                            </li>
+                                            <li>
+                                                <span class="icon-m-article-cata"></span>{{ new.chapterscount|default(0) }}
+                                            </li>
+                                        </ul>
+									</a>
+							</div></div>   					
+						</div>
+						{% endfor %}
+						<div class="col-lg-12 col-sm-12 col-md-12 text-center m-show-more">
+                            <a href="#" class="btn grey">显示更多</a>
+                            <div style="display: none">
+                                <img alt="loading" src="images/loading.gif">
+                            </div>
+                        </div>
+						{% endif %}
+                  	</div> 
+					<!-- Tab panes -->
+					{% if courses %}
+					{% for key, value in courses%}
+					<div class="tab-pane fade" id="{{ key }}">
+						{% for course in value%}
+						<div class="col-lg-3 col-sm-4 col-md-3">
+							<div class="m-book-cell">                                                    
+								<div class="m-book-cover m-book-cover-large" style="background-image:url({{ course.cover }})">
+									<a href="/course/{{ course.cid }}/{{ course.ptitle }}">
+										<hgroup>
+											<h3>{{ course.title }}</h3>
+											<img class="m-avatar" src="{{ course.usercover }}">
+											<h4>{{ course.username }}</h4>
+										</hgroup>
+										 <ul class="flow-numbers">
+                                            <li>
+                                                <span class="icon-m-user"></span>{{ course.studentcount|default(0) }}
+                                            </li>
+                                            <li>
+                                                <span class="icon-m-article-cata"></span>{{ course.chapterscount|default(0) }}
+                                            </li>
+                                        </ul>
+									</a></div></div>
+						</div>
+						{% endfor %}
+					</div>
+					{% endfor %}
+					<div class="col-lg-12 col-sm-12 col-md-12 text-center m-show-more">
+                            <a href="#" class="btn grey">显示更多</a>
+                            <div style="display: none">
+                                <img alt="loading" src="images/loading.gif">
+                            </div>
+                        </div>
+					{% endif %}             
+			</div></div></div>
+{% endblock %}

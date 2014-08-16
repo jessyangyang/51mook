@@ -267,7 +267,7 @@ class ORM extends MySQL
     function insert($dbData) {
         if ($this->_filter($dbData)) {
             foreach ($dbData as $key => $value) {
-                $dbData["`$key`"] = "'$dbData[$key]'";
+                $dbData["`$key`"] = "'" . $this->escapeString($dbData[$key]) . "'";
                 if (array_key_exists($key,$this->fields) and $this->fields[$key]['type'] == "bit") {
                     $dbData["`$key`"] = "b'$value'";
                 }
@@ -309,7 +309,7 @@ class ORM extends MySQL
             if ($dbData and isset($tmpOption['where']) and $tmpOption['where'])
             {
                 foreach ($dbData as $key => $value) {
-                    $setarr[] = $this->fields[$key]['type'] == 'bit' ? "`$key`=b'$value'" :"`$key`='$value'";
+                    $setarr[] = $this->fields[$key]['type'] == 'bit' ? "`$key`=b'" .$this->escapeString($value). "'" :"`$key`='" . $this->escapeString($value) . "'";
                 }
                 $sql = "UPDATE " . $tmpOption['table'] . " SET " . implode(',', $setarr) . " WHERE " . $tmpOption['where'];
                 

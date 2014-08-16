@@ -25,7 +25,7 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract
 
     public function _initConfig(Dispatcher $dispatcher)
     {
-        Yaf\Registry::set("common", new common());
+        Yaf\Registry::set("common", common::instance());
     }
 
     public function _initDataBase(Dispatcher $dispatcher)

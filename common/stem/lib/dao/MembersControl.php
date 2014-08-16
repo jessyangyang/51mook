@@ -133,7 +133,6 @@ class MembersControl
      */
     public function isRegistered($email)
     {
-        $email = $this->members->escapeString($email);
         if ($data = $this->members->where("email='" . $email ."'")->fetchRow()) return $data;
         return false;
     }
@@ -257,7 +256,7 @@ class MembersControl
         $offset = $page == 1 ? 0 : ($page - 1)*$limit; 
         $table = $this->members->table;
 
-        $list = $this->members->field("$table.id,$table.email,$table.username,$table.published,$table.role_id,r.name as role_name,mi.ip,mi.last_ip,im.path as cover,mi.last_dateline as dateline")
+        $list = $this->members->field("$table.id,$table.email,$table.username,$table.published,$table.role_id,r.name as role_name,mi.ip,mi.last_ip,im.path as cover,mi.last_dateline as dateline,mi.summary")
             ->joinQuery("user_role as r","$table.role_id=r.id")
             ->joinQuery('member_info as mi',"$table.id=mi.id")
             ->joinQuery('images_member as im',"im.imid=mi.avatar_id")

@@ -12,13 +12,23 @@ namespace local\common;
 
 class Pinyin {
 
+    const VERSION = "1.0";
+
+    // Instance Self
+    protected static $instance;
+
+    public static function instance()
+    {
+        return self::$instance ? self::$instance : new Pinyin();
+    }
+    
     /**
      * [convert description]
      * @param  [type] $string [description]
      * @param  string $code   [description]
      * @return [type]         [description]
      */
-    public function convert($string, $code='gb2312') {
+    public function convert($string, $code='gb2312', $sign = "-") {
 
         $_DataKey = "a|ai|an|ang|ao|ba|bai|ban|bang|bao|bei|ben|beng|bi|bian|biao|bie|bin|bing|bo|bu|ca|cai|can|cang|cao|ce|ceng|cha".
                     "|chai|chan|chang|chao|che|chen|cheng|chi|chong|chou|chu|chuai|chuan|chuang|chui|chun|chuo|ci|cong|cou|cu|".
@@ -72,13 +82,23 @@ class Pinyin {
         reset($_Data);
         if($code != 'gb2312') $string = $this->utf8_to_gb($string);
         $_Res = '';
-        for($i=0; $i<strlen($string); $i++){
-            $_P = ord(substr($string, $i, 1));
-            if($_P>160) { $_Q = ord(substr($string, ++$i, 1)); $_P = $_P*256 + $_Q - 65536; }
-            $_Res .= $this->pinyins($_P, $_Data);
+        $count = strlen($string);
+        for($i=0; $i<$count; $i++){
+            $tmp = substr($string, $i, 1);
+            preg_match("/^[a-zA-Z0-9]+/", $tmp , $matches);
+            if (!$matches) {
+                $_P = ord($tmp);
+                if($_P>160) { $_Q = ord(substr($string, ++$i, 1)); $_P = $_P*256 + $_Q - 65536; }
+                $_Res .= " " . $this->pinyins($_P, $_Data) . " ";
+            }
+            else
+            {
+                $_Res .= $matches[0];
+            }
         }
-        return $_Res;
-        //return preg_replace("/[^a-z0-9]*/", '', $_Res);
+        $_Res = preg_replace('/\s(?=\s)/', '', $_Res);
+        return implode($sign, explode(" ",trim($_Res)));
+        // return preg_replace("/[^a-z0-9]*/", '', $_Res);
     }
          
     public function pinyins($num, $data){
@@ -108,7 +128,7 @@ class Pinyin {
             $string .= chr(0x80 | $code & 0x3F);
         }
         
-        return iconv('UTF-8', 'GB2312', $string);
+        return iconv('UTF-8', 'GB2312//TRANSLIT', $string);
     }
     
     public function Arr_Combine($_Arr1, $_Arr2){
