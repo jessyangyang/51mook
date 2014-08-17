@@ -1,50 +1,37 @@
-<!-- login-->
-    <!-- Modal -->
-    {% set script_controller = 'auth/login' %}
-
-    <form id="login-form" role="form" action="/login" method="post" novalidate="novalidate" data-widget-cid="widget-0">
-       <div id="id_login" class="modal fade in" aria-hidden="false" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" style="display: block;">
-            <div class="modal-dialog m-modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header m-modal-header text-center">
-                        <h4 class="modal-title" id="myModalLabel">登录墨客</h4>
-                    </div>
-                    <div class="modal-body m-modal-body">
-                        <ul class="social-login">
-                            <li>
-                                <a class="btn social"  href="#">
-                                    <span class="color-sina"><span class="icon-m-weibo"></span></span>使用微博登录</a>
-                            </li>
-                            <li>
-                                <a class="btn social" href="#">
-                                    <span class="color-weixin"><span class="icon-m-weixin"></span></span>使用微信登录</a>
-                            </li>
-                            <li>
-                                <a class="btn social"  href="#">
-                                    <span class="color-lin"><span class="icon-m-linked-in"></span></span>使用 Linked in 登录</a>
-                            </li>
-                            <li>
-                                <a class="btn social"  href="#">
-                                    <span class="color-qq"><span class="icon-m-qq"></span></span>使用QQ登录
-                                </a>
-                            </li>
-                        </ul>
-                        <p class="or"><span>OR</span></p>
-                        <p>
-                            <label for="login-email">E-mail：</label>
-                            <input id="login-email" type="text" name="login-email" tabindex="1" maxlength="75">
-                        </p>
-                        <p>
-                            <label for="login-password">密码：</label>
-                            <input id="login-password" type="password" name="login-password" tabindex="2">
-                        </p>
-                    </div>
-                    <div class="modal-footer m-modal-footer">
-                        <span class="pull-left"><a href="#" data-toggle="modal" data-target="#id_signup">还没有帐号？<b>点击注册</b></a></span>
-                        <a href="#" class="btn">确 定</a>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-    </form>
-    <!-- login end -->
+{% set script_controller = 'auth/login' %}
+<form id="login-form" role="form" action="/login" method="post" novalidate="novalidate" data-widget-cid="widget-0">
+    <div id="id_login" class="modal fade" aria-hidden="true" aria-labelledby="myModalLabel" tabindex="-1" style="display: block">
+        <div class="modal-dialog m-modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header m-modal-header text-center">
+                    <h4 class="modal-title" id="myModalLabel">登录墨客</h4>
+                </div>
+                <div class="modal-body m-modal-body">
+                    <ul class="social-login">
+                        <li>
+                            <a class="btn social"  href="#"><span class="color-sina"><span class="icon-m-weibo"></span></span>使用微博登录</a></li>
+                        <li>
+                            <a class="btn social" href="#"><span class="color-weixin"><span class="icon-m-weixin"></span></span>使用微信登录</a></li>
+                        <li>
+                            <a class="btn social"  href="#"><span class="color-lin"><span class="icon-m-linked-in"></span></span>使用 Linked in 登录</a></li>
+                        <li>
+                            <a class="btn social"  href="#"><span class="color-qq"><span class="icon-m-qq"></span></span>使用QQ登录</a></li>
+                    </ul>
+                    <p class="or"><span>OR</span></p>
+                    <p>
+                        <label for="login-email">E-mail：</label>
+                        <input id="login-email" type="text" name="login-email" tabindex="1" maxlength="75">
+                    </p>
+                    <p>
+                        <label for="login-password">密码：</label>
+                        <input id="login-password" type="password" name="login-password" tabindex="2">
+                    </p>
+                </div>
+                <div class="modal-footer m-modal-footer">
+                    <span class="pull-left"><a href="#" data-toggle="modal" data-target="#id_signup">还没有帐号？<b>点击注册</b></a></span>
+                    <button type="submit" class="btn">确 定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

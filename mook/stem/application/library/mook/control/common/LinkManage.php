@@ -11,7 +11,6 @@
 namespace mook\control\common;
 
 use \local\common\Readability;
-use \mook\common;
 
 class LinkManage { 
 
@@ -24,7 +23,7 @@ class LinkManage {
 	 */
 	public static function link($url, $charset = 'utf-8', array $option = NULL )
 	{
-		$common =  common::instance();
+		$common =  \Yaf\Registry::get('common');
 
 		$htmls = $common->curl_request($url);
 

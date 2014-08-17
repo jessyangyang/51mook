@@ -1,0 +1,54 @@
+<!-- edit book info -->
+    <!-- Modal -->
+    <form id="course-edit-form" class="form-horizontal" method="post" role="form" action="">
+        <div class="modal fade" id="edit-course" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog m-modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header m-modal-header text-center">
+                        <h4 class="modal-title" id="myModalLabel">编辑信息</h4>
+                    </div>
+                    <div class="modal-body m-modal-body">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="form-cover" rowspan="3">
+                                        <label>封面：</label>
+                                        <a onclick="id_image.click()" class="m-flow-cover" href="#"></a>
+                                        <input id="id_image" type="file" name="image">
+                                        <a onclick="id_image.click()" class="cover-change btn grey tiny" href="#">上传封面</a>
+                                    </td>
+                                    <td>
+                                        <p>
+                                            <label for="id_title">标题</label>
+                                            <input id="id_title" value="苍井空" type="text" name="title" maxlength="256">
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>
+                                            <label for="id_description">For who is this flow?</label>
+                                            <textarea id="id_description"  rows="10"  name="description" cols="40">苍井空</textarea>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            <label for="id_tags">选择分类：</label>
+                            <input id="id_tags" type="password" name="tags" maxlength="256">
+                        </p>
+                        <p class="small light">Choose 3 topics for this flow so people can easily find it. Topics are comma separated. E.g. "design, ux-design".</p>
+                    </div>
+                    <div class="modal-footer m-modal-footer">
+                        <p  class="pull-left">
+                            <a href="#" data-dismiss="modal" aria-hidden="true">取消</a>
+                            <a href="#" data-reveal-id="delete-course" data-animation="fade"  data-toggle="modal" data-target="#delete-course"><span class="icon-m-remove"></span></a>
+                        </p>
+                        <button class="btn" type="submit">确 定</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </form>
+    <!-- edit book info end -->

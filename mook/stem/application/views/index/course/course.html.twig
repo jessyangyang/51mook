@@ -12,19 +12,16 @@
 					<div class="m-flow-title">
 						<h2>{{ course.title }}</h2>
 						<p class="small">
-                            by
-                            <a href="#">{{ course.username }}</a>
-							<span>•</span>
-							{{ menus|length }}篇
-							<span>•</span>
-							<a href="#">{{ course.category }}</a>
+                            by <a href="/u/{{ course.username }}">{{ course.username }}</a>
+							<span>•</span> {{ menus|length }}篇 <span>•</span>
+							<a href="/flows/#{{ course.category }}">{{ course.category }}</a>
 						</p>
 						<!--button starts-->
 						<div class="m-actions">
                             {% if app %}
                             {% if owner %}
 							<div class="btn-group">
-								<button type="button" class="btn grey"   data-reveal-id="editbookinfo" data-animation="fade"  data-toggle="modal" data-target="#editbookinfo"><span class="icon-m-pencil"></span>编辑</button>
+								<button type="button" class="btn grey"   data-reveal-id="edit-course" data-animation="fade"  data-toggle="modal" data-target="#edit-course"><span class="icon-m-pencil"></span>编辑</button>
 							</div>
                             {% else %}
                             <div class="btn-group">
@@ -50,8 +47,10 @@
                             {% if app %}
                             {% if owner %}
                             <li class="active"><a href="#start" data-toggle="tab">开始</a></li>
-                            {% endif %}
                             <li><a href="#information" data-toggle="tab">信息</a></li>
+                            {% else %}
+                            <li class="active"><a href="#information" data-toggle="tab">信息</a></li>
+                            {% endif %}
                             <li><a href="#reading-man" data-toggle="tab">学生</a></li>
                             {% else %}
                             <li class="active"><a href="#information" data-toggle="tab">信息</a></li>
@@ -97,7 +96,7 @@
 							</div>
                             {% endif %}
                             <!--blockquote introduction starts-->
-                            <div class="tab-pane fade in active" id="information">
+                            <div class="tab-pane fade in {% if owner is empty %}active{% endif %}" id="information">
                                 <p>{{ course.summary }}</p>
                                 <div class="m-book-introduction">
                                     <a class="m-avatar" href="#"><img src="{{ course.usercover }}"></a>
@@ -167,6 +166,10 @@
                                 <a href="#">{{ menu.student|default(0) }} 学生</a>
                                 <span> • </span>
                                 <a href="#">{{ menu.studytime|default(0) }} 分钟</a>
+                                {% if owner %}
+                                <span> • </span>
+                                <a href="#">编辑</a>
+                                {% endif %}
                             </p>
                         </li>
                         {% endfor %}
@@ -188,5 +191,8 @@
 	<!--account information ends-->
     </div>
 
+    {% include 'index/course/course-edit-modal.html.twig' %}
+    {% include 'index/course/course-delete-modal.html.twig' %}
 
 {% endblock %}
+

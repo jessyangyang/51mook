@@ -101,7 +101,7 @@ class IndexController extends \Yaf\Controller_Abstract
         $app = $members->getCurrentSession();
         $controlControl = AdminCourseManage::instance();
 
-        $member = array();
+        $owner = $member = false;
         
         preg_match("/^[a-zA-Z0-9]+/", $name , $matches);
 
@@ -117,6 +117,7 @@ class IndexController extends \Yaf\Controller_Abstract
 
         if ($app and strnatcasecmp($name,$app['username'])) {
             $member = $members->getCurrentMember();
+            $owner = true;
         }
         
         if (!$member) {
@@ -128,6 +129,7 @@ class IndexController extends \Yaf\Controller_Abstract
 
         $views->assign('title',"mook");
         $views->assign('app',$app);
+        $views->assign('owner',$owner);
         $views->assign('courses',$course);
         $views->assign('user',$member);
         $views->display("index/index/users.html.twig");

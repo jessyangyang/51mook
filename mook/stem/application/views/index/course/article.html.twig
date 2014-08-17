@@ -5,6 +5,7 @@
     <div class="container" id="uber-wrap">
     	<div class="row narrow">
             <div class="col-lg-12">
+                {% if article %}
                 <div id="meta">
                     <p id="m-teacher" class="small">
                         <a href="#" class="m-avatar"><img src="{{ course.usercover }}"></a>
@@ -12,10 +13,12 @@
                         <br>
                         <a href="#">{{ course.usersummary|default('这家伙很懒') }}</a>
                     </p>
+                    {% if article.summary %}
                     <div class="m-note">
                         <p>{{ article.summary|default('...')}}</p>
                         <span class="m-triangle"></span>
                     </div>
+                    {% endif %}
                     <div class="m-header">
                         <h2>{{ article.title }}</h2>
                         <p><a href="{{ article.url }}" target="_blank">{{ article.host }}</a></p>
@@ -42,6 +45,7 @@
                     {% if prev %}<a id="mook-prev" href="/course/{{ prev.cid }}/{{ prev.ccid }}/{{ prev.ptitle }}"><span class="icon-m-arrow-left"></span></a>{% endif %}
                     {% if next %}<a id="mook-next" href="/course/{{ next.cid }}/{{ next.ccid }}/{{ next.ptitle }}"><span class="icon-m-arrow-right"></span></a>{% endif %}
                 </div>
+                {% endif %}
             </div>
 		</div>
     </div>

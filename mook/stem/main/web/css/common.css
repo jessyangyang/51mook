@@ -406,7 +406,7 @@ a.btn.teal, button.teal {
 #page-home #top-nav.show {
     background: linear-gradient(to right, rgba(80, 171, 241, 0.96) 0px, rgba(72, 163, 233, 0.96) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0); ;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
-    z-index: 3000;
+    z-index: 1000;
 }
 
 #page-home #top-nav h1 {
@@ -742,7 +742,7 @@ ul.flow-numbers li span {
 	width: 100%;
 	background: #000;
 	background: rgba(0,0,0,.8);
-	z-index: 100000000;
+	z-index: 1000;
 	display: none;
 	top: 0;
 	left: 0;
@@ -757,7 +757,7 @@ ul.flow-numbers li span {
 	min-height: 340px;
 	background: #FFFFFF;
 	position: absolute;
-	z-index: 100000001;
+	z-index: 1001;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;

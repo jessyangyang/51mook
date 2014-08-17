@@ -80,7 +80,12 @@ class Pinyin {
         $_Data = (PHP_VERSION>='5.0') ? array_combine($_TDataKey, $_TDataValue) : $this->Arr_Combine($_TDataKey, $_TDataValue);
         arsort($_Data);
         reset($_Data);
-        if($code != 'gb2312') $string = $this->utf8_to_gb($string);
+
+
+        if($code != 'gb2312') {
+            $string = $this->utf8_to_gb($string);
+        }
+
         $_Res = '';
         $count = strlen($string);
         for($i=0; $i<$count; $i++){
@@ -96,8 +101,10 @@ class Pinyin {
                 $_Res .= $matches[0];
             }
         }
-        $_Res = preg_replace('/\s(?=\s)/', '', $_Res);
-        return implode($sign, explode(" ",trim($_Res)));
+        return preg_replace('/\s+(?=\b)/', $sign, trim($_Res));
+        // $_Res = preg_replace('/\s(?=\s)/', '', $_Res);
+        // return implode($sign, explode(" ",trim($_Res)));
+        
         // return preg_replace("/[^a-z0-9]*/", '', $_Res);
     }
          
@@ -111,24 +118,24 @@ class Pinyin {
     }
 
     public function utf8_to_gb($code){
-        $string = '';
-        if($code < 0x80){ 
-            $string .= $code;
-        }elseif($code < 0x800){
-            $string .= chr(0xC0 | $code>>6);
-            $string .= chr(0x80 | $code & 0x3F);
-        }elseif($code < 0x10000){
-            $string .= chr(0xE0 | $code>>12);
-            $string .= chr(0x80 | $code>>6 & 0x3F);
-            $string .= chr(0x80 | $code & 0x3F);
-        }elseif($code < 0x200000) {
-            $string .= chr(0xF0 | $code>>18);
-            $string .= chr(0x80 | $code>>12 & 0x3F);
-            $string .= chr(0x80 | $code>>6 & 0x3F);
-            $string .= chr(0x80 | $code & 0x3F);
-        }
+        // $string = '';
+        // if($code < 0x80){ 
+        //     $string .= $code;
+        // }elseif($code < 0x800){
+        //     $string .= chr(0xC0 | $code>>6);
+        //     $string .= chr(0x80 | $code & 0x3F);
+        // }elseif($code < 0x10000){
+        //     $string .= chr(0xE0 | $code>>12);
+        //     $string .= chr(0x80 | $code>>6 & 0x3F);
+        //     $string .= chr(0x80 | $code & 0x3F);
+        // }elseif($code < 0x200000) {
+        //     $string .= chr(0xF0 | $code>>18);
+        //     $string .= chr(0x80 | $code>>12 & 0x3F);
+        //     $string .= chr(0x80 | $code>>6 & 0x3F);
+        //     $string .= chr(0x80 | $code & 0x3F);
+        // }
         
-        return iconv('UTF-8', 'GB2312//TRANSLIT', $string);
+        return iconv('UTF-8', 'GB2312//TRANSLIT', $code);
     }
     
     public function Arr_Combine($_Arr1, $_Arr2){
