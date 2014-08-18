@@ -29,9 +29,8 @@ class LinkManage {
 
 
 		if ($htmls) {
-			preg_match('/=(\w+\b)/',$htmls->info['content_type'], $matchs);
+			preg_match('/=(.+\b)/',$htmls->info['content_type'], $matchs);
 			$charset = isset($matchs[1]) ? $matchs[1] : 'utf-8';
-
 			$datas = new Readability($htmls->response,$charset);
 			return $datas->getContent();
 		}
