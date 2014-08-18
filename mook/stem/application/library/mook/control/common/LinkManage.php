@@ -27,9 +27,10 @@ class LinkManage {
 
 		$htmls = $common->curl_request($url);
 
+
 		if ($htmls) {
 			preg_match('/=(\w+\b)/',$htmls->info['content_type'], $matchs);
-			$charset = $charset ? $charset : $matchs[1];
+			$charset = isset($matchs[1]) ? $matchs[1] : 'utf-8';
 
 			$datas = new Readability($htmls->response,$charset);
 			return $datas->getContent();
