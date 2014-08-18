@@ -21,14 +21,17 @@ class LinkManage {
 	 * @param  [type] $option  [description]
 	 * @return [array]         [lead_image_url,word_count,title,content]
 	 */
-	public static function link($url, $charset = 'utf-8', array $option = NULL )
+	public static function link($url, $charset = false, array $option = NULL )
 	{
 		$common =  \Yaf\Registry::get('common');
 
 		$htmls = $common->curl_request($url);
 
 		if ($htmls) {
-			$datas = new Readability($htmls->response);
+			preg_match('/=(\w+\b)/',$htmls->info['content_type'], $matchs);
+			$charset = $charset ? $charset : $matchs[1];
+
+			$datas = new Readability($htmls->response,$charset);
 			return $datas->getContent();
 		}
 		return false;
