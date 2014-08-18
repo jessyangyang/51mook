@@ -30,7 +30,7 @@
               <a href="/course/{{ course.cid }}/{{ course.ptitle }}">
                 <hgroup>
                   <h3>{{ course.title }}</h3>
-                  <img class="m-avatar" src="{{ course.usercover }}">
+                  <img class="m-avatar" src="{{ course.usercover_s|default('') }}">
                   <h4>{{ course.username }}</h4>
                 </hgroup></a>
           </div></div></div>

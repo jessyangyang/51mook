@@ -1,5 +1,7 @@
 <!-- edit book info -->
     <!-- Modal -->
+    {% if app %}
+    {% if course %}
     <form id="course-edit-form" class="form-horizontal" method="post" role="form" action="">
         <div class="modal fade" id="edit-course" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog m-modal-dialog">
@@ -20,15 +22,15 @@
                                     <td>
                                         <p>
                                             <label for="id_title">标题</label>
-                                            <input id="id_title" value="苍井空" type="text" name="title" maxlength="256">
+                                            <input id="id_title" value="{{ course.title }}" type="text" name="title" maxlength="256">
                                         </p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <p>
-                                            <label for="id_description">For who is this flow?</label>
-                                            <textarea id="id_description"  rows="10"  name="description" cols="40">苍井空</textarea>
+                                            <label for="id_description">课程简介</label>
+                                            <textarea id="id_description"  rows="10"  name="description" cols="40">{{ course.summary }}</textarea>
                                         </p>
                                     </td>
                                 </tr>
@@ -36,9 +38,18 @@
                         </table>
                         <p>
                             <label for="id_tags">选择分类：</label>
-                            <input id="id_tags" type="password" name="tags" maxlength="256">
+                             <select class="form-control" name='ccid'>
+                            {% if categories %}
+                            {% for category in categories %}
+                            {% if category.ccid > 0 %}
+                            <option {% if course.ccid == category.ccid  %}selected{% endif %} value="{{ category.ccid }}">{{ category.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                            {% else %}
+                            <option value="0">默认分类</option>
+                            {% endif %}
+                        </select>
                         </p>
-                        <p class="small light">Choose 3 topics for this flow so people can easily find it. Topics are comma separated. E.g. "design, ux-design".</p>
                     </div>
                     <div class="modal-footer m-modal-footer">
                         <p  class="pull-left">
@@ -51,4 +62,6 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </form>
+    {% endif %}
+    {% endif %}
     <!-- edit book info end -->

@@ -108,7 +108,12 @@ class AdminCourseManage extends CourseControl
         if (is_array($list)) {
             foreach ($list as $key => $value) {
                 if (isset($value['usercover']) and $value['usercover']) {
-                    $list[$key]['usercover'] = ImagesManage::getRealCoverSize($value['usercover']);
+                    $list[$key]['usercover_s'] = ImagesManage::getRealCoverSize($value['usercover']);
+                    $list[$key]['usercover_m'] = ImagesManage::getRealCoverSize($value['usercover'],'medium');
+                    $list[$key]['usercover'] = ImagesManage::getRelativeImage($value['usercover']);
+                    
+                    empty($list[$key]['usercover_s']) and $list[$key]['usercover_s'] = $list[$key]['usercover_m'];
+                    empty($list[$key]['usercover_m']) and $list[$key]['usercover_m'] = $list[$key]['usercover'];
                 }
                 if (isset($value['title']) and $value['title']) {
                     $list[$key]['ptitle'] = $this->convert($value['title']);

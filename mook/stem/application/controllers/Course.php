@@ -74,6 +74,7 @@ class CourseController extends \Yaf\Controller_Abstract
         $courseControl = AdminCourseManage::instance();
 
         $course = $courseControl->getCourseRow(array('course.cid' => $cid));
+        $category = $courseControl->getCategory();
         $articles = $courseControl->getChapterForCID($cid);
 
         $owner = $students = false;
@@ -89,6 +90,7 @@ class CourseController extends \Yaf\Controller_Abstract
         $views->assign('course', $course);
         $views->assign('menus', $articles);
         $views->assign('students', $students);
+        $views->assign('categories', $category);
         $views->assign('app', $app);
         $views->assign('owner', $owner);
         $views->display("index/course/course.html.twig");
