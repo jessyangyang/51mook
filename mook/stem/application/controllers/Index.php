@@ -104,26 +104,16 @@ class IndexController extends \Yaf\Controller_Abstract
         $owner = $member = false;
         
         preg_match("/^[a-zA-Z0-9]+/", $name , $matches);
+        $name = $matches[0];
+        $member = $members->getMemberForName(trim($name));
 
-        if (!$matches)
+        if (!$matches or !$member)
         {
             header('Location: /');
             exit();
         }
 
-        $name = $matches[0];
-
-        $member = $members->getMemberForName(trim($name));
-
-        if ($app and strnatcasecmp($name,$app['username'])) {
-            $member = $members->getCurrentMember();
-            $owner = true;
-        }
-        
-        if (!$member) {
-            header('Location: /');
-            exit();
-        }
+        if ($app and $app['username'] == $name) $owner = true;
 
         $course = $controlControl->getCourseList(array('course.uid' => $member['id']), 100, 1);
 

@@ -62,6 +62,7 @@
             <!--book information ends-->
             <!--book cata starts-->
                 <div class="col-lg-6 col-md-6 col-sm-6 pull-right">
+                    {% if courses %}
                     <h6><span>创建的图书</span></h6>
                     <ul class="m-tiny-cover-list">
                         {% if owner %}
@@ -69,7 +70,7 @@
                             <a href="/create"><span class="icon-m-add-mook"></span><b>创建<br>课程</b></a>
                         </li>
                         {% endif %}
-                        {% if courses %}
+                        
                         {% for course in courses %}
                         <li><div class="m-book-cell">
                                 <div class="m-book-cover" style="background-image:url({{ course.cover }})">
@@ -77,8 +78,9 @@
                                 </div></div>
                         </li>
                         {% endfor %}
-                        {% endif %}
+                    
                     </ul>
+                    {% endif %}
                     <h6><span>学习的图书</span></h6>
                     <ul class="m-tiny-cover-list">
                         {% if owner %}
@@ -89,50 +91,6 @@
                         <li>
                             <div class="m-book-cell">
                                 <div class="m-book-cover" style="background-image:url(images/cover6.png)">
-                                    <a href="#">
-                                        <span class="m-title">
-                                            左宗棠的新疆攻略
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="m-book-cell">
-                                <div class="m-book-cover" style="background-image:url(images/cover7.png)">
-                                    <a href="#">
-                                           <span class="m-title">
-                                                左宗棠的新疆攻略
-                                            </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="m-book-cell">
-                                <div class="m-book-cover" style="background-image:url(images/cover8.png)">
-                                    <a href="#">
-                                        <span class="m-title">
-                                            左宗棠的新疆攻略
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="m-book-cell">
-                                <div class="m-book-cover" style="background-image:url(images/cover9.png)">
-                                    <a href="#">
-                                        <span class="m-title">
-                                            左宗棠的新疆攻略
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="m-book-cell">
-                                <div class="m-book-cover" style="background-image:url(images/cover17.png)">
                                     <a href="#">
                                         <span class="m-title">
                                             左宗棠的新疆攻略
