@@ -1,0 +1,57 @@
+{% if app %}
+{% if owner %}
+<!-- change password -->
+    <!-- Modal -->
+    <form id="article-edit-form" class="form-horizontal" method="post" role="form" action="">
+        <div id="edit-article" class="modal fade" id="change-my-password" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog m-modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header m-modal-header text-center">
+                        <h4 class="modal-title" id="myModalLabel">编辑章节</h4>
+                    </div>
+                    <div class="modal-body m-modal-body">
+                        <p>
+                            <label for="article-title">标题：</label>
+                            <input id="article-title" type="text" name="title" maxlength="256" value="{{ menu.title }}">
+                        </p>
+                        <p>
+                            <label for="article-summay">说明：</label>
+                            <textarea id="article-summay" rows="5"  name="summary" cols="40">{{ menu.summary }}</textarea>
+                        </p>
+                    </div>
+                    <div class="modal-footer m-modal-footer">
+                        <p class="pull-left">
+                            <a href="#" data-dismiss="modal" aria-hidden="true">取消</a>
+                            <a href="#" data-dismiss="modal" data-target="#delete_article" data-toggle="modal" data-animation="fade"><span class="icon-m-remove"></span></a>
+                        </p>
+                        <button type="submit" class="btn">确 定</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </form>
+    <!-- change password end -->
+
+    <!--delete  start-->
+    <!-- Modal -->
+    <form id="article-delete-form" class="form-horizontal" method="post" role="form" action="">
+        <div class="modal fade" id="delete_article" tabindex="-1" role="dialog" aria-labelledby="delete_course" aria-hidden="true">
+            <div class="modal-dialog m-modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header m-modal-header text-center">
+                        <h4 class="modal-title" id="ChangelEmailLabel">删除</h4>
+                    </div>
+                    <div class="modal-body m-modal-body">
+                        <p class="text-center">你确认想要删除<br><b>"{{ course.title }}"</b>？</p>
+                    </div>
+                    <div class="modal-footer m-modal-footer">
+                        <span class="pull-left"><a href="#" data-dismiss="modal" aria-hidden="true">取消</a></span>
+                        <button type="submit" class="btn">确 定</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </form>
+    <!--delete  ends-->
+{% endif %}
+{% endif %}

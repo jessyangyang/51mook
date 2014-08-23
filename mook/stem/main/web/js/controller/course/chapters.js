@@ -65,6 +65,19 @@ define(function(require, exports, module) {
                 });
         });
 
+        $('.edit-article-modal').on('click', function(){
+            var $menu = $(this);
+
+            $('#article-title').val($menu.data('title'));
+            $('#article-summay').val($menu.parent().find('.artice-summary').html());
+            // if (!confirm('您真的要退出学习吗？')) {
+            //     return false;
+            // }
+            // $.post($btn.data('url'), function(){
+                // window.location.href = $btn.data('goto');
+            // });
+        });
+
         var validator = new Validator({
             element: '#add-form',
             autoSubmit: false,
