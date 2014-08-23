@@ -31,7 +31,9 @@ class IndexController extends \Yaf\Controller_Abstract
 
 
         if ($app) {
-           $display = "index/index/play.html.twig";
+           // $display = "index/index/play.html.twig";
+            header('Location: /u/' . $app['username']);
+            exit();
         }
         else
         {
