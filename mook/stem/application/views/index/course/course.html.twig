@@ -156,7 +156,7 @@
                         {% if menus %}
                         {% for menu in menus %}
                         <li>
-                            <span class="m-next">next<span class="point"></span></span>
+                            {# <span class="m-next">next<span class="point"></span></span> #}
                             <span class="m-dot"><span class="icon-m-article-cata"></span></span>
                             {% if owner %}<span class="m-move"><span class="icon-m-envelope"></span></span>{% endif %}
                             <h2><a href="/course/{{ menu.cid }}/{{ menu.ccid }}/{{ menu.ptitle }}">{{ menu.title }}</a></h2>

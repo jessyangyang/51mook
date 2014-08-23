@@ -160,11 +160,6 @@ a.m-follow:hover span, a.m-follow.yes span {
     margin: 15px 0 40px;
 }
 
-article img{
-    width: 100%;
-    margin: 10px 0;
-}
-
 p#m-teacher {
     display: block;
     line-height: 1.8rem;
@@ -232,6 +227,20 @@ p.m-boxed {
     height: 60px;
 }
 
+article img{
+    margin: 3rem 0;
+    display: block;
+    max-width: 100%;
+}
+
+article a {
+    color: #F56363;
+}
+
+
+article a:hover,  article a.btn:hover{
+    text-decoration: underline;
+}
 
 article pre {
     background-color: #444444;
@@ -251,7 +260,7 @@ article pre {
 }
 
 article blockquote {
-    border-left: 10px solid #42C4B8;
+    border-left: 4px solid #50abf1;
     font-style: italic;
     padding: 20px 0 20px 30px;
 }
@@ -586,12 +595,12 @@ ul.m-author-booklist {
 	margin-bottom:0;
 }
 
-.m-search-result-wrapper h6{
-	color: #999999;
-	font-size: 1.8rem;
-	font-weight: 700;
-	margin-bottom: 30px;
-}
+
+.m-search-result-wrapper h6 {
+    color: #999999;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+} 
 
 .m-index-covers-wrapper h2, .m-search-result-wrapper h2, .m-library-wrapper h2, .m-covers-wrapper h2 {
 	margin-bottom: 30px;
@@ -727,11 +736,17 @@ ul.m-author-booklist {
     padding: 4% 0;
 }
 
+
 .m-flow-title h2 {
+    font-size: 42px;
     margin-top: 0;
-}
+} 
+
 
 .m-flow-title p {
+    font-size: 1.5rem;
+    line-height: 1.5em;
+    margin-bottom: 1.5em;
     margin-top: 10px;
 }
 
@@ -747,9 +762,10 @@ ul.m-author-booklist {
     margin: 40px 0 20px !important;
 }
 
+
 .m-flow-title > .tab-content > .tab-pane > p {
-	font-size:16px;
-	line-height:3.1rem;
+    font-size: 1.5rem;
+    line-height: 2.6rem;
 }
 
 .m-flow-title > .tab-content > .tab-pane > p.small {
@@ -913,10 +929,17 @@ ul.m-author-booklist {
     width: 28px;
 }
 
+
 .m-catalog li h2 {
-    margin: 0;
-    font-size: 2.3rem;
+    font-size: 2.2rem;
     font-weight: 400;
+    margin: 0;
+    line-height: 2.9rem;
+}
+
+
+.m-catalog li h2 a:hover {
+    color: #79A5BA;
 }
 
 .m-catalog li.loader h2 {
@@ -924,10 +947,12 @@ ul.m-author-booklist {
     padding: 30px 20px 30px 50px;
 }
 
+
 .m-catalog li h2 a {
-	display:block;
-	transition:background-color 0.15s linear 0s, color 0.15s linear 0s;
-    padding: 30px 20px 62px 50px;
+    display: block;
+    padding: 30px 40px 62px 50px;
+    transition: background-color 0.15s linear 0s, color 0.15s linear 0s;
+    color: #333;
 }
 
 .m-catalog li.m-learned h2 a, .m-catalog li.m-learned h2 a:hover {
@@ -937,7 +962,7 @@ ul.m-author-booklist {
 
 
 .m-catalog li a:hover {
-	color:#FF4C4C !important;
+     color:#FF4C4C;
     background:#FCFCFC;
 }
 
@@ -1271,6 +1296,20 @@ p.small .edit {
     font-size: 1.1rem;
 }
 
+p.small a{
+    color: #aaa;
+}
+
+
+p.small a:hover{
+    color: #FF4C4C;
+}
+
+p.small span{
+    display: inline-block;
+    padding: 0 5px;
+}
+
 p.big {
     font-size: 2.2rem;
     font-weight: 300;
@@ -1303,6 +1342,14 @@ p.or span {
     text-align: center;
     text-indent: 1px;
     width: 26px;
+}
+
+p a.red {
+    color: #f56363;
+}
+
+p a:hover.red {
+    color: #50abf1;
 }
 
 ul.m-tiny-cover-list {
@@ -1344,6 +1391,40 @@ ul.m-tiny-cover-list li.m-create a span {
     display: block;
     margin: 42px auto 0;
     width: 30px;
+}
+
+
+
+ul.m-tiny-cover-list li a.m-follow {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 2px solid #50abf1;
+    border-radius: 2px 9px 9px 2px;
+    bottom: -1%;
+    height: inherit;
+    left: -4%;
+    right: 6%;
+    top: -3%;
+    width: 108%;
+}
+ 
+ul.m-tiny-cover-list li a.m-follow span {
+    border: 0 none;
+    border-radius: 0 0 22px;
+    height: 26px;
+    left: 0;
+    top: 0;
+    width: 26px;
+}
+
+ul.m-tiny-cover-list li a.m-follow:hover span, a.m-follow.yes-done span {
+    background-color: #50abf1;
+}
+
+ul.m-tiny-cover-list li, ol.m-steps ul.m-tiny-cover-list li {
+    float: left;
+    margin: 2.5%;
+    position: relative;
+    width: 20%;
 }
 /**作者 详细 书籍 结束**/
 
@@ -1534,7 +1615,8 @@ h1#logo a {
 #playlist {
     padding: 8% 0 5% 0;
 }
-#not-found h1.page-title {
+
+h1.page-title {
     font-size: 4rem;
     margin-bottom: 2rem;
 }
@@ -1621,8 +1703,9 @@ h1#logo a {
     font-weight: 200;
 }
 
+
 #m-lesson h2 {
-    font-size: 2.2rem;
+    font-size: 2rem;
     margin-bottom: 1.2rem;
 }
 
@@ -1811,3 +1894,44 @@ p.activity a:hover,  #activity-feed li p.link a hover{
 }
 
 /**activity 结束**/
+
+/**welcome 开始**/
+
+ol.m-welcome-boarding {
+    list-style: none outside none;
+}
+ol.m-welcome-boarding li.m-steps {
+    margin: 50px 0 20px;
+    position: relative;
+}
+
+li.m-steps h2 {
+    color: #666;
+    font-size: 3.2rem;
+    margin-bottom: 1rem;
+}
+
+ol.m-welcome-boarding li .m-dot {
+    background-color: #50abf1;
+    border-radius: 62px;
+    color: #fff;
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    height: 30px;
+    left: -45px;
+    line-height: 30px;
+    position: absolute;
+    text-align: center;
+    top: 3px;
+    width: 30px;
+}
+
+ol.m-welcome-boarding li label.selector {
+    background-color: #f7f7f7;
+    border: 1px solid #eee;
+    display: block;
+    padding: 2%;
+    width: 99%;
+}
+/**welcome 结束**/

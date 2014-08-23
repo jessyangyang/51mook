@@ -41,21 +41,29 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 
 footer {
-	border-top: 1px solid #E7E7E7 ;
-	background:#FFFFFF;
-	padding:4% 0 0 0;
-	color: #AAAAAA;
-	position: absolute;
-	width: 100%;
-	z-index: 90;
+    border-top: 1px solid #E7E7E7 ;
+    background:#FFFFFF;
+    padding:4% 0;
+    color: #AAAAAA;
+    position: absolute;
+    width: 100%;
+    z-index: 90;
+}
+
+footer a {
+    color: #aaaaaa;
+}
+
+footer a:hover {
+    color: #FF4C4C;
 }
 
 label {
     color: #777777;
-    font-size: 1.4rem;
-    font-weight: 400;
     display: block;
-}
+    font-size: 1.4rem;
+    font-weight: 600;
+} 
 
 label a.pull-right {
     color: #bbb;
@@ -274,10 +282,9 @@ span.error {
 }
 
 .btn > [class^="icon-m-"] {
-    font-size:14px;
+    font-size: 14px;
     margin-right: 5px;
-    vertical-align: middle;
-}
+} 
 
 .btn.icon-only > [class^="icon-m-"] {
     margin-right: 0;
@@ -943,7 +950,7 @@ ul.social-login li {
 	-------------------------------------------------- */
 article * {
     background-image: none;
-    color: #454545;
+    color: #000000;
     font-size: 1.6rem;
     line-height: 1.8em;
     margin-bottom: 1.6rem;
@@ -976,6 +983,92 @@ blockquote {
     padding: 10px 0;
 }
 
+
+/*     --------------------------------------------------
+     follow
+     -------------------------------------------------- */
+
+a.m-follow.yes-done {
+    opacity: 1;
+}
+
+a.m-follow {
+    border-radius: 6px;
+    display: block;
+    height: 50px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    transition: all 0.3s linear 0s;
+    width: 50px;
+    z-index: 800;
+}
+
+
+a.m-follow span {
+    background-color: #aaa;
+    border: 3px solid #fff;
+    border-radius: 22px;
+    color: #fff;
+    display: block;
+    height: 22px;
+    line-height: 25px;
+    position: absolute;
+    right: 10px;
+    text-align: center;
+    top: 10px;
+    width: 22px;
+}
+
+/*     --------------------------------------------------
+     message
+     -------------------------------------------------- */
+
+
+div.m-message {
+    background-color: #fcfcfc;
+    border: 1px solid #eee;
+    border-radius: 2px;
+    margin: 0 0 40px;
+    padding: 30px;
+}
+
+
+div.m-message p {
+    margin-bottom: 1.5em;
+    line-height: 2.4rem;
+}
+
+div.m-message p:last-child {
+    margin-bottom: 0;
+}
+
+
+.m-btn-row {
+    overflow: inherit;
+}
+
+ul.m-btn-row {
+    display: inline-block;
+}
+
+ul.m-btn-row a {
+    margin-right: 20px;
+}
+
+
+ul.m-btn-row li {
+    display: inline-block;
+    float: left;
+    height: 32px;
+}
+
+ul.m-btn-row li a.btn.social {
+    padding-right: 12px;
+}
 
 
 

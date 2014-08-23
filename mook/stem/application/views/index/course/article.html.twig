@@ -27,7 +27,7 @@
                     	{% autoescape false %}
                         {{ article.body }}
                         {% endautoescape %}
-                        {% if app %}
+{#                         {% if app %}
                         <div class="m-actions">
                             <a href="#" class="btn iconized">未学习</a>
                             <a href="#" class="btn trans m-social-icon icon-only"><span class="icon-m-weibo"></span></a>
@@ -40,7 +40,7 @@
                             <a class="" href="#" data-reveal-id="signup" data-animation="fade"  data-toggle="modal" data-target="#id_signup">注册</a>
                             来阅读全文
                         </p>
-                        {% endif %}
+                        {% endif %} #}
                     </article>
                     {% if prev %}<a id="mook-prev" href="/course/{{ prev.cid }}/{{ prev.ccid }}/{{ prev.ptitle }}"><span class="icon-m-arrow-left"></span></a>{% endif %}
                     {% if next %}<a id="mook-next" href="/course/{{ next.cid }}/{{ next.ccid }}/{{ next.ptitle }}"><span class="icon-m-arrow-right"></span></a>{% endif %}

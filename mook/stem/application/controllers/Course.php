@@ -120,9 +120,9 @@ class CourseController extends \Yaf\Controller_Abstract
             }
         }
 
-        if (!$app and $article) {
-            $article['body'] = mb_substr($article['body'], 0, 100, 'utf-8') . ' ...';
-        }
+        // if (!$app and $article) {
+        //     $article['body'] = mb_substr($article['body'], 0, 100, 'utf-8') . ' ...';
+        // }
 
         $views->assign('title',"mook");
         $views->assign('app',$app);

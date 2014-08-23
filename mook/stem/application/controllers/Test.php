@@ -25,11 +25,14 @@ class TestController extends \Yaf\Controller_Abstract
 
         $common =  \Yaf\Registry::get('common');
 
-        $html = $common->curl_request('http://www.dowebok.com/120.html');
+        // $html = $common->curl_request('http://www.dowebok.com/120.html');
 
-        $readability = new Readability($html->response);
-        $data = $readability->getContent();
-        print_r($data);
+        // $readability = new Readability($html->response);
+        // $data = $readability->getContent();
+        // print_r($data);
+        // 
+        preg_match('/=(\w+\b)/','text/html; charset=GBK',$matchs);
+        print_r($matchs);
         // $roles = array(
         //     'admin' => array(
         //         'model' => 1,
