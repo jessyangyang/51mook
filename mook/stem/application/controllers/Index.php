@@ -275,7 +275,7 @@ class IndexController extends \Yaf\Controller_Abstract
 
         $members = new MembersManage();
         if ($members->logout()) {
-        	header('Location: /login');
+        	header('Location: /');
         }
         exit();
     }
