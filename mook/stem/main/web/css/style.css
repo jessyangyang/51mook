@@ -114,7 +114,7 @@ a.m-follow:hover span, a.m-follow.yes span {
 #uber-wrap {
     background-color: #FFFFFF;
     box-sizing: border-box;
-    min-height: 100%;
+    min-height: 800px;
     overflow: auto;
     padding: 70px 0 ;
     position: relative;

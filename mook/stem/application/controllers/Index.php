@@ -41,7 +41,7 @@ class IndexController extends \Yaf\Controller_Abstract
             $views->assign('courses',$course);
         }
 
-        $views->assign('title',"mook");
+        $views->assign('title',"墨客");
         $views->assign('app',$app);
         $views->display($display);
     }
@@ -69,7 +69,7 @@ class IndexController extends \Yaf\Controller_Abstract
         $news = $controlControl->getCourseList(array("course.verified" => 3,"course.published" => 4),30,1);
         $hots = $controlControl->getCourseList(array("course.verified" => 3,"course.published" => 4),30,1,"cf.student DESC");
 
-        $views->assign('title',"mook");
+        $views->assign('title',"墨客文库");
         $views->assign('app',$app);
         $views->assign('courses',$course);
         $views->assign('categories', $categories);
@@ -119,7 +119,7 @@ class IndexController extends \Yaf\Controller_Abstract
 
         $course = $controlControl->getCourseList(array('course.uid' => $member['id']), 100, 1);
 
-        $views->assign('title',"mook");
+        $views->assign('title',$member['username']);
         $views->assign('app',$app);
         $views->assign('owner',$owner);
         $views->assign('courses',$course);
@@ -141,7 +141,7 @@ class IndexController extends \Yaf\Controller_Abstract
             exit();
         }
 
-        $views->assign('title',"mook");
+        $views->assign('title',"个人中心");
         $views->assign('app',$app);
         $views->display("index/index/settings.html.twig");
     }
@@ -176,8 +176,41 @@ class IndexController extends \Yaf\Controller_Abstract
         	}
         }
 
-        $views->assign('title',"mook");
+        $views->assign('title',"登录");
         $views->display('index/auth/login.html.twig');
+    }
+
+    public function loginCheckAction()
+    {
+        $rest = Restful::instance();
+        $data = $this->getRequest();
+
+        $success = 0;
+        $message = "登录失败.";
+
+        $members = new MembersManage();
+        $app = $members->getCurrentSession();
+
+        if ($app) {
+            $success = 1;
+            $message = "登录成功.";
+        }
+
+        if ($data->isPost()) {
+            if ($uid = $members->login($data->getPost('email'),$data->getPost('password'))) {
+                $success = 1;
+                $message = "登录成功.";
+            }
+            else
+            {
+                $message = "用户名或密码错误.";
+            }
+
+        }
+
+        $rest->assign('success',$success);
+        $rest->assign('message',$message);
+        $rest->response();
     }
 
     public function registerAction()
@@ -205,7 +238,7 @@ class IndexController extends \Yaf\Controller_Abstract
         }
 
         $views->assign('isLoginEnabled',true);
-        $views->assign('title',"mook");
+        $views->assign('title',"注册");
         $views->display('index/register/index.html.twig');
     }
 

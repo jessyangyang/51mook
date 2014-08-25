@@ -1,12 +1,13 @@
 {% set script_controller = 'auth/login' %}
-<form id="login-form" role="form" action="/login" method="post" novalidate="novalidate" data-widget-cid="widget-0">
-    <div id="id_login" class="modal fade" aria-hidden="true" aria-labelledby="myModalLabel" tabindex="-1" style="display: block">
+<form id="login-action-form" class="form-horizontal" role="form" action="/login/email/check" method="post" novalidate="novalidate" data-widget-cid="widget-0">
+    <div id="login-body" class="modal fade" aria-hidden="true" aria-labelledby="myModalLabel" tabindex="-1" style="display: block">
         <div class="modal-dialog m-modal-dialog">
             <div class="modal-content">
                 <div class="modal-header m-modal-header text-center">
                     <h4 class="modal-title" id="myModalLabel">登录墨客</h4>
                 </div>
                 <div class="modal-body m-modal-body">
+
                     <ul class="social-login">
                         <li>
                             <a class="btn social"  href="#"><span class="color-sina"><span class="icon-m-weibo"></span></span>使用微博登录</a></li>
@@ -18,14 +19,17 @@
                             <a class="btn social"  href="#"><span class="color-qq"><span class="icon-m-qq"></span></span>使用QQ登录</a></li>
                     </ul>
                     <p class="or"><span>OR</span></p>
-                    <p>
+                    <span class="error"></span>
+                    <div class="form-group form-group-box">
                         <label for="login-email">E-mail：</label>
-                        <input id="login-email" type="text" name="login-email" tabindex="1" maxlength="75">
-                    </p>
-                    <p>
+                        <input id="login-email" type="text" name="email" tabindex="1" maxlength="75">
+                        <p class="help-block"></p>
+                    </div>
+                    <div class="form-group form-group-box">
                         <label for="login-password">密码：</label>
-                        <input id="login-password" type="password" name="login-password" tabindex="2">
-                    </p>
+                        <input id="login-password" type="password" name="password" tabindex="2">
+                        <p class="help-block"></p>
+                    </div>
                 </div>
                 <div class="modal-footer m-modal-footer">
                     <span class="pull-left"><a href="#" data-toggle="modal" data-target="#id_signup">还没有帐号？<b>点击注册</b></a></span>

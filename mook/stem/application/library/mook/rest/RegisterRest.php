@@ -84,6 +84,7 @@ class RegisterRest extends \local\rest\Restful{
         self::regRestURL('web_users','/u/:name','index','users','个人主页');
         self::regRestURL('web_users_setting','/settings','index','setting','设置');
         self::regRestURL('web_login','/login','index','login','登录');
+        self::regRestURL('web_login_check','/login/email/check','index','loginCheck','登录验证');
         self::regRestURL('web_register','/register','index','register','注册');
         self::regRestURL('web_register_check','/register/email/check','index','registerCheck','注册验证');
         self::regRestURL('web_logout','/logout','index','logout','退出');

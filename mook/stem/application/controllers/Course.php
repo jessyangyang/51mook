@@ -29,8 +29,6 @@ class CourseController extends \Yaf\Controller_Abstract
         $views->assign('title',"mook");
         $views->assign('app',$app);
         $views->display($display);
-
-
     }
 
     public function createAction()
@@ -57,7 +55,7 @@ class CourseController extends \Yaf\Controller_Abstract
             }
         }
 
-        $views->assign('title', "mook");
+        $views->assign('title', "创建墨客");
         $views->assign('categories', $category);
         $views->assign('app', $app);
         $views->display("index/course/create.html.twig");
@@ -86,7 +84,7 @@ class CourseController extends \Yaf\Controller_Abstract
         }
 
 
-        $views->assign('title',"mook");
+        $views->assign('title',$course['title']);
         $views->assign('course', $course);
         $views->assign('menus', $articles);
         $views->assign('students', $students);
@@ -124,7 +122,7 @@ class CourseController extends \Yaf\Controller_Abstract
         //     $article['body'] = mb_substr($article['body'], 0, 100, 'utf-8') . ' ...';
         // }
 
-        $views->assign('title',"mook");
+        $views->assign('title',$article['title']);
         $views->assign('app',$app);
         $views->assign('course', $course);
         $views->assign('article', $article);

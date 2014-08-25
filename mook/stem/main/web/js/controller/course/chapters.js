@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 
-    require('jquery.sortable');
     var Validator = require('bootstrap.validator');
+    require('jquery.sortable');
 
     exports.run = function() {
 
@@ -78,7 +78,7 @@ define(function(require, exports, module) {
             // });
         });
 
-        var validator = new Validator({
+        var addValidator = new Validator({
             element: '#add-form',
             autoSubmit: false,
             onFormValidated: function(error, results, $form) {
@@ -118,13 +118,13 @@ define(function(require, exports, module) {
             }
         });
 
-        validator.addItem({
+        addValidator.addItem({
             element: '[name="_link"]',
             required: true,
             rule : 'url'
         });
 
-        validator.addItem({
+        addValidator.addItem({
             element: '[name="_summary"]',
             required: true,
             rule: 'minlength{min:5} maxlength{max:100}'
