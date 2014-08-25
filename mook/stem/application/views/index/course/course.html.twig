@@ -79,7 +79,7 @@
                                         <span class="m-number">3</span>
                                         <h4>邀请学生</h4>
                                         <p>现在你可以通过邮件和微博发送给你的学生，让他们参与进来</p>
-                                        <a class="btn social"  href="#">
+                                        {# <a class="btn social"  href="#">
                                             <span class="color-sina">
                                                 <span class="icon-m-weibo"></span>
                                             </span>
@@ -90,7 +90,7 @@
                                                 <span class="icon-m-qq"></span>
                                             </span>
                                             分享到微信
-                                        </a>
+                                        </a> #}
                                     </li>
                                 </ol>
 							</div>
@@ -99,8 +99,8 @@
                             <div class="tab-pane fade in {% if owner is empty %}active{% endif %}" id="information">
                                 <p>{{ course.summary }}</p>
                                 <div class="m-book-introduction">
-                                    <a class="m-avatar" href="#"><img src="{{ course.usercover_m }}"></a>
-                                    <p><b>{{ course.username }}</b></p>
+                                    <a class="m-avatar" href="/u/{{ course.username }}"><img src="{{ course.usercover_m }}"></a>
+                                    <p><b><a href="/u/{{ course.username }}">{{ course.username }}</a></b></p>
                                     <p>{{ course.usersummary }}</p>
                                 </div>
                             </div>
