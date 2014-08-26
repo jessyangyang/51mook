@@ -2,13 +2,20 @@ define(function(require, exports, module) {
 
     $(function(options) {
 
-        $(document).on('click.modal.data-api', '[data-toggle="modal"]', function(e) {
-            var $this = $(this),
-            href = $this.attr('href'),
-            url = $(this).data('url');
+        $(document).on('click.data-api', '[data-toggle="modal"]', function(e) {
+            var imgUrl=app.config.loading_img_path;
+            var $this = $(this);
+            href = $this.attr('href');
+            url = $this.data('url');
             if (url) {
                 var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, '')));
-                $target.html('').load(url);
+                var $loadingImg = '<div id="box-loading"><div></div></div>';
+                $target.html($loadingImg);
+                $target.load(url, function(response, status, xhr) {
+                    setTimeout(function() {
+                        $target.find('.modal').addClass('in').attr({'aria-hidden':'false'});
+                    }, 50);
+                });
             }
         });
 

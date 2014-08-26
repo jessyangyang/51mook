@@ -15,7 +15,7 @@
                     <a class="icon" href="{{ article.url }}"><span class="icon-m-globe"></span></a>
                 </li>
                 {% else %}
-                <li class="pull-right"><a class="text accounts" href="javascript:void(0);" data-url="/login" data-animation="fade"  data-target="#id_login">登录</a></li>
+                <li class="pull-right"><a class="text" data-url="/login?ajax=true" data-toggle="modal" href="#login" data-target="#modal">登录</a></li>
                 {# <li class="pull-right"><a class="text accounts" href="javascript:void(0);" data-url="/register" data-animation="fade" data-target="#id_register">注册</a></li> #}
                 {% endif %}
             </ul>

@@ -21,7 +21,8 @@
                             {% if app %}
                             {% if owner %}
 							<div class="btn-group">
-								<button type="button" class="btn grey"  data-reveal-id="edit-course" data-animation="fade"  data-toggle="modal" data-target="#edit-course"><span class="icon-m-pencil"></span>编辑</button>
+								{# <button type="button" class="btn grey"  data-reveal-id="edit-course" data-animation="fade"  data-toggle="modal" data-target="#edit-course"><span class="icon-m-pencil"></span>编辑</button> #}
+                                <a class="btn grey" data-url="/course/modal/chapter/edit/{{ course.cid }}" data-toggle="modal" href="#edit" data-target="#modal"><span class="icon-m-pencil"></span>编辑</a>
 							</div>
                             {% else %}
                             {# <div class="btn-group">
@@ -147,25 +148,7 @@
 					<ul class="list-unstyled m-catalog">
                         {% if menus %}
                         {% for menu in menus %}
-                        <li>
-                            {# <span class="m-next">next<span class="point"></span></span> #}
-                            <span class="m-dot"><span class="icon-m-article-cata"></span></span>
-                            {% if owner %}<span class="m-move"><span class="icon-m-envelope"></span></span>{% endif %}
-                            <h2><a href="/course/{{ menu.cid }}/{{ menu.ccid }}/{{ menu.ptitle }}">{{ menu.title }}</a></h2>
-                            <p class="small m-meta">
-                                <a href="{{ menu.url }}">{{ menu.host }}</a>
-                                <span> • </span>
-                                <a href="#">{{ menu.student|default(0) }} 学生</a>
-                                <span> • </span>
-                                <a href="#">{{ menu.studytime|default(0) }} 分钟</a>
-
-                                {% if owner %}
-                                <span> • </span>
-                                <span class="artice-summary" style="display:none;">{{ menu.summary }}</span>
-                                <a href="#" class="edit-article-modal" data-reveal-id="edit-article"  data-animation="fade" data-toggle="modal" data-target="#edit-article" data-title="{{ menu.title }}" data-cid="{{ menu.cid }}" data-ccid="{{ menu.ccid }}">编辑</a>
-                                {% endif %}
-                            </p>
-                        </li>
+                        {% include 'index/course/article-menu-li-modal.html.twig' %}
                         {% endfor %}
                         {% else %}
                         <li class="empty">
@@ -180,8 +163,8 @@
 	<!--account information ends-->
     </div>
 
-    {% include 'index/course/course-edit-modal.html.twig' %}
-    {% include 'index/course/article-edit-modal.html.twig' %}
+    {# {% include 'index/course/course-edit-modal.html.twig' %} #}
+    {# {% include 'index/course/article-edit-modal.html.twig' %} #}
 
 {% endblock %}
 

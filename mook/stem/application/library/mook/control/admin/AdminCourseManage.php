@@ -222,6 +222,7 @@ class AdminCourseManage extends CourseControl
                     }
                 }
                 $this->course->commit();
+                return true;
             }
             $this->course->rollback();
         }

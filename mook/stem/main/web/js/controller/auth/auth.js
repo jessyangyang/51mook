@@ -45,7 +45,7 @@ define(function(require, exports, module) {
             element: '#login-action-form',
             autoSubmit: false,
             onFormValidated: function(error, results, $form) {
-                $form.find('.error').hide();
+                $form.find('.m-error').hide();
 
                 if (error) {
                     return ;
@@ -57,11 +57,11 @@ define(function(require, exports, module) {
                     }
                     else
                     {
-                        $form.find('.error').html(json.message).show();
+                        $form.find('.m-error').html(json.message).attr('style','display:block;');
                     }
                 }, 'json').error(function(jqxhr, textStatus, errorThrown) {
                     var json = jQuery.parseJSON(jqxhr.responseText);
-                    $form.find('.error').html(json.message).show();
+                    $form.find('.m-error').html(json.message).show();
                 });
                 }
             });

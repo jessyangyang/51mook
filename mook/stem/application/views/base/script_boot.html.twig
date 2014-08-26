@@ -6,6 +6,8 @@
   app.theme = 'default';
   app.jsPaths = {"common":"common","theme":"\/themes\/default\/js"};
 
+  app.config = {"api":{"weibo":{"key":""},"qq":{"key":""},"douban":{"key":""},"renren":{"key":""}},"loading_img_path":"\/assets\/img\/default\/loading.gif"};
+
   app.arguments = {};
   {% if script_controller is defined %}
     app.controller = '{{ script_controller }}';

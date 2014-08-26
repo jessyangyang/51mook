@@ -1,39 +1,44 @@
 define(function(require, exports, module) {
     var Validator = require('bootstrap.validator');
+    require('common/validator-rules').inject(Validator);
 
     exports.run = function() {
-        var validator = new Validator({
-            element: '#login-ajax-form',
+        var loginValidator = new Validator({
+            element: '#login-action-form',
             autoSubmit: false,
             onFormValidated: function(error, results, $form) {
-                $form.find('.alert-danger').hide();
+                $form.find('.m-error').hide();
 
                 if (error) {
                     return ;
                 }
 
-                $.post($form.attr('action'), $form.serialize(), function(response) {
-                    window.location.reload();
+                $.post($form.attr('action'), $form.serialize(), function(json) {
+                    if (json.success == 1) {
+                        window.location.reload();
+                    }
+                    else
+                    {
+                        $form.find('.m-error').html(json.message).attr('style','display:block;');
+                    }
                 }, 'json').error(function(jqxhr, textStatus, errorThrown) {
                     var json = jQuery.parseJSON(jqxhr.responseText);
-                    $form.find('.alert-danger').html(json.message).show();
+                    $form.find('.m-error').html(json.message).show();
                 });
+                }
+            });
 
-            }
-        });
+            loginValidator.addItem({
+                element: '[name="email"]',
+                required: true,
+                rule: 'email'
+            });
 
-        validator.addItem({
-            element: '[name="_username"]',
-            required: true
-        });
-
-        validator.addItem({
-            element: '[name="_password"]',
-            required: true
-        });
-
-
-
+            loginValidator.addItem({
+                element: '[name="password"]',
+                required: true,
+                rule: 'minlength{min:5} maxlength{max:20}'
+            });
     };
 
 });

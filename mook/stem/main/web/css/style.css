@@ -1590,11 +1590,11 @@ h1#logo a {
     color: #aaaaaa;
 }
 
-#clean-login span.m-error {
+span.m-error {
     background-color: #f8f8d4;
     border-radius: 2px;
     color: rgba(0, 0, 0, 0.6);
-    display: block;
+    display: none;
     font-size: 0.8em;
     margin: 6px 0 6px;
     padding: 5px;

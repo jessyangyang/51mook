@@ -1,0 +1,25 @@
+{% if app %}
+{% if owner %}
+<!--delete  start-->
+<!-- Modal -->
+<div class="modal-dialog m-modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header m-modal-header text-center">
+            <h4 class="modal-title" id="ChangelEmailLabel">删除章节</h4>
+        </div>
+        <div class="modal-body m-modal-body">
+        <form id="article-delete-form" class="form-horizontal" method="post" role="form" action="/course/check/{{ menu.cid }}/{{ menu.ccid }}/article-delete">
+            <p class="text-center">你确认想要删除<br><b>"{{ menu.title }}"</b>?</p>
+            <span class='article-id' data-title=".article-id-{{ menu.ccid }}" style="display:none;"></span>
+        </form>
+        </div>
+        <div class="modal-footer m-modal-footer">
+            <span class="pull-left"><a href="#" data-dismiss="modal" aria-hidden="true">取消</a></span>
+            <button class="btn" data-toggle="form-submit" data-target="#article-delete-form">确 定</button>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+    <!--delete  ends-->
+{% endif %}
+{% endif %}
+<script type="text/javascript"> app.load('course/chapters-article-delete-modal')</script>

@@ -1,10 +1,16 @@
 define(function(require, exports, module) {
 
     var Validator = require('bootstrap.validator');
+    var Notify = require('common/bootstrap-notify');
+    require('common/validator-rules').inject(Validator);
     require('jquery.sortable');
 
     exports.run = function() {
+        _sortableChapterAction();
+        _linkAction();
+    };
 
+    function _sortableChapterAction(){
         var adjustment;
 
         var $list = $(".m-catalog").sortable({
@@ -46,7 +52,9 @@ define(function(require, exports, module) {
                 return isContainer ? children : parent.attr('id');
             }
         });
+    }
 
+    function _linkAction(){
         $('[name="_link"]').focus(function(){
             $('.point').hide();
             $("#add-form label").animate({width: "0px"}, 150);
@@ -65,19 +73,6 @@ define(function(require, exports, module) {
                 });
         });
 
-        $('.edit-article-modal').on('click', function(){
-            var $menu = $(this);
-
-            $('#article-title').val($menu.data('title'));
-            $('#article-summay').val($menu.parent().find('.artice-summary').html());
-            // if (!confirm('您真的要退出学习吗？')) {
-            //     return false;
-            // }
-            // $.post($btn.data('url'), function(){
-                // window.location.href = $btn.data('goto');
-            // });
-        });
-
         var addValidator = new Validator({
             element: '#add-form',
             autoSubmit: false,
@@ -93,21 +88,14 @@ define(function(require, exports, module) {
                     return ;
                 }
                 $form.find('button').attr('class', 'btn loading disabled');
-                $('ul.m-catalog').append('<li class="loader"><span class="m-dot"><img alt="loading" src="/web/img/default/loading.gif"></span><h2>获取链接地址中...</h2></li>');
+                $('ul.m-catalog').append('<li class="loader"><span class="m-dot"><img alt="loading" src="/web/img/default/loader.gif"></span><h2>获取链接地址中...</h2></li>');
 
                 $.post($form.attr('action'), $form.serialize(), function(response) {
                     $form.find('button').attr('class', 'btn');
-                    var data = response.message.content;
-                    if (data) {
-                        $('li.loader').remove();
-                        $('li.empty').remove();
-                    
-                        var html = '<li><span class="m-dot"><span class="icon-m-article-cata"></span></span><span class="m-move"><span class="icon-m-envelope"></span></span><h2><a href="/course/' + data.cid + '/' + data.ccid + '/' + data.ptitle + '">' + data.title + '</a></h2><p class="small m-meta"><a href="' + data.url +'">' + data.host +'</a><span> • </span><a href="#">' + data.student + ' 学生</a><span> • </span><a href="#">' + data.studytime + ' 分钟</a></p></li>';
-
-                        $('ul.m-catalog').append(html);
-                    }
-
-                },'json').error(function(jqxhr, textStatus, errorThrown){
+                    $('li.loader').remove();
+                    $('li.empty').remove();
+                    $('ul.m-catalog').append(response);
+                }).error(function(jqxhr, textStatus, errorThrown){
                     var json = jQuery.parseJSON(jqxhr.responseText);
                     $('span.error').text(json.message.error).attr('style','display:block;');
 
@@ -129,10 +117,6 @@ define(function(require, exports, module) {
             required: true,
             rule: 'minlength{min:5} maxlength{max:100}'
         });
-
-
-
-
-    };
+    }
 
 });

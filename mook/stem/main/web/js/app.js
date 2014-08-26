@@ -19,8 +19,6 @@ define(function(require, exports, module) {
 
 	window.app.load = exports.load;
 
-	exports.load('auth/auth');
-
 	if (app.controller) {
 		exports.load(app.controller);
 	}

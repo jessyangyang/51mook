@@ -1,0 +1,22 @@
+{% if menu %}
+<li class="article-id-{{ menu.ccid }}">
+    {# <span class="m-next">next<span class="point"></span></span> #}
+    <span class="m-dot"><span class="icon-m-article-cata"></span></span>
+    {% if owner %}<span class="m-move"><span class="icon-m-envelope"></span></span>{% endif %}
+    <h2><a href="/course/{{ menu.cid }}/{{ menu.ccid }}/{{ menu.ptitle }}">{{ menu.title }}</a></h2>
+    <p class="small m-meta">
+        <a href="{{ menu.url }}">{{ menu.host }}</a>
+        <span> • </span>
+        <a href="#">{{ menu.student|default(0) }} 学生</a>
+        <span> • </span>
+        <a href="#">{{ menu.studytime|default(0) }} 分钟</a>
+
+        {% if owner %}
+        <span> • </span>
+        <a data-url="/course/modal/article/edit/{{ menu.cid }}/{{ menu.ccid }}" data-toggle="modal" href="#edit" data-target="#modal">编辑</a>
+        <span> • </span>
+        <a data-url="/course/modal/article/delete/{{ menu.cid }}/{{ menu.ccid }}" data-toggle="modal" href="#delete" data-target="#modal"><span class="icon-m-remove"></span></a>
+        {% endif %}
+    </p>
+</li>
+{% endif %}

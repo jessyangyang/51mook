@@ -72,8 +72,12 @@ class CourseController extends \Yaf\Controller_Abstract
         $courseControl = AdminCourseManage::instance();
 
         $course = $courseControl->getCourseRow(array('course.cid' => $cid));
-        $category = $courseControl->getCategory();
         $articles = $courseControl->getChapterForCID($cid);
+
+        if (!$course) {
+            header("Location: /");
+            exit();
+        }
 
         $owner = $students = false;
         if (isset($app['uid']) and $app['uid'])
@@ -88,10 +92,147 @@ class CourseController extends \Yaf\Controller_Abstract
         $views->assign('course', $course);
         $views->assign('menus', $articles);
         $views->assign('students', $students);
-        $views->assign('categories', $category);
         $views->assign('app', $app);
         $views->assign('owner', $owner);
         $views->display("index/course/course.html.twig");
+    }
+
+    public function courseChapterModalAction($cid, $action = false)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = new MembersManage();
+        $app = $members->getCurrentSession();
+
+        $courseControl = AdminCourseManage::instance();
+
+        $owner = false;
+
+        $display = '';
+
+        $course = $courseControl->getCourseRow(array('course.cid' => $cid));
+        $category = $courseControl->getCategory();
+
+        switch ($action) {
+            case 'edit':
+                $display = "index/course/course-edit-modal.html.twig";
+                break;
+            case 'delete':
+                $display = "index/course/course-delete-modal.html.twig";
+                break;
+            default:
+                # code...
+                break;
+        }
+
+        if (isset($app['uid']) and $app['uid'])
+        {
+            if ($app['uid'] == $course['uid']) $owner = true;
+        }
+
+        $views->assign('app', $app);
+        $views->assign('owner', $owner);
+        $views->assign('course', $course);
+        $views->assign('categories', $category);
+        $views->display($display);
+    }
+
+    public function courseArticleModalAction($cid, $ccid, $action = false)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = new MembersManage();
+        $app = $members->getCurrentSession();
+
+        $courseControl = AdminCourseManage::instance();
+
+        $owner = false;
+
+        switch ($action) {
+            case 'edit':
+                $display = "index/course/article-edit-modal.html.twig";
+                break;
+            case 'delete':
+                $display = "index/course/article-delete-modal.html.twig";
+                break;
+            default:
+                # code...
+                break;
+        }
+
+        $menu = $courseControl->getArticleForID($ccid);
+        $course = $courseControl->getCourseRow(array('course.cid' => $cid));
+
+        if (isset($app['uid']) and $app['uid'])
+        {
+            if ($app['uid'] == $course['uid']) $owner = true;
+        }
+
+        $views->assign('app', $app);
+        $views->assign('owner', $owner);
+        $views->assign('course', $course);
+        $views->assign('menu', $menu);
+        $views->display($display);
+    }
+
+    public function courseCheckAction($cid, $ccid, $action = false)
+    {
+        $rest = Restful::instance();
+        $data = $this->getRequest();
+
+        $success = 0;
+        $message = '';
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+
+        if ($data->isPost()) {
+
+            $datas = array(
+                        'title' => $data->getPost('title'),
+                        'summary' => $data->getPost('summary'));
+
+            $courseControl = AdminCourseManage::instance();
+
+            switch ($action) {
+                case 'chapter':
+                    $datas['ccid'] = $data->getPost('ccid');
+                    if ($datas and $courseControl->updateCourse($cid, $datas)) {
+                        $success = 1;
+                        $message = "";
+                    }
+                    break;
+                case 'article':
+                    $datas['ccid'] = $ccid;
+                    if ($datas and $courseControl->createArticle($cid, $datas)) {
+                        $success = 1;
+                        $message = "";
+                    }
+                    # code...
+                    break;
+                case 'chapter-delete':
+                    if ($cid and $courseControl->deleteCourse($cid)) {
+                        $success = 1;
+                        $message = "";
+                    }
+                    break;
+                case 'article-delete':
+                    if ($cid and $ccid and $courseControl->deleteArticle($ccid)) {
+                        $success = 1;
+                        $message = "";
+                    }
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+        }
+
+        $rest->assign('success',$success);
+        $rest->assign('message',$message);
+        $rest->response();
     }
 
     public function articleAction($cid, $ccid, $title = false)
@@ -106,6 +247,11 @@ class CourseController extends \Yaf\Controller_Abstract
 
         $course = $courseControl->getCourseRow(array('course.cid' => $cid));
         $chapters = $courseControl->getChapterForCID($cid);
+
+        if (!$course) {
+            header("Location: /");
+            exit();
+        }
 
         $article = $next = $prev = false;
         if (is_array($chapters)) {
@@ -133,9 +279,12 @@ class CourseController extends \Yaf\Controller_Abstract
 
     public function linkAddAction($cid)
     {
+        $views = $this->getView();
         $rest = Restful::instance();
         $data = $this->getRequest();
 
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
         $courseControl = AdminCourseManage::instance();
 
         $message = array(
@@ -143,14 +292,26 @@ class CourseController extends \Yaf\Controller_Abstract
             'content' => ''
         );
 
-        $success = false;
+        $success = 0;
+
+        if (!$app) {
+            $message['error'] = '没有权限';
+        }
 
         if ($data->isPost()) {
-
             $contents = $courseControl->addLinkToArticle($cid, $data->getPost('_link'),$data->getPost('_summary'));
-            $message['content'] = $contents ? $contents : array();
-            $message['error'] = '';
-            $success = true;  
+
+            $owner = false;
+
+            if (isset($app['uid']) and $app['uid'])
+            {
+                $course = $courseControl->getCourseRow(array('course.cid' => $contents['cid']));
+                if ($course and $app['uid'] == $course['uid']) $owner = true;
+            }
+
+            $views->assign('owner', $owner);
+            $views->assign('menu', $contents);
+            $views->display("index/course/article-menu-li-modal.html.twig");
         }
 
         $rest->assign('success',$success);

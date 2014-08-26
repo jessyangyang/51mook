@@ -6,7 +6,7 @@ define(function(require, exports, module) {
             $exist.remove();
         }
 
-        var html = '<div class="alert alert-' + type + ' bootstrap-notify-bar" style="display:none;">'
+        var html = '<div class="alert alert-' + type + ' bootstrap-notify-bar" role="alert" style="display:none;">'
         html += '<button type="button" class="close" data-dismiss="alert">×</button>';
         html += message;
         html += '</div>';
@@ -15,8 +15,9 @@ define(function(require, exports, module) {
         $html.appendTo('body');
 
         $html.slideDown(100, function(){
-            duration = $.type(duration) == 'undefined' ? 3 :  duration;
+            duration = $.type(duration) == 'undefined' ? 2 :  duration;
             if (duration > 0) {
+                $html.fadeOut(2000);
                 setTimeout(function(){
                     $html.remove();
                 }, duration * 1000);

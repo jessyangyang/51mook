@@ -154,17 +154,17 @@ class IndexController extends \Yaf\Controller_Abstract
         $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
-
         if ($app) {
         	header('Location: /');
             exit();
         }
 
+        $display = 'index/auth/login.html.twig';
 
+        if ($data->getQuery('ajax') == 'true') {
+            $display = 'index/index/login.html.twig';
+        }
         if ($data->isPost()) {
-            if ($data->getPost('account') == '1') {
-                $views->display('index/index/login.html.twig');
-            }
         	if ($uid = $members->login($data->getPost('email'),$data->getPost('password')))
         	{
         		header('Location: /');
@@ -177,7 +177,7 @@ class IndexController extends \Yaf\Controller_Abstract
         }
 
         $views->assign('title',"登录");
-        $views->display('index/auth/login.html.twig');
+        $views->display($display);
     }
 
     public function loginCheckAction()

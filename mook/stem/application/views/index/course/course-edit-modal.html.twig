@@ -1,15 +1,14 @@
+{% if app %}
+{% if owner %}
 <!-- edit book info -->
-    <!-- Modal -->
-    {% if app %}
-    {% if owner %}
-    <form id="course-edit-form" class="form-horizontal" method="post" role="form" action="">
-       <div id="edit-course" class="modal fade" aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1">
+<!-- Modal -->
             <div class="modal-dialog m-modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header m-modal-header text-center">
                         <h4 class="modal-title" id="myModalLabel">编辑信息</h4>
                     </div>
                     <div class="modal-body m-modal-body">
+                    <form id="course-edit-form" class="form-horizontal" method="post" role="form" action="/course/check/{{ course.cid }}/{{ course.ccid }}/chapter">
                         <table>
                             <tbody>
                                 <tr>
@@ -27,7 +26,7 @@
                                 </tr>
                                 <tr>
                                     <td><p><label for="id_description">课程简介</label>
-                                            <textarea id="id_description"  rows="10"  name="description" cols="40">{{ course.summary }}</textarea>
+                                            <textarea id="id_description"  rows="10"  name="summary" cols="40">{{ course.summary }}</textarea>
                                         </p>
                                     </td>
                                 </tr>
@@ -47,41 +46,17 @@
                             {% endif %}
                         </select>
                         </p>
+                        </form>
                     </div>
                     <div class="modal-footer m-modal-footer">
                         <p  class="pull-left">
                             <a href="#" data-dismiss="modal" aria-hidden="true">取消</a>
-                            <a href="#" data-dismiss="modal" data-target="#delete_course" data-toggle="modal" data-animation="fade"><span class="icon-m-remove"></span></a>
+                            <a data-url="/course/modal/chapter/delete/{{ course.cid }}/{{ course.ccid }}" data-toggle="modal" href="#delete" data-target="#modal" id="course-action-delete"><span class="icon-m-remove"></span></a>
                         </p>
-                        <button class="btn" type="submit">确 定</button>
+                        <button class="btn" data-toggle="form-submit" data-target="#course-edit-form">确 定</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-    </form>
-
-    <!--delete  start-->
-    <!-- Modal -->
-    <form id="course-delete-form" class="form-horizontal" method="post" role="form" action="">
-        <div class="modal fade" id="delete_course" tabindex="-1" role="dialog" aria-labelledby="delete_course" aria-hidden="true">
-            <div class="modal-dialog m-modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header m-modal-header text-center">
-                        <h4 class="modal-title" id="ChangelEmailLabel">删除</h4>
-                    </div>
-                    <div class="modal-body m-modal-body">
-                        <p class="text-center">你确认想要删除<br><b>"{{ course.title }}"</b>？</p>
-                    </div>
-                    <div class="modal-footer m-modal-footer">
-                        <span class="pull-left"><a href="#" data-dismiss="modal" aria-hidden="true">取消</a></span>
-                        <button type="submit" class="btn">确 定</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-    </form>
-    <!--delete  ends-->
-
-    {% endif %}
-    {% endif %}
-    <!-- edit book info end -->
+{% endif %}
+{% endif %}
+<script type="text/javascript"> app.load('course/chapters-edit-modal');</script>
