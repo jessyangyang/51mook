@@ -10,11 +10,11 @@
 			<!--book information starts-->
         		<div class="col-lg-6 col-md-6 col-sm-6">
 					<div class="m-flow-title">
-						<h2>{{ course.title }}</h2>
+						<h2 id="course-title-show">{{ course.title }}</h2>
 						<p class="small">
                             by <a href="/u/{{ course.username }}">{{ course.username }}</a>
 							<span>•</span> {{ menus|length }}篇 <span>•</span>
-							<a href="/flows/#{{ course.category }}">{{ course.category }}</a>
+							<a href="/flows/#{{ course.category }}" id='course-category-show'>{{ course.category }}</a>
 						</p>
 						<!--button starts-->
 						<div class="m-actions">
@@ -145,7 +145,7 @@
                     </div>
                     {% endif %}
                     {% endif %}
-					<ul class="list-unstyled m-catalog">
+					<ul class="list-unstyled m-catalog" data-sort-url="/course/check/{{ course.cid }}/{{ course.ccid }}/sort">
                         {% if menus %}
                         {% for menu in menus %}
                         {% include 'index/course/article-menu-li-modal.html.twig' %}

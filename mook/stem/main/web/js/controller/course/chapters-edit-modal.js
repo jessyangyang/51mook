@@ -29,10 +29,24 @@ define(function(require, exports, module) {
             onFormValidated: function(error, results, $form) {
                 var $modal = $form.parents('.modal');
 
-                $.post($form.attr('action'), $form.serialize(), function(json) {
+                var formdata = new FormData($form[0]);
+
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: 'POST',
+                    data:  formdata,
+                    mimeType:"multipart/form-data",
+                    contentType: false,
+                    processData:false
+                }).done(function(data, textStatus, jqXHR) {
+                    if (data) {
+                        var json = jQuery.parseJSON(data);
+                        $('#course-title-show').text(json.message.title);
+                        $('#course-category-show').text(json.message.category);
+                    }
                     $modal.modal('hide');
                     Notify.success('修改课程成功！');
-                }).fail(function() {
+                }).fail(function(jqXHR, textStatus, errorThrown) { 
                     Notify.danger("修改课程失败，请重试！");
                 });
             }

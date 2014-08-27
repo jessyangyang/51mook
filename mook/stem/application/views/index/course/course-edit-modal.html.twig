@@ -2,61 +2,61 @@
 {% if owner %}
 <!-- edit book info -->
 <!-- Modal -->
-            <div class="modal-dialog m-modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header m-modal-header text-center">
-                        <h4 class="modal-title" id="myModalLabel">编辑信息</h4>
-                    </div>
-                    <div class="modal-body m-modal-body">
-                    <form id="course-edit-form" class="form-horizontal" method="post" role="form" action="/course/check/{{ course.cid }}/{{ course.ccid }}/chapter">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td class="form-cover" rowspan="3">
-                                        <label>封面：</label>
-                                        <a onclick="id_image.click()" class="m-flow-cover" href="#"></a>
-                                        <input id="id_image" type="file" name="image">
-                                        <a onclick="id_image.click()" class="cover-change btn grey tiny" href="#">上传封面</a>
-                                    </td>
-                                    <td>
-                                        <p><label for="id_title">标题</label>
-                                            <input id="id_title" value="{{ course.title }}" type="text" name="title" maxlength="256">
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><p><label for="id_description">课程简介</label>
-                                            <textarea id="id_description"  rows="10"  name="summary" cols="40">{{ course.summary }}</textarea>
-                                        </p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p>
-                            <label for="id_tags">选择分类：</label>
-                             <select class="form-control" name='ccid'>
-                            {% if categories %}
-                            {% for category in categories %}
-                            {% if category.ccid > 0 %}
-                            <option {% if course.ccid == category.ccid  %}selected{% endif %} value="{{ category.ccid }}">{{ category.name }}</option>
-                            {% endif %}
-                            {% endfor %}
-                            {% else %}
-                            <option value="0">默认分类</option>
-                            {% endif %}
-                        </select>
-                        </p>
-                        </form>
-                    </div>
-                    <div class="modal-footer m-modal-footer">
-                        <p  class="pull-left">
-                            <a href="#" data-dismiss="modal" aria-hidden="true">取消</a>
-                            <a data-url="/course/modal/chapter/delete/{{ course.cid }}/{{ course.ccid }}" data-toggle="modal" href="#delete" data-target="#modal" id="course-action-delete"><span class="icon-m-remove"></span></a>
-                        </p>
-                        <button class="btn" data-toggle="form-submit" data-target="#course-edit-form">确 定</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
+<div class="modal-dialog m-modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header m-modal-header text-center">
+            <h4 class="modal-title" id="myModalLabel">编辑信息</h4>
+        </div>
+        <div class="modal-body m-modal-body">
+        <form id="course-edit-form" class="form-horizontal" method="post" role="form"  enctype="multipart/form-data" action="/course/check/{{ course.cid }}/{{ course.ccid }}/chapter">
+        <table>
+            <tbody>
+            <tr>
+                <td class="form-cover" rowspan="3">
+                    <label>封面：</label>
+                    <a onclick="id_course_cover.click()" class="m-flow-cover" href="#">
+                        {% if course.cover %}<img alt="{{ course.title }}" src="{{ course.cover_s|default(course.cover) }}">{% endif %}
+                    </a>
+                    <input id="id_course_cover" type="file" name="cover" accept="image/gif,image/jpeg,image/png" data-explain="你可以上传jpg, gif, png格式的文件, 图片建议尺寸至少为480x270。<br>文件大小不能超过<strong> 2M </strong>。">
+                    <a onclick="id_course_cover.click()" class="cover-change btn grey tiny" href="#">上传封面</a>
+                </td>
+                <td>
+                    <p><label for="id_title">标题</label><input id="id_title" value="{{ course.title }}" type="text" name="title" maxlength="256"></p>
+                </td>
+            </tr>
+            <tr>
+                <td><p><label for="id_description">课程简介</label>
+                    <textarea id="id_description"  rows="10"  name="summary" cols="40">{{ course.summary }}</textarea></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+    <label for="id_tags">选择分类：</label>
+    <select class="form-control" name='ccid'>
+        {% if categories %}
+        {% for category in categories %}
+        {% if category.ccid > 0 %}
+        <option {% if course.ccid == category.ccid  %}selected{% endif %} value="{{ category.ccid }}">{{ category.name }}</option>
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        <option value="0">默认分类</option>
+        {% endif %}
+    </select>
+    </p>
+    </form>
+    </div>
+
+    <div class="modal-footer m-modal-footer">
+        <p  class="pull-left">
+            <a href="#" data-dismiss="modal" aria-hidden="true">取消</a>
+            <a data-url="/course/modal/chapter/delete/{{ course.cid }}/{{ course.ccid }}" data-toggle="modal" href="#delete" data-target="#modal" id="course-action-delete"><span class="icon-m-remove"></span></a>
+        </p>
+        <button class="btn" data-toggle="form-submit" data-target="#course-edit-form">确 定</button>
+    </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
 {% endif %}
 {% endif %}
 <script type="text/javascript"> app.load('course/chapters-edit-modal');</script>

@@ -39,14 +39,14 @@ define(function(require, exports, module) {
             },
             onDrop: function (item, container, _super) {
                 _super(item, container);
-                item.removeAttr('class');
                 var data = $list.sortable("serialize").get();
-                // $.post($list.data('sortUrl'), {ids:data}, function(response){
-                //     $list.find('.item-chapter').each(function(index){
-                //         $(this).find('.chapter-sort').text(index+1);
-                //     });
+                // item.removeAttr('class');
+                $.post($list.data('sortUrl'), {ids:data}, function(response){
+                    // $list.find('.item-chapter').each(function(index){
+                    //     $(this).find('.chapter-sort').text(index+1);
+                    // });
                     
-                // });
+                });
             },
             serialize: function(parent, children, isContainer) {
                 return isContainer ? children : parent.attr('id');
@@ -115,7 +115,8 @@ define(function(require, exports, module) {
         addValidator.addItem({
             element: '[name="_summary"]',
             required: true,
-            rule: 'minlength{min:5} maxlength{max:100}'
+            rule: 'minlength{min:5} maxlength{max:100}',
+            errormessageRequired: '为你的课程添加简介，让学员了解您的核心内容'
         });
     }
 

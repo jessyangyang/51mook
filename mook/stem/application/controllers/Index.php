@@ -117,7 +117,7 @@ class IndexController extends \Yaf\Controller_Abstract
 
         if ($app and $app['username'] == $name) $owner = true;
 
-        $course = $controlControl->getCourseList(array('course.uid' => $member['id']), 100, 1);
+        $course = $controlControl->getCourseList(array('course.uid' => $member['id'],"course.verified" => 3,"course.published" => 4), 100, 1);
 
         $views->assign('title',$member['username']);
         $views->assign('app',$app);

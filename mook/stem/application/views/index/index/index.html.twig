@@ -27,7 +27,7 @@
       {% for course in courses %}
       <div class="col-lg-3 col-sm-4 col-md-3">
         <div class="m-book-cell">                                                    
-            <div class="m-book-cover m-book-cover-large" style="background-image:url({{ course.cover }})">
+            <div class="m-book-cover m-book-cover-large" style="background-image:url({{ course.cover_m|default(course.cover) }})">
               <a href="/course/{{ course.cid }}/{{ course.ptitle }}">
                 <hgroup>
                   <h3>{{ course.title }}</h3>

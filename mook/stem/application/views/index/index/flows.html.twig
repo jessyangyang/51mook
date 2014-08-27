@@ -25,7 +25,7 @@
 						{% for hot in hots %}
 						<div class="col-lg-3 col-sm-4 col-md-3">
 							<div class="m-book-cell">                                                    
-								<div class="m-book-cover m-book-cover-large" style="background-image:url({{ hot.cover }})">
+								<div class="m-book-cover m-book-cover-large" style="background-image:url({{ hot.cover_m|default(hot.cover) }})">
 									<a href="/course/{{ hot.cid }}/{{ hot.ptitle }}">
 										<hgroup>
 											<h3>{{ hot.title }}</h3>
@@ -59,7 +59,7 @@
 						{% for new in news%}
 						<div class="col-lg-3 col-sm-4 col-md-3">
 							<div class="m-book-cell">                                                    
-								<div class="m-book-cover m-book-cover-large" style="background-image:url({{ new.cover }})">
+								<div class="m-book-cover m-book-cover-large" style="background-image:url({{ new.cover_m|default(new.cover) }})">
 									<a href="/course/{{ new.cid }}/{{ new.ptitle }}">
 										<hgroup>
 											<h3>{{ new.title }}</h3>
@@ -93,7 +93,7 @@
 						{% for course in value%}
 						<div class="col-lg-3 col-sm-4 col-md-3">
 							<div class="m-book-cell">                                                    
-								<div class="m-book-cover m-book-cover-large" style="background-image:url({{ course.cover }})">
+								<div class="m-book-cover m-book-cover-large" style="background-image:url({{ course.cover_m|default(course.cover) }})">
 									<a href="/course/{{ course.cid }}/{{ course.ptitle }}">
 										<hgroup>
 											<h3>{{ course.title }}</h3>

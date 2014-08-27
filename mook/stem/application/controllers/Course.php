@@ -11,6 +11,7 @@
 use \mook\control\index\MembersManage;
 use \mook\control\index\MessageManage;
 use \mook\control\admin\AdminCourseManage;
+use \mook\control\common\ImagesManage;
 use \mool\control\pagesControl;
 use \local\rest\Restful;
 use \Yaf\Registry;
@@ -71,7 +72,7 @@ class CourseController extends \Yaf\Controller_Abstract
 
         $courseControl = AdminCourseManage::instance();
 
-        $course = $courseControl->getCourseRow(array('course.cid' => $cid));
+        $course = $courseControl->getCourseRow(array('course.cid' => $cid,"course.verified" => 3,"course.published" => 4));
         $articles = $courseControl->getChapterForCID($cid);
 
         if (!$course) {
@@ -111,7 +112,7 @@ class CourseController extends \Yaf\Controller_Abstract
 
         $display = '';
 
-        $course = $courseControl->getCourseRow(array('course.cid' => $cid));
+        $course = $courseControl->getCourseRow(array('course.cid' => $cid,"course.verified" => 3,"course.published" => 4));
         $category = $courseControl->getCategory();
 
         switch ($action) {
@@ -163,7 +164,7 @@ class CourseController extends \Yaf\Controller_Abstract
         }
 
         $menu = $courseControl->getArticleForID($ccid);
-        $course = $courseControl->getCourseRow(array('course.cid' => $cid));
+        $course = $courseControl->getCourseRow(array('course.cid' => $cid,"course.verified" => 3,"course.published" => 4));
 
         if (isset($app['uid']) and $app['uid'])
         {
@@ -200,8 +201,28 @@ class CourseController extends \Yaf\Controller_Abstract
                 case 'chapter':
                     $datas['ccid'] = $data->getPost('ccid');
                     if ($datas and $courseControl->updateCourse($cid, $datas)) {
+                        $course = $course = $courseControl->getCourseRow(array('course.cid' => $cid,"course.verified" => 3,"course.published" => 4));
                         $success = 1;
-                        $message = "";
+                        $message = $course;
+                    }
+                    if ($cover = $data->getFiles('cover')) {
+                        $image = new ImagesManage();
+
+                        $coversize = $cover['size'] * 0.001;
+                        $covertype = explode('/', $cover['type']);
+
+                        if ($coversize >= 2048) {
+                           $message = '文件大小不能超过 2M.';
+                        }
+                        else if (!ImagesManage::hasImageType($covertype[1])) {
+                           $message = '上传图片格式错误，请上传jpg, gif, png格式的文件.';
+                        }
+                        else
+                        {
+                            if ($aid = $image->saveImagesCourse($cover, $cid, $app['uid'], 1, 1)) {
+                                $courseControl->updateCourse($cid, array('cover' => $aid));
+                            }
+                        }
                     }
                     break;
                 case 'article':
@@ -222,6 +243,19 @@ class CourseController extends \Yaf\Controller_Abstract
                     if ($cid and $ccid and $courseControl->deleteArticle($ccid)) {
                         $success = 1;
                         $message = "";
+                    }
+                    break;
+                case 'sort':
+                    if ($menus = $data->getPost('ids')) {
+                        $menulist = array();
+
+                        foreach ($menus as $key => $value) {
+                            $menu_id = explode("-", $value);
+                            $menulist[$key + 1] = intval($menu_id[2]);
+                        }
+                    
+                        $courseControl->updateChapterSort($cid,$menulist);
+                        $success = 1;
                     }
                     break;
                 default:
@@ -245,7 +279,7 @@ class CourseController extends \Yaf\Controller_Abstract
 
         $courseControl = AdminCourseManage::instance();
 
-        $course = $courseControl->getCourseRow(array('course.cid' => $cid));
+        $course = $courseControl->getCourseRow(array('course.cid' => $cid,"course.verified" => 3,"course.published" => 4));
         $chapters = $courseControl->getChapterForCID($cid);
 
         if (!$course) {
@@ -305,7 +339,7 @@ class CourseController extends \Yaf\Controller_Abstract
 
             if (isset($app['uid']) and $app['uid'])
             {
-                $course = $courseControl->getCourseRow(array('course.cid' => $contents['cid']));
+                $course = $courseControl->getCourseRow(array('course.cid' => $contents['cid'],"course.verified" => 3,"course.published" => 4));
                 if ($course and $app['uid'] == $course['uid']) $owner = true;
             }
 

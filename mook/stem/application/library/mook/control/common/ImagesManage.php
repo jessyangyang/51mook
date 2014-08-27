@@ -219,7 +219,7 @@ class ImagesManage extends \lib\dao\ImageControl
 
     public function saveImagesCourse($files, $cid, $uid, $class= 1, $thumb = false)
     {
-        if ($filepath = $this->save($files, $uid, $path='book')) {
+        if ($filepath = $this->save($files, $uid, $path='course')) {
             $fields = array(
                 'cid' => $cid,
                 'uid' => $uid,
@@ -229,10 +229,14 @@ class ImagesManage extends \lib\dao\ImageControl
                 'type' => $files['type'],
                 'size' => $files['size'],
                 'path' => $filepath,
-                'thumb' => 0,
+                'thumb' => $thumb ? 1 : 0,
                 'dateline' => UPDATE_TIME
             );
 
+            if ($thumb) {
+               $this->makethumb(self::getRealPath($filepath),107,280,'small','jpeg');
+               $this->makethumb(self::getRealPath($filepath),263,626,'medium','jpeg');
+            }
 
             if ($this->insertId = $this->images_course->insert($fields)) {
                 return $this->insertId;

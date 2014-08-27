@@ -122,7 +122,11 @@ class AdminCourseManage extends CourseControl
                     $list[$key]['cover'] = ImagesManage::getRelativeImage($value['cover']);
                 }
                 if (isset($value['thumb']) and $value['thumb'] == 1) {
-                    $list[$key]['cover'] = ImagesManage::getRealCoverSize($value['cover'],'medium','jpg');
+                    $list[$key]['cover_m'] = ImagesManage::getRealCoverSize($value['cover'],'medium','jpg');
+                    $list[$key]['cover_s'] = ImagesManage::getRealCoverSize($value['cover'],'small','jpg');
+
+                    empty($list[$key]['cover_s']) and $list[$key]['cover_s'] = $list[$key]['cover_m'];
+                    empty($list[$key]['cover_m']) and $list[$key]['cover_m'] = $list[$key]['cover'];
                 }
                 if (isset($value['published']) and $value['published']) {
                     $list[$key]['published'] = $this->changedCourseStatus(intval($value['published']));

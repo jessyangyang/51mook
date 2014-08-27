@@ -189,9 +189,9 @@ class ImageControl extends \local\image\Images
                 imagecopyresampled($ni, $im, 0, 0, $x, $y, $width, $height, $width, $height);
 
                 if(function_exists('imagejpeg') and $fileName['extension'] == 'jpg'or $fileName['extension'] == 'jpeg') {
-                    imagejpeg($ni, FILES_PATH . '/files' . $filePath);
+                    imagejpeg($ni, FILES_PATH . '/files' . $filePath, 100);
                 } elseif(function_exists('imagepng') and $fileName['extension'] == 'png') {
-                    imagepng($ni, FILES_PATH . '/files' . $filePath);
+                    imagepng($ni, FILES_PATH . '/files' . $filePath, 100);
                 }
                 imagedestroy($ni);
                 imagedestroy($im);
@@ -309,8 +309,8 @@ class ImageControl extends \local\image\Images
      */
     public function upload($tmpName)
     {
-        if ($this->_file) {
-            if (copy($tmpName,FILES_PATH . '/files' . $this->_file)) {
+        if ($this->_file and is_uploaded_file($tmpName)) {
+            if (copy($tmpName, FILES_PATH . '/files' . $this->_file)) {
                 unlink($tmpName);
             }
             elseif (function_exists('move_uploaded_file') and move_uploaded_file($tmpName, FILES_PATH . '/files' . $this->_file)) {
@@ -423,10 +423,10 @@ class ImageControl extends \local\image\Images
                 return '';
             }
             if(function_exists('imagejpeg') and $type == 'jpg' or $type == 'jpeg') {
-                imagejpeg($ni, $dstfile . ".jpg");
+                imagejpeg($ni, $dstfile . ".jpg", 100);
                 //大图片
                 if($make_max) {
-                    imagejpeg($maxni, $srcfile);
+                    imagejpeg($maxni, $srcfile, 100);
                 }
             } elseif(function_exists('imagepng') and $type == 'png') {
                 imagepng($ni, $dstfile . '.png');
@@ -534,7 +534,7 @@ class ImageControl extends \local\image\Images
         @imagecopy($src_im, $water_im, $posx, $posy, 0, 0, $water_w, $water_h);
         switch($src_info[2]) {
             case 1:@imagegif($src_im, $srcfile);break;
-            case 2:@imagejpeg($src_im, $srcfile);break;
+            case 2:@imagejpeg($src_im, $srcfile, 100);break;
             case 3:@imagepng($src_im, $srcfile);break;
             default:return '';
         }
