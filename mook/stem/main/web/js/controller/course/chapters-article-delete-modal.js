@@ -9,10 +9,10 @@ define(function(require, exports, module) {
             onFormValidated: function(error, results, $form) {
                 var $modal = $form.parents('.modal');
                 $.post($form.attr('action'), $form.serialize(), function(json) {
-                    $modal.modal('hide');
-                    Notify.success('删除章节成功！');
                     var ccid = $form.find('.article-id').data('title');
                     $(ccid).remove();
+                    $modal.modal('hide');
+                    Notify.success('删除章节成功！');
                 }).fail(function() {
                     Notify.danger("删除章节失败，请重试！");
                 });

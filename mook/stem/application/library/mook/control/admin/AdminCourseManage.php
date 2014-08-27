@@ -295,29 +295,19 @@ class AdminCourseManage extends CourseControl
     {
         if (!$cid and !is_array($datas)) return false;
 
-        $data = array(
-            'ccid' => isset($datas['ccid']) ? $datas['ccid'] : false,
-            'title' => isset($datas['title']) ? $datas['title'] : '',
-            'url' => isset($datas['url']) ? $datas['url'] : '',
-            'body' => isset($datas['body']) ? $datas['body'] : '',
-            'summary' => isset($datas['summary']) ? $datas['summary'] : '',
-            'wordcount' => isset($datas['wordcount']) ? $datas['wordcount'] : 0,
-            'sort' => isset($datas['sort']) ? $datas['sort'] : ''
-        );
-
-        $chapter  = $this->courseChapterFilter($data);
-
+        $chapter  = $this->courseChapterFilter($datas);
 
         if ($chapter) $chapter['cid'] = $cid;
 
-        if (isset($data['ccid']) and $data['ccid']){
+        if (isset($datas['ccid']) and $datas['ccid']){
             $chapter['modified'] = UPDATE_TIME;
-
+            unset($chapter['ccid']);
+            unset($chapter['cid']);
             $this->course_chapter->begin();
-            if ($this->course_chapter->where("ccid='". $data['ccid'] ."'")->update($chapter))
+            if ($this->course_chapter->where("ccid='". $datas['ccid'] ."' AND cid='" + $cid + "'")->update($chapter))
             {
                 $this->course_chapter->commit();
-                return $data['ccid'];
+                return $datas['ccid'];
             }
             $this->course_chapter->rollback();
         }
@@ -327,7 +317,6 @@ class AdminCourseManage extends CourseControl
 
             $this->course_chapter->begin();
 
-
             if ($ccid = $this->course_chapter->insert($chapter)) {
                 $this->course_chapter->commit();
                 $this->updateCourseFields(array('chapters' => '+'), $cid);
@@ -335,6 +324,24 @@ class AdminCourseManage extends CourseControl
             }
             $this->course_chapter->rollback();
         }
+        return false;
+    }
+
+    public function updateArticle($cid, $ccid, $datas)
+    {
+        if (!$cid and $ccid and !is_array($datas)) return false;
+
+        $chapter  = $this->courseChapterFilter($datas);
+
+        $chapter['modified'] = UPDATE_TIME;
+
+        $this->course_chapter->begin();
+
+        if ($this->course_chapter->where("ccid='". $ccid ."' AND cid='" + $cid + "'")->update($chapter)) {
+            $this->course_chapter->commit();
+            return $ccid;
+        }
+        $this->course_chapter->rollback();
         return false;
     }
 
