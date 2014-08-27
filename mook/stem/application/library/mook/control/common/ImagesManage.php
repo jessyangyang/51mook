@@ -263,8 +263,8 @@ class ImagesManage extends \lib\dao\ImageControl
             );
 
             if ($thumb) {
-               $this->makethumb(self::getRealPath($filepath),130,188,'small','jpeg');
-               $this->makethumb(self::getRealPath($filepath),216,310,'medium','jpeg');
+               $this->makethumb(self::getRealPath($filepath),107,280,'small','jpeg');
+               $this->makethumb(self::getRealPath($filepath),263,626,'medium','jpeg');
             }
 
             if ($file = $this->getImagesCourseForCID($cid,1)) {
