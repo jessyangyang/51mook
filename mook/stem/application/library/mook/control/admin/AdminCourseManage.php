@@ -311,7 +311,7 @@ class AdminCourseManage extends CourseControl
 
             if ($ccid = $this->course_chapter->insert($chapter)) {
                 $this->course_chapter->commit();
-                // $this->updateCourseFields(array('chapters' => '+'), $cid);
+                $this->updateCourseFields(array('chapters' => '+'), $cid);
                 return $ccid;
             }
             $this->course_chapter->rollback();
