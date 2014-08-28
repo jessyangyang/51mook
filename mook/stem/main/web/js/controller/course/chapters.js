@@ -40,7 +40,7 @@ define(function(require, exports, module) {
             onDrop: function (item, container, _super) {
                 _super(item, container);
                 var data = $list.sortable("serialize").get();
-                // item.removeAttr('class');
+                item.removeAttr('class');
                 $.post($list.data('sortUrl'), {ids:data}, function(response){
                     // $list.find('.item-chapter').each(function(index){
                     //     $(this).find('.chapter-sort').text(index+1);
