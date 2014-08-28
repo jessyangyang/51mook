@@ -228,7 +228,7 @@ class CourseController extends \Yaf\Controller_Abstract
                     $datas['ccid'] = $ccid;
                     if ($datas and $courseControl->createArticle($cid, $datas)) {
                         $success = 1;
-                        $message = "";
+                        $message = $courseControl->getArticleForID($ccid);
                     }
                     # code...
                     break;

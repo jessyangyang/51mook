@@ -95,12 +95,16 @@ define(function(require, exports, module) {
                     $('li.loader').remove();
                     $('li.empty').remove();
                     $('ul.m-catalog').append(response);
+                    $form.find('#course-link').val('');
+                    $form.find('#course-link-summary').val('');
                 }).error(function(jqxhr, textStatus, errorThrown){
                     var json = jQuery.parseJSON(jqxhr.responseText);
                     $('span.error').text(json.message.error).attr('style','display:block;');
 
                     $form.find('button').attr('class', 'btn');
                     $('li.loader').remove();
+                    $form.find('#course-link').val('');
+                    $form.find('#course-link-summary').val('');
                 });
 
             }
@@ -115,8 +119,8 @@ define(function(require, exports, module) {
         addValidator.addItem({
             element: '[name="_summary"]',
             required: true,
-            rule: 'minlength{min:5} maxlength{max:100}',
-            errormessageRequired: '为你的课程添加简介，让学员了解您的核心内容'
+            errormessageRequired: '为你的课程添加简介，让学员了解您的核心内容',
+            rule: 'minlength{min:5} maxlength{max:200}'
         });
     }
 

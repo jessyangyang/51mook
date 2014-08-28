@@ -134,9 +134,9 @@
                     <div class="m-input">
                             <span class="error"><span></span></span>
                             <form id="add-form" class="form-horizontal" method="post" action="/course/add/link/{{ course.cid }}">
-                                <label for="link-url-id">新链接<span class="point"></span></label>
-                                <input id="link-url-id" type="text" value="" name="_link" placeholder="http://…">
-                                <textarea  placeholder="简明概要您的课程..." name="_summary"></textarea>
+                                <label for="course-link">新链接<span class="point"></span></label>
+                                <input id="course-link" type="text" value="" name="_link" placeholder="http://…">
+                                <textarea  id="course-link-summary" placeholder="简明概要您的课程..." name="_summary"></textarea>
                                 <div class="form-actions" style="display: block">
                                     <p class="small pull-left"><a id="link-cancel" class="cancel" href="#">取消</a></p>
                                     <button type="submit" class="btn">添加</button>

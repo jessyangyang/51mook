@@ -6,7 +6,7 @@
             <h4 class="modal-title" id="myModalLabel">编辑章节</h4>
         </div>
         <div class="modal-body m-modal-body">
-            <form id="article-edit-form" class="form-horizontal" method="post" role="form" action="/course/check/{{ menu.cid }}/{{ menu.ccid }}/article">
+            <form id="article-edit-form" class="form-horizontal" method="post" role="form" data-item="#article-id-{{menu.ccid}}" action="/course/check/{{ menu.cid }}/{{ menu.ccid }}/article">
                 <p>
                 <label for="article-title">标题：</label>
                 <input id="article-title" type="text" name="title" maxlength="256" value="{{ menu.title }}">

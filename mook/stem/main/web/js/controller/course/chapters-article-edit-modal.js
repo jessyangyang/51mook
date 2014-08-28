@@ -12,6 +12,10 @@ define(function(require, exports, module) {
 
                 $.post($form.attr('action'), $form.serialize(), function(json) {
                     $modal.modal('hide');
+                    var $item = $($form.data('item'));
+                    if (json) {
+                        $item.find('h2 a').text(json.message.title);
+                    }
                     Notify.success('修改章节成功！');
                 }).fail(function() {
                     Notify.danger("修改章节失败，请重试！");
