@@ -68,6 +68,8 @@ define(function(require, exports, module) {
             $("#add-form label").animate({
                     width: "70px"
                 }, 150,function(){
+                    $('#course-link').val('');
+                    $('#course-link-summary').val('');
                     $('.point').show();
                     $('#add-form').removeAttr('class','open');
                 });

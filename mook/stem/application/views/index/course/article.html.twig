@@ -8,10 +8,10 @@
                 {% if article %}
                 <div id="meta">
                     <p id="m-teacher" class="small">
-                        <a href="#" class="m-avatar"><img src="{{ course.usercover }}"></a>
-                        <a href="#">{{ course.username }}</a>
+                        <a href="/u/{{ course.username }}" class="m-avatar"><img src="{{ course.usercover|default(course.usercover) }}"></a>
+                        <a href="/u/{{ course.username }}">{{ course.username }}</a>
                         <br>
-                        <a href="#">{{ course.usersummary|default('这家伙很懒') }}</a>
+                        <a href="/u/{{ course.username }}">{{ course.usersummary|default('这家伙很懒') }}</a>
                     </p>
                     {% if article.summary %}
                     <div class="m-note">
