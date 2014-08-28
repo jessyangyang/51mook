@@ -164,7 +164,7 @@ class CourseController extends \Yaf\Controller_Abstract
         }
 
         $menu = $courseControl->getArticleForID($ccid);
-        $course = $courseControl->getCourseRow(array('course.cid' => $cid,"course.verified" => 3,"course.published" => 4));
+        $course = $courseControl->getCourseRow(array('course.cid' => $cid,'course.verified' => 3,'course.published' => 4));
 
         if (isset($app['uid']) and $app['uid'])
         {
@@ -205,19 +205,18 @@ class CourseController extends \Yaf\Controller_Abstract
                         $success = 1;
                         $message = $course;
                     }
-                    if ($cover = $data->getFiles('cover')) {
+                    if ($cover = $data->getFiles('cover') and $cover['error'] == 0) {
                         $image = new ImagesManage();
 
                         $coversize = $cover['size'] * 0.001;
                         $covertype = explode('/', $cover['type']);
-
                         if ($coversize >= 2048) {
                            $message = '文件大小不能超过 2M.';
                         }
-                        else if (!ImagesManage::hasImageType($covertype[1])) {
+                        else if ($covertype and !ImagesManage::hasImageType($covertype[1])) {
                            $message = '上传图片格式错误，请上传jpg, gif, png格式的文件.';
                         }
-                        else
+                        else if ($cover)
                         {
                             if ($aid = $image->saveImagesCourse($cover, $cid, $app['uid'], 1, 1)) {
                                 $courseControl->updateCourse($cid, array('cover' => $aid));
