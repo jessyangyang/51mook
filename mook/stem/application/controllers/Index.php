@@ -69,7 +69,7 @@ class IndexController extends \Yaf\Controller_Abstract
         $news = $controlControl->getCourseList(array("course.verified" => 3,"course.published" => 4),30,1);
         $hots = $controlControl->getCourseList(array("course.verified" => 3,"course.published" => 4),30,1,"cf.student DESC");
 
-        $views->assign('title',"墨客文库");
+        $views->assign('title',"知识库");
         $views->assign('app',$app);
         $views->assign('courses',$course);
         $views->assign('categories', $categories);
