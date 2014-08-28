@@ -96,7 +96,7 @@ a.m-follow:hover span, a.m-follow.yes span {
 	overflow: hidden;
 }
 
-.m-overlay-unlogin-row h1{
+.m-overlay-unlogin-row h1, .m-overlay-unlogin-row h2{
     color: #fff;
     font-size: 4.8rem;
     font-weight: 200;
