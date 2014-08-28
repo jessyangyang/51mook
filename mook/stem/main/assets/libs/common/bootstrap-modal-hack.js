@@ -32,6 +32,10 @@ define(function(require, exports, module) {
             });
         });
 
+        $('#search-form input').on('keydown',function(e){
+            if(e.keyCode == 13){$(this).parent().submit();}
+        });
+
     });
 
 });

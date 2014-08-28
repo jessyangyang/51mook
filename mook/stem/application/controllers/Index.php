@@ -51,7 +51,7 @@ class IndexController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
         $controlControl = AdminCourseManage::instance();
@@ -75,10 +75,28 @@ class IndexController extends \Yaf\Controller_Abstract
         $views->assign('categories', $categories);
         $views->assign('news', $news);
         $views->assign('hots', $hots);
-
         $views->display("index/index/flows.html.twig");
     }
 
+    public function searchAction()
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+        $result = false;
+
+        if ($data->isGet() and $data->getQuery('q')) {
+            $controlControl = AdminCourseManage::instance();
+            $result = $controlControl->searchCourse($data->getQuery('q'));
+        }
+
+        $views->assign('title',$data->getQuery('q'));
+        $views->assign('app',$app);
+        $views->assign('result',$result);
+        $views->display("index/index/search.html.twig");
+    }
 
     public function articleAction($ccid)
     {

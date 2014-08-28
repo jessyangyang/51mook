@@ -1,0 +1,27 @@
+{% extends 'index/layout.html.twig' %}
+{% block title %}{{ title }} - 搜索结果 | 墨客{% endblock %}
+{% block content %}
+<!--search result book-list start-->
+<div class="container m-search-result-wrapper">
+    <div class="row">
+	<h2 class="col-lg-12">搜索结果</h2>
+    <h6 class="col-lg-12">相关内容「<span>{{ title }}</span>」</h6>
+    
+    {% if result %}
+    {% for course in result %}
+    <div class="col-lg-3 col-sm-4 col-md-3">
+		<div class="m-book-cell">                                                    
+			<div class="m-book-cover m-book-cover-large" style="background-image:url({{ course.cover_m|default(course.cover) }})">
+				<a href="/course/{{ course.cid }}/{{ course.ccid}}/{{ course.ptitle }}"><hgroup>
+					<h3>{{ course.title }}</h3>
+					<img class="m-avatar" src="{{ course.usercover_s|default(course.usercover) }}">
+					<h4>{{ course.username }}</h4>
+				</hgroup></a>
+			</div>
+		</div>   					
+	</div>
+	{% endfor %}
+	{% endif %}
+    </div>
+</div>
+{% endblock %}

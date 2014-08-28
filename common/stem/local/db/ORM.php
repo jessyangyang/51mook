@@ -31,7 +31,7 @@ class ORM extends MySQL
     protected static $instance;
 
     // Allow Methods
-    protected $allowDBOMethods = array('table','field','group','where','order','having','distinct','lock','limit','offset','page');
+    protected $allowDBOMethods = array('table','field','group','where','order','having','distinct','lock','limit','offset','page','like');
 
     // Allow Maths Methods
     protected $allowMathMethods = array('sum','min','max','count','avg');

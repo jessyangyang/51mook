@@ -81,6 +81,7 @@ class RegisterRest extends \local\rest\Restful{
          */
         self::regRestURL('web_index','/index','index','index','网站首页');
         self::regRestURL('web_flows','/flows','index','flows','网站文库');
+        self::regRestURL('web_search','/search','index','search','搜索');
         self::regRestURL('web_users','/u/:name','index','users','个人主页');
         self::regRestURL('web_users_setting','/settings','index','setting','设置');
         self::regRestURL('web_login','/login','index','login','登录');

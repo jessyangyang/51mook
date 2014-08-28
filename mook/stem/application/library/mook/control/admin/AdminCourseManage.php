@@ -76,12 +76,13 @@ class AdminCourseManage extends CourseControl
      */
     public function getCourseList($option = array(),$limit = 10,$page = 1, $order = false)
     {
-        $sql = '';
+        $sql = $option;
 
-        if (is_array($option) or $option)
+        if (is_array($option) and $option)
         {
             $i = 1;
             $count = count($option);
+            $sql = '';
             foreach ($option as $key => $value) {
                 if($i == $count) $sql .= "$key='" . $value . "'";
                 else $sql .= "$key='" . $value . "' AND ";
@@ -255,6 +256,11 @@ class AdminCourseManage extends CourseControl
         return false;
     }
 
+    public function searchCourse($query, $limit = 100, $page = 1)
+    {
+        return $this->getCourseList("course.title LIKE '%" . $this->course->escapeString($query) . "%'", $limit, $page, 'course.modified DESC');
+    }
+
 
     /*Article*/
 
@@ -328,7 +334,7 @@ class AdminCourseManage extends CourseControl
         $chapter['modified'] = UPDATE_TIME;
 
         $this->course_chapter->begin();
-        
+
         if ($this->course_chapter->where("ccid='$ccid' AND cid='$cid'")->update($chapter)) {
             $this->course_chapter->commit();
             return $ccid;
@@ -670,6 +676,38 @@ class AdminCourseManage extends CourseControl
         }
         $sql .= "END WHERE ccid IN ($ids)";
         return $this->course_chapter->query($sql);
+    }
+
+
+    public function searchCourseChapter($query)
+    {
+        $table = $this->course_chapter->table;
+        $query = $this->course_chapter->escapeString($query);
+        $list =  $this->course_chapter->query("SELECT * FROM $table WHERE title LIKE '%" . $query . "%' ORDER BY modified DESC");
+        if (is_array($list) and count($list) > 0) {
+            foreach ($list as $key => $value) {
+                if (isset($value['url']) and $value['url']) {
+                    $url = parse_url($value['url']);
+                    $list[$key]['host'] = $url['host'];
+                }
+                else
+                {
+                    $list[$key]['host'] = $_SERVER['HTTP_HOST'];
+                }
+                $list[$key]['host'] = preg_replace('/www./','',$list[$key]['host']);
+
+                $list[$key]['studytime'] = 0;
+                if (isset($value['body']) and $value['body']) {
+                    $list[$key]['studytime'] = round(mb_strlen($value['body'], 'UTF-8') / 300);
+                }
+
+                if (isset($value['title']) and $value['title']) {
+                    $list[$key]['ptitle'] = $this->convert($value['title']);
+                }
+            }
+            return $list;
+        }
+        return false;
     }
 
 
