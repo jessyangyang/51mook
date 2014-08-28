@@ -72,7 +72,7 @@ class CourseController extends \Yaf\Controller_Abstract
 
         $courseControl = AdminCourseManage::instance();
 
-        $course = $courseControl->getCourseRow(array('course.cid' => $cid,"course.verified" => 3,"course.published" => 4));
+        $course = $courseControl->getCourseRow(array('course.cid' => $cid,'course.verified' => 3,'course.published' => 4));
         $articles = $courseControl->getChapterForCID($cid);
 
         if (!$course) {

@@ -297,21 +297,13 @@ class AdminCourseManage extends CourseControl
 
         $chapter  = $this->courseChapterFilter($datas);
 
-        if ($chapter) $chapter['cid'] = $cid;
-
-        if (isset($datas['ccid']) and $datas['ccid']){
+        if (isset($datas['ccid']) and $this->getArticleForID($datas['ccid'])){
             $chapter['modified'] = UPDATE_TIME;
             unset($chapter['ccid']);
-            unset($chapter['cid']);
-            $this->course_chapter->begin();
-            if ($this->course_chapter->where("ccid='". $datas['ccid'] ."' AND cid='" + $cid + "'")->update($chapter))
-            {
-                $this->course_chapter->commit();
-                return $datas['ccid'];
-            }
-            $this->course_chapter->rollback();
+            return $this->updateArticle($cid, $datas['ccid'], $chapter);
         }
         else {
+            $chapter['cid'] = $cid;
             $chapter['dateline'] = UPDATE_TIME;
             $chapter['modified'] = UPDATE_TIME;
 
@@ -336,8 +328,8 @@ class AdminCourseManage extends CourseControl
         $chapter['modified'] = UPDATE_TIME;
 
         $this->course_chapter->begin();
-
-        if ($this->course_chapter->where("ccid='". $ccid ."' AND cid='" + $cid + "'")->update($chapter)) {
+        
+        if ($this->course_chapter->where("ccid='$ccid' AND cid='$cid'")->update($chapter)) {
             $this->course_chapter->commit();
             return $ccid;
         }
@@ -617,11 +609,11 @@ class AdminCourseManage extends CourseControl
     public function getChapterForCID($cid, $limit = false, $page = false)
     {
         $list = array();
+        $cid = $this->course_chapter->escapeString($cid);
         if ($limit and $page) {
            $page = $page - 1;
            $offset = $limit * $page;
-           $cid = $this->course_chapter->escapeString($cid);
-           $list =  $this->course_chapter->where("cid='$cid'")->order('sort')->limit("$offset,$limit")->fetchList();
+           $list = $this->course_chapter->where("cid='$cid'")->order('sort')->limit("$offset,$limit")->fetchList();
         }
         $list = $this->course_chapter->where("cid='$cid'")->order('sort')->fetchList();
 
