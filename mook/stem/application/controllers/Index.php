@@ -98,20 +98,6 @@ class IndexController extends \Yaf\Controller_Abstract
         $views->display("index/index/search.html.twig");
     }
 
-    public function articleAction($ccid)
-    {
-        $views = $this->getView();
-        $data = $this->getRequest();
-
-        $members = MembersManage::instance();
-        $app = $members->getCurrentSession();
-
-        $views->assign('title',"mook");
-        $views->assign('app',$app);
-        $views->assign('user',$member);
-        $views->display("index/course/artice.html.twig");
-    }
-
     public function usersAction($name = false)
     {
         $views = $this->getView();
@@ -146,7 +132,7 @@ class IndexController extends \Yaf\Controller_Abstract
 
     }
 
-    public function settingAction()
+    public function settingsAction()
     {
         $views = $this->getView();
         $data = $this->getRequest();
@@ -194,7 +180,7 @@ class IndexController extends \Yaf\Controller_Abstract
         	}
         }
 
-        $views->assign('title',"登录");
+        $views->assign('title',"登录墨客");
         $views->display($display);
     }
 
@@ -256,7 +242,7 @@ class IndexController extends \Yaf\Controller_Abstract
         }
 
         $views->assign('isLoginEnabled',true);
-        $views->assign('title',"注册");
+        $views->assign('title',"注册墨客");
         $views->display('index/register/index.html.twig');
     }
 

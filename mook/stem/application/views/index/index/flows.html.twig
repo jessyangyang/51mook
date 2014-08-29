@@ -5,13 +5,13 @@
 <div class="row">
 	<h2 class="col-lg-12">知识库</h2>
 	<div class="col-lg-12">
-		<ul class="nav nav-tabs m-Library-nav-tabs">
+		<ul class="nav nav-tabs m-Library-nav-tabs" role="navigation">
 			<li class="active"><a href="#popular" data-toggle="tab">热门</a></li>
   			<li><a href="#new" data-toggle="tab">最新上架</a></li>
   			{% if categories %}
   			{% for category in categories%}
   			{% if category.ccid > 0%}
-  			<li class="category-list-{{ category.sort }}"><a href="#{{ category.name }}" data-toggle="tab">{{ category.name }}</a></li>
+  			<li role="presentation" class="category-list-{{ category.sort }}"><a href="#{{ category.name }}" data-toggle="tab">{{ category.name }}</a></li>
   			{% endif %}
   			{% endfor %}
   			{% endif %}

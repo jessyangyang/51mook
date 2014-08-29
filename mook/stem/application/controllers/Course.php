@@ -39,7 +39,11 @@ class CourseController extends \Yaf\Controller_Abstract
 
         $members = new MembersManage();
         $app = $members->getCurrentSession();
-        if (!$app) exit(); 
+
+        if (!$app) {
+            header("Location: /");
+            exit();
+        }
 
         $courseControl = AdminCourseManage::instance();
 
@@ -56,7 +60,7 @@ class CourseController extends \Yaf\Controller_Abstract
             }
         }
 
-        $views->assign('title', "创建墨客");
+        $views->assign('title', "创建课程");
         $views->assign('categories', $category);
         $views->assign('app', $app);
         $views->display("index/course/create.html.twig");
@@ -132,6 +136,8 @@ class CourseController extends \Yaf\Controller_Abstract
             if ($app['uid'] == $course['uid']) $owner = true;
         }
 
+        if (!$app or !$owner) exit();
+
         $views->assign('app', $app);
         $views->assign('owner', $owner);
         $views->assign('course', $course);
@@ -171,6 +177,8 @@ class CourseController extends \Yaf\Controller_Abstract
             if ($app['uid'] == $course['uid']) $owner = true;
         }
 
+        if (!$app or !$owner) exit();
+
         $views->assign('app', $app);
         $views->assign('owner', $owner);
         $views->assign('course', $course);
@@ -188,6 +196,8 @@ class CourseController extends \Yaf\Controller_Abstract
 
         $members = MembersManage::instance();
         $app = $members->getCurrentSession();
+
+         if (!$app) exit();
 
         if ($data->isPost()) {
 

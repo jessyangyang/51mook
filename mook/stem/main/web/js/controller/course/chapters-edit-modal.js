@@ -28,9 +28,9 @@ define(function(require, exports, module) {
             autoSubmit: false,
             onFormValidated: function(error, results, $form) {
                 var $modal = $form.parents('.modal');
-
+                var $button = $('.m-modal-dialog').find('button');
                 var formdata = new FormData($form[0]);
-
+                
                 $.ajax({
                     url: $form.attr('action'),
                     type: 'POST',
@@ -44,6 +44,7 @@ define(function(require, exports, module) {
                         $('#course-title-show').text(json.message.title);
                         $('#course-category-show').text(json.message.category);
                     }
+                    $button.removeClass('loading');
                     $modal.modal('hide');
                     Notify.success('修改课程成功！');
                 }).fail(function(jqXHR, textStatus, errorThrown) { 

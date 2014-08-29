@@ -9,9 +9,12 @@ define(function(require, exports, module) {
             autoSubmit: false,
             onFormValidated: function(error, results, $form) {
                 var $modal = $form.parents('.modal');
-
+                var $button = $('.m-modal-dialog').find('button');
+                $button.addClass('loading');
                 $.post($form.attr('action'), $form.serialize(), function(json) {
+                    $button.removeClass('loading');
                     $modal.modal('hide');
+
                     var $item = $($form.data('item'));
                     if (json) {
                         $item.find('h2 a').text(json.message.title);

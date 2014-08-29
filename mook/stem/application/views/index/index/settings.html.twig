@@ -1,33 +1,33 @@
 {% extends 'index/layout.html.twig' %}
 {% block content %}
-
+{% if app %}
 <!--account information start-->
-    <div class="container m-setting-wrapper">
-			<div class="row narrow">
-				<h2 class="col-lg-12">账户设置</h2>
-				<!--account nav-tab start-->
-				<div class="col-lg-12">
-					<ul class="nav nav-tabs m-setting-nav-tabs">
-						<li class="active"><a href="#edit-information" data-toggle="tab">个人信息</a></li>
-						<li><a href="#change-password" data-toggle="tab">账户设置</a></li>
-						<li><a href="#billing" data-toggle="tab">账户升级</a></li>
+<div class="container m-setting-wrapper">
+	<div class="row narrow">
+		<h2 class="col-lg-12">账户设置</h2>
+			<!--account nav-tab start-->
+			<div class="col-lg-12">
+				<ul class="nav nav-tabs m-setting-nav-tabs">
+					<li class="active"><a href="#edit-information" data-toggle="tab">个人信息</a></li>
+					<li><a href="#change-password" data-toggle="tab">账户设置</a></li>
+				<li><a href="#billing" data-toggle="tab">账户升级</a></li>
                         <li><a href="#notifications" data-toggle="tab">邮件设置</a></li>
                     </ul>
 				</div>
 				<!--account nav-tab ends-->
 				<!--account content start-->
-				<div class="tab-content col-lg-12">
-					<div class="tab-pane fade in active" id="edit-information">
-						<form role="form">
-							<!--account author photo end-->
+			<div class="tab-content col-lg-12">
+				<div class="tab-pane fade in active" id="edit-information">
+					<form role="form">
+						<!--account author photo end-->
                   		<div class="m-author-avatar-box text-center">
-								<a class="m-avatar m-author-avatar" onclick="uploadavatar.click()" href="#">
-									<img src="{{ app.cover }}">
-								</a> 
-            					<button href="#" onclick="uploadavatar.click()" class="btn m-btn-defult grey"><span class="icon-m-user-normal-photo"></span>修改头像</button>
-								<input type="file" id="uploadavatar"> 
+							<a class="m-avatar m-author-avatar" onclick="uploadavatar.click()" href="#">
+								<img src="{{ app.cover }}">
+							</a> 
+            				<button href="#" onclick="uploadavatar.click()" class="btn m-btn-defult grey"><span class="icon-m-user-normal-photo"></span>修改头像</button>
+							<input type="file" id="uploadavatar"> 
                   		</div>
-							<!--account author photo end-->
+						<!--account author photo end-->
                             <p>
                                 <label for="id_username">昵称</label>
                                 <input id="id_username" type="text" name="username" maxlength="256" value="">
@@ -45,10 +45,10 @@
                                 <textarea id="id_about" rows="10" name="about" cols="40"></textarea>
                             </p>
                 			<button type="button" class="btn m-btn-green pull-right">保存修改</button>
-						</form>
-					</div>
-					<div class="tab-pane fade in" id="change-password">
-						<form role="form">
+					</form>
+				</div>
+				<div class="tab-pane fade in" id="change-password">
+					<form role="form">
                             <ul class="action-list">
                                 <li>
                                     <a class="btn grey icon-only pull-right" href="#" data-reveal-id="change-email" data-animation="fade"  data-toggle="modal" data-target="#change-email"><span class="icon-m-pencil"></span></a>
@@ -92,20 +92,20 @@
                             <p class="small text-center">
                                 <a class="popup red tip" original-title="Please don't go... we'll miss you... :-(" href="/logout">退出您的账户</a>
                             </p>
-						</form>
-					</div>
-					<div class="tab-pane fade in" id="billing">
-						<p><b>Private Flows</b> are great for companies, teams, workshops and study-groups. Only you and the students you personally invite are able to see and join this Learning Flow. In the private flows you can track the learning progress of your students and have closed discussions. <a href="#">Learn more »</a></p>
-						<table>
-							<thead>
-								<tr>
-									<th>计划</th>
-									<th>价格</th>
-									<th>学生人数</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
+					</form>
+				</div>
+				<div class="tab-pane fade in" id="billing">
+					<p><b>Private Flows</b> are great for companies, teams, workshops and study-groups. Only you and the students you personally invite are able to see and join this Learning Flow. In the private flows you can track the learning progress of your students and have closed discussions. <a href="#">Learn more »</a></p>
+					<table>
+						<thead>
+							<tr>
+								<th>计划</th>
+								<th>价格</th>
+								<th>学生人数</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
                          		<tr>
                                     <td><p>免费</p></td>
                                     <td><p>￥0元/月</p></td>
@@ -130,9 +130,9 @@
                                     <td><p>50</p> </td>
                                     <td class="text-right"><a href="#" class="btn loading">升级</a></td>
                          		</tr>
-							</tbody>
-						</table>
-					</div>
+						</tbody>
+					</table>
+				</div>
                     <div class="tab-pane fade in" id="notifications">
                         <form role="form">
                             <ul class="action-list">
@@ -172,7 +172,7 @@
                     </div>
 
                 </div>
-				<!--account content end-->
+			<!--account content end-->
 			</div>
     </div>
 	<!--account information ends-->
@@ -228,5 +228,5 @@
         </div><!-- /.modal -->
     </form>
     <!-- change password end -->
-
+{% endif %}
 {% endblock %}
