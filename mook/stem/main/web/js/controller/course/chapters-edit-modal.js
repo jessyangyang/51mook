@@ -29,8 +29,9 @@ define(function(require, exports, module) {
             onFormValidated: function(error, results, $form) {
                 var $modal = $form.parents('.modal');
                 var $button = $('.m-modal-dialog').find('button');
+                $button.addClass('loading');
                 var formdata = new FormData($form[0]);
-                
+
                 $.ajax({
                     url: $form.attr('action'),
                     type: 'POST',

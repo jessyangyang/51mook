@@ -9,6 +9,7 @@ define(function(require, exports, module) {
             onFormValidated: function(error, results, $form) {
                 var $modal = $form.parents('.modal');
                 var $button = $('.m-modal-dialog').find('button');
+                $button.addClass('loading');
                 $.post($form.attr('action'), $form.serialize(), function(json) {
                     var ccid = $form.find('.article-id').data('title');
                     $(ccid).remove();
