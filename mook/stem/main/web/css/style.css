@@ -160,6 +160,16 @@ a.m-follow:hover span, a.m-follow.yes span {
     margin: 15px 0 40px;
 }
 
+#uber-wrap .m-header h1 {
+    font-size: 4.2rem;
+    font-weight: 300;
+    line-height: 1.1em;
+    margin-bottom: 1.5rem;
+}
+#uber-wrap .m-header p {
+
+}
+
 p#m-teacher {
     display: block;
     line-height: 1.8rem;
@@ -227,6 +237,36 @@ p.m-boxed {
     height: 60px;
 }
 
+/*  --------------------------------------------------
+    正文
+    -------------------------------------------------- */
+article {
+    word-wrap:break-word;
+    word-break:break-all;
+}
+article p{
+    background-image: none;
+    color: #333333;
+    font-size: 1.6rem;
+    line-height: 1.8em;
+    margin-bottom: 1.6rem;
+    max-width: 100%;
+    position: relative;
+}
+
+article h1, article h2, article h3, article h4, article h5, article h6, article h1 *, article h2 *, article h3 *, article h4 *, article h5 *, article h6 * {
+    background-color: inherit;
+    border: 0 none;
+    font-size: 2.8rem;
+    font-weight: 500;
+    height: inherit;
+    letter-spacing: 0;
+    margin-top: 3.2rem;
+    line-height: 1.6;
+    padding-bottom: 0.3em;
+    text-transform: none;
+}
+
 article img{
     margin: 3rem 0;
     display: block;
@@ -243,26 +283,34 @@ article a:hover,  article a.btn:hover{
 }
 
 article pre {
-    background-color: #444444;
     border:none;
     border-radius: 0;
+    font-size: medium;
     box-sizing: border-box;
     color: #EEEEEE;
     display: block;
-    font-family: "Lucida Console",Monaco,monospace;
     margin-bottom: 28px;
     overflow: auto;
-    padding: 20px;
+    padding: 0;
     white-space: pre;
-    width: 600px;
     word-break: normal;
     word-wrap: normal;
+    margin: 20px 0;
+}
+
+article code {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-radius: 3px;
+    font-size: 85%;
+    margin: 0;
+    padding: 0.2em 0.4em;
 }
 
 article blockquote {
     border-left: 4px solid #50abf1;
     font-style: italic;
     padding: 20px 0 20px 30px;
+    margin: 20px 0;
 }
 
 article p.m-end {

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /* CSS Document */
 
-/*@import url(http://fonts.useso.com/css?family=Open+Sans:400,300,600);*/
+@import url(http://fonts.useso.com/css?family=Open+Sans:400,300,600);
 
 *,*:before,*:after {
 	-webkit-box-sizing: border-box;
@@ -16,7 +16,7 @@ html {
 }
 
 body {
-    font-family: "Open Sans",Arial,"Hiragino Sans GB","Microsoft YaHei","微软雅黑","STHeiti","WenQuanYi Micro Hei",SimSun,sans-serif;
+    font-family: "Open Sans","Lucida Grande","Hiragino Sans GB","Microsoft YaHei","微软雅黑","STHeiti","WenQuanYi Micro Hei",SimSun,Arial,sans-serif;
 }
 
 body.dragging, body.dragging * {
@@ -173,7 +173,7 @@ span.error {
 
 
 .row.narrow {
-    max-width: 620px;
+    max-width: 700px;
     min-width: 620px;
     padding: 3% 25px;
     margin: 0 auto !important;
@@ -945,29 +945,6 @@ ul.social-login li {
 	-------------------------------------------------- */
 
 
-/*	--------------------------------------------------
-	正文
-	-------------------------------------------------- */
-article * {
-    background-image: none;
-    color: #000000;
-    font-size: 1.6rem;
-    line-height: 1.8em;
-    margin-bottom: 1.6rem;
-    max-width: 100%;
-    position: relative;
-}
-
-article h1, article h2, article h3, article h4, article h5, article h6, article h1 *, article h2 *, article h3 *, article h4 *, article h5 *, article h6 * {
-    background-color: inherit;
-    border: 0 none;
-    font-size: 2.4rem;
-    font-weight: 500;
-    height: inherit;
-    letter-spacing: 0;
-    margin-top: 3.2rem;
-    text-transform: none;
-}
 
 /*	--------------------------------------------------
 	show more

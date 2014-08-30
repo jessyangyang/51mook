@@ -22,6 +22,7 @@ seajs.config({
 		"mediaelementplayer": "jquery-plugin/mediaelement/2.13.1/mediaelement-and-player",
 		'bootstrap': 'gallery2/bootstrap/3.1.1/bootstrap',
 		'kindeditor': 'gallery2/kindeditor/4.1.10/kindeditor',
+		'highlight': 'gallery2/highlight/8.2/highlight.pack',
 		'autocomplete': 'arale/autocomplete/1.2.2/autocomplete',
 		'upload': 'arale/upload/1.1.0/upload',
 		'bootstrap.validator': 'common/validator',

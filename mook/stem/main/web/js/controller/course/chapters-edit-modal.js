@@ -8,8 +8,8 @@ define(function(require, exports, module) {
     	$('#course-action-delete').on('click',function(){
     		var $modal = $('.modal');
     		var $this = $(this);
-            href = $this.attr('href');
-            url = $this.data('url');
+            var href = $this.attr('href');
+            var url = $this.data('url');
             // $('.modal-backdrop').remove();
             // $modal.modal('hide');
             if (url) {

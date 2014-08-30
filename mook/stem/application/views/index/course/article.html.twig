@@ -1,4 +1,6 @@
 {% extends 'index/course/layout.html.twig' %}
+{% block head_scripts %}<link rel="stylesheet" media="screen" href="/assets/libs/gallery2/highlight/8.2/styles/github.css" />{% endblock %}
+{% set script_controller = 'course/articles' %}
 {% block content %}
 
 	<!--content start-->
@@ -20,7 +22,7 @@
                     </div>
                     {% endif %}
                     <div class="m-header">
-                        <h2>{{ article.title }}</h2>
+                        <h1>{{ article.title }}</h1>
                         <p><a href="{{ article.url }}" target="_blank">{{ article.host }}</a></p>
                     </div>
                     <article>
