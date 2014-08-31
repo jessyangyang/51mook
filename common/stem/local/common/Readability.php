@@ -67,9 +67,9 @@ class Readability {
         // 生成 DOM 解析类
         $this->DOM = new \DOMDocument('1.0', $input_char);
         try {
-            //libxml_use_internal_errors(true);
+            libxml_use_internal_errors(true);
             // 会有些错误信息，不过不要紧 :^)
-            if (!@$this->DOM->loadHTML('<?xml encoding="'.Readability::DOM_DEFAULT_CHARSET.'">'.$source)) {
+            if (!$this->DOM->loadHTML('<?xml encoding="'.Readability::DOM_DEFAULT_CHARSET.'">'.$source)) {
                 throw new \Exception("Parse HTML Error!");
             }
 
@@ -150,9 +150,9 @@ class Readability {
      *
      * @return DOMNode
      */
-    private function getTopBox() {
+    private function getTopBox($tag = 'p') {
         // 获得页面所有的章节
-        $allParagraphs = $this->DOM->getElementsByTagName("p");
+        $allParagraphs = $this->DOM->getElementsByTagName($tag);
 
         // Study all the paragraphs and find the chunk that has the best score.
         // A score is determined by things like: Number of <p>'s, commas, special classes, etc.
