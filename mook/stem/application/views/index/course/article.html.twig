@@ -47,8 +47,8 @@
                         </p>
                         {% endif %} #}
                     </article>
-                    {% if prev %}<a id="mook-prev" href="/course/{{ prev.cid }}/{{ prev.ccid }}/{{ prev.ptitle }}"><span class="icon-m-arrow-left"></span></a>{% endif %}
-                    {% if next %}<a id="mook-next" href="/course/{{ next.cid }}/{{ next.ccid }}/{{ next.ptitle }}"><span class="icon-m-arrow-right"></span></a>{% endif %}
+                    {% if prev %}<a id="mook-prev" href="/course/{{ prev.cid }}/{{ prev.ccid }}/{{ prev.ptitle|url_encode }}"><span class="icon-m-arrow-left"></span></a>{% endif %}
+                    {% if next %}<a id="mook-next" href="/course/{{ next.cid }}/{{ next.ccid }}/{{ next.ptitle|url_encode }}"><span class="icon-m-arrow-right"></span></a>{% endif %}
                 </div>
                 {% endif %}
             </div>
@@ -66,12 +66,12 @@
                     <li>
                         <span class="m-dot"></span>
                         <h2>
-                            <a href="/course/{{ next.cid }}/{{ next.ccid }}/{{ next.ptitle }}">{{ next.title }}</a>
+                            <a href="/course/{{ next.cid }}/{{ next.ccid }}/{{ next.ptitle|url_encode }}">{{ next.title }}</a>
                         </h2>
                         <p class="m-meta small">
                             <a href="{{ next.url }}">{{ next.host }}</a>
                             <span>•</span>
-                            <a href="/course/{{ course.cid }}/{{ course.ptitle }}/#reading-man">{{ next.student|default('0') }} 学习过</a>
+                            <a href="/course/{{ course.cid }}/{{ course.ptitle|url_encode }}/#reading-man">{{ next.student|default('0') }} 学习过</a>
                             <span>•</span>
                             <a href="{{ next.url }}">{{ next.studytime }} 分钟</a>
                         </p>

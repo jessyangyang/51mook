@@ -25,7 +25,7 @@
 		<div class="col-lg-3 col-sm-4 col-md-3">
 			<div class="m-book-cell">                                                    
 			<div class="m-book-cover m-book-cover-large" style="background-image:url({{ hot.cover_m|default(hot.cover) }})">
-			<a href="/course/{{ hot.cid }}/{{ hot.ptitle }}">
+			<a href="/course/{{ hot.cid }}/{{ hot.ptitle|url_encode }}">
 				<hgroup>
 				<h3>{{ hot.title }}</h3>
 				<img class="m-avatar" src="{{ hot.usercover_s|default('') }}">
@@ -51,7 +51,7 @@
 		<div class="col-lg-3 col-sm-4 col-md-3">
 			<div class="m-book-cell">                                                    
 			<div class="m-book-cover m-book-cover-large" style="background-image:url({{ new.cover_m|default(new.cover) }})">
-				<a href="/course/{{ new.cid }}/{{ new.ptitle }}">
+				<a href="/course/{{ new.cid }}/{{ new.ptitle|url_encode }}">
 					<hgroup>
 						<h3>{{ new.title }}</h3>
 						<img class="m-avatar" src="{{ new.usercover_s|default('') }}">
@@ -78,7 +78,7 @@
 		<div class="col-lg-3 col-sm-4 col-md-3">
 			<div class="m-book-cell">                                                    
 			<div class="m-book-cover m-book-cover-large" style="background-image:url({{ course.cover_m|default(course.cover) }})">
-			<a href="/course/{{ course.cid }}/{{ course.ptitle }}">
+			<a href="/course/{{ course.cid }}/{{ course.ptitle|url_encode }}">
 				<hgroup>
 					<h3>{{ course.title }}</h3>
 					<img class="m-avatar" src="{{ course.usercover_s|default('') }}">

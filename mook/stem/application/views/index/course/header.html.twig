@@ -8,7 +8,7 @@
             </h1>
             <ul class="nav nav-pills">
                 <li class="pull-left">
-                    <a class="icon" href="/course/{{ course.cid }}/{{ course.ptitle }}"><span class="icon-m-return-back"></span></a>
+                    <a class="icon" href="/course/{{ course.cid }}/{{ course.ptitle|url_encode }}"><span class="icon-m-return-back"></span></a>
                 </li>
                 {% if app %}
                 <li class="pull-right">

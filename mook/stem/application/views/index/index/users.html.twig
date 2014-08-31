@@ -74,7 +74,7 @@
                         {% for course in courses %}
                         <li><div class="m-book-cell">
                                 <div class="m-book-cover" style="background-image:url({{ course.cover_s|default(course.cover) }})">
-                                    <a href="/course/{{ course.cid }}/{{ course.ptitle }}"><span class="m-title">{{ course.title }}</span></a>
+                                    <a href="/course/{{ course.cid }}/{{ course.ptitle|url_encode }}"><span class="m-title">{{ course.title }}</span></a>
                                 </div></div>
                         </li>
                         {% endfor %}
