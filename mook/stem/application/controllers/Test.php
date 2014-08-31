@@ -14,6 +14,7 @@ use \local\rss\DOMHtml;
 use \local\common\Readability;
 use \mook\control\common\BlogManage;
 use \mook\control\admin\AdminBookManage;
+use \mook\control\common\LinkManage;
 
 class TestController extends \Yaf\Controller_Abstract 
 {
@@ -25,14 +26,31 @@ class TestController extends \Yaf\Controller_Abstract
 
         $common =  \Yaf\Registry::get('common');
 
-        // $html = $common->curl_request('http://www.dowebok.com/120.html');
+        // print_r(LinkManage::link('http://games.sina.com.cn/y/n/2014-07-02/1630795937.shtml'));
+
+        // $html = $common->curl_request('http://games.sina.com.cn/y/n/2014-07-02/1630795937.shtml');
+
+        // $doc = new \DOMDocument();
+        // libxml_use_internal_errors(true);
+        // $doc->loadHTML($html->response);
+
+        // $metas = $doc->getElementsByTagName('meta');
+
+
+        // for ($i = 0; $i < $metas->length; $i++)
+        // {
+        //     $meta = $metas->item($i);
+        //     if ($meta->getAttribute('http-equiv') == 'Content-Type') {
+        //         echo $meta->getAttribute('content');
+        //     }
+        // }
 
         // $readability = new Readability($html->response);
         // $data = $readability->getContent();
-        // print_r($data);
-        // 
-        preg_match('/=(\w+\b)/','text/html; charset=GBK',$matchs);
-        print_r($matchs);
+        // print_r($html);
+        
+        // preg_match('/=(\w+\b)/','text/html; charset=GBK',$matchs);
+        // print_r($matchs);
         // $roles = array(
         //     'admin' => array(
         //         'model' => 1,

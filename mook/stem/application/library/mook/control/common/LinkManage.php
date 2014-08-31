@@ -27,13 +27,35 @@ class LinkManage {
 
 		$htmls = $common->curl_request($url);
 
+		$charset = 'utf-8';
 
 		if ($htmls) {
-			preg_match('/=(.+\b)/',$htmls->info['content_type'], $matchs);
-			$charset = isset($matchs[1]) ? $matchs[1] : 'utf-8';
+			preg_match('/=(.+\b)/',$htmls->info['content_type'], $matchs_one);
+			if (isset($matchs_one[1]) and $matchs_one[1]) {
+				$charset = $matchs_one[1];
+			}
+			else if (preg_match('/=(.+\b)/',self::getMetaEncoding($htmls->response), $matchs_two) and isset($matchs_two[1])){
+				$charset = $matchs_two[1];
+			}
+			
 			$datas = new Readability($htmls->response,$charset);
 			return $datas->getContent();
 		}
 		return false;
+	}
+
+	public static function getMetaEncoding($response)
+	{
+		$doc = new \DOMDocument();
+        libxml_use_internal_errors(true);
+        $doc->loadHTML($response);
+        $metas = $doc->getElementsByTagName('meta');
+        for ($i = 0; $i < $metas->length; $i++)
+        {
+            $meta = $metas->item($i);
+            if ($meta->getAttribute('http-equiv') == 'Content-Type') {
+                return $meta->getAttribute('content');
+            }
+        }
 	}
 }

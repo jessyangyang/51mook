@@ -48,7 +48,7 @@ class Readability {
                                 "embed", "frame", "frameset", "keygen", "label", "marquee", "link");
 
     // 需要删除的属性
-    private $junkAttrs = Array("style", "class", "onclick", "onmouseover", "align", "border", "margin");
+    private $junkAttrs = Array("style", "class", "onclick", "onmouseover", "align", "border", "margin", "id" ,"width", "height", "font");
 
 
     /**
@@ -266,7 +266,8 @@ class Readability {
         
         //Check if we found a suitable top-box.
         if($ContentBox === null)
-            throw new \RuntimeException(Readability::MESSAGE_CAN_NOT_GET);
+            // throw new \RuntimeException(Readability::MESSAGE_CAN_NOT_GET);
+            return false;
         
         // 复制内容到新的 DOMDocument
         $Target = new \DOMDocument;

@@ -15,9 +15,9 @@ define(function(require, exports, module) {
         $html.appendTo('body');
 
         $html.slideDown(100, function(){
-            duration = $.type(duration) == 'undefined' ? 2 :  duration;
+            duration = $.type(duration) == 'undefined' ? 3 :  duration;
             if (duration > 0) {
-                $html.fadeOut(2000);
+                $html.fadeOut(3000);
                 setTimeout(function(){
                     $html.remove();
                 }, duration * 1000);

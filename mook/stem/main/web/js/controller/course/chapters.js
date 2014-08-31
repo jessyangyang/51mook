@@ -93,16 +93,21 @@ define(function(require, exports, module) {
                 $('ul.m-catalog').append('<li class="loader"><span class="m-dot"><img alt="loading" src="/web/img/default/loader.gif"></span><h2>获取链接地址中...</h2></li>');
 
                 $.post($form.attr('action'), $form.serialize(), function(response) {
+                    if (response) {
+                        Notify.success('添加成功！');
+                        $('ul.m-catalog').append(response);
+                    } else {
+                        Notify.warning('链接不可采集!');
+                    }
                     $form.find('button').attr('class', 'btn');
                     $('li.loader').remove();
                     $('li.empty').remove();
-                    $('ul.m-catalog').append(response);
                     $form.find('#course-link').val('');
                     $form.find('#course-link-summary').val('');
                 }).error(function(jqxhr, textStatus, errorThrown){
                     var json = jQuery.parseJSON(jqxhr.responseText);
                     $('span.error').text(json.message.error).attr('style','display:block;');
-
+                    Notify.danger("采集失败，请重试！");
                     $form.find('button').attr('class', 'btn');
                     $('li.loader').remove();
                     $form.find('#course-link').val('');

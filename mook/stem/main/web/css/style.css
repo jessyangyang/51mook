@@ -194,10 +194,6 @@ p#m-teacher a.m-avatar img {
     height: 30px;
 }
 
-p#m-teacher a {
-    font-weight: 600;
-}
-
 a.m-original {
     background-color: #FEFEFE;
     border: 1px dashed #DDDDDD;
@@ -1157,6 +1153,7 @@ textarea,  #add-form textarea {
 .m-catalog li.empty {
     padding: 90px 40px;
     text-align: center;
+    color: #AAAAAA;
 }
 
 .m-catalog li.empty:hover {
@@ -1812,7 +1809,7 @@ h1.page-title {
 
 p.small, time {
     color: #aaa;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 /**playlist 结束**/
 
