@@ -596,7 +596,7 @@ class AdminController extends \Yaf\Controller_Abstract
         $app = $members->getCurrentSession();
         if (!$app) exit(); 
 
-        $views->assign('title','图书编辑');
+        $views->assign('title','课程编辑');
         $views->assign('app',$app);
 
         $course = array();
@@ -692,7 +692,7 @@ class AdminController extends \Yaf\Controller_Abstract
         }
 
 
-        $views->assign('title','图书分类编辑');
+        $views->assign('title','课程分类编辑');
         $views->assign('category',$category);
         $views->assign('type',$type);
         $views->assign('app',$app);

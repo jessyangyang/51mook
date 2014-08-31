@@ -1,5 +1,5 @@
 {% extends 'admin/layout.html.twig' %}
-
+{% block title %}{{ title }} - {{ parent() }}{% endblock %}
 {% set panel = 'dashboard' %}
 {% set script_controller = 'default/index' %}
 {% block content %}
