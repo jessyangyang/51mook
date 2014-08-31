@@ -7,22 +7,22 @@
 <!--search result book-list start-->
     	<div id="uber-wrap" class="container">
     		<div class="row narrow">
-                <div class="col-lg-12"><h2>创建课程</h2></div>
+                <div class="col-lg-12"><h2>创建 MOOK</h2></div>
                 <div class="col-lg-12">
-                    <p>在墨客里创建课程非常简单，根据您的课程主题，您只需要将网页的最好的文章与视频收集到这里。</p>
+                    <p>创建 MOOK 超级简单，你只需要根据既定的知识点，采集最好的文章到这里。</p>
                     <form id="course-create-form" class="form-horizontal" method="post" enctype="multipart/form-data">
                         <div class="form-group form-group-box">
                             <label for="title">标题:</label>
                             <input id="title" type="text" name="title" maxlength="256">
-                            <span class="help help-block">简明概述您创建的课程名称.</span>
+                            <span class="help help-block">确定一个简明扼要而又引人注目的标题，如:创业者必需掌握的基本技能.</span>
                         </div>
                         <div class="form-group form-group-box">
-                            <label for="summary">摘要:</label>
+                            <label for="summary">导语:</label>
                             <textarea id="summary" rows="10" name="summary" cols="40"></textarea>
-                            <span class="help help-block">详细的介绍你的课程信息.</span>
+                            <span class="help help-block">介绍一下 MOOK 的基本内容，告诉你的大家可以学到什么.</span>
                         </div>
                         <div class="form-group form-group-box">
-                        <label for="category">选择分类:</label>
+                        <label for="category">分类:</label>
                         <select class="form-control" name='ccid'>
                             {% if categories %}
                             {% for category in categories %}
@@ -34,12 +34,12 @@
                             <option value="0">默认分类</option>
                             {% endif %}
                         </select>
-                        <span class="help help-block">根据您的内容选择分类</span>
+                        <span class="help help-block">选择一个分类，方便人们浏览知识库时发现你的 MOOK</span>
                         </div>
                         <div class="form-group form-group-box">
                             <ul class="radio">
                             <li><p><label><input type="radio" id="roles" checked="" value="1" name="private"><span></span>公开</label>
-                                <span class="help">任何人都能够加入课程学习.</span></p>
+                                <span class="help">对任何人可见，大家可以自由加入到学习中来.</span></p>
                             </li>
   {#                           <li>
                                 <p><label><input type="radio" id="roles" value="2" name="private"><span></span>个人</label>

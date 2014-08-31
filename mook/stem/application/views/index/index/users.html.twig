@@ -11,7 +11,7 @@
                         <div class="m-profile">
                             <a class="m-avatar" href="#"><img src="{{ user.cover }}"></a>
                             <h2><a href="/settings">{{ user.username }}<span class="icon-m-pencil edit"></span></a></h2>
-                            <p class="small"><a href="/settings">编辑个人签名档<span class="icon-m-pencil edit"></span></a></p>
+                            <p class="small"><a href="/settings">编辑签名档<span class="icon-m-pencil edit"></span></a></p>
                         </div>
                         <!--button starts-->
                         <div class="m-actions">
@@ -21,7 +21,7 @@
                         <!--blockquote starts-->
                         <!--blockquote nav starts-->
                         <ul class="nav nav-tabs m-Library-nav-tabs m-remove-magin">
-                            <li class="active"><a href="#points" data-toggle="tab">点数</a></li>
+                            <li class="active"><a href="#points" data-toggle="tab">统计</a></li>
 {#                             <li><a href="#badge" data-toggle="tab">徽章</a></li>
                             <li><a href="#student" data-toggle="tab">学生</a></li> #}
                         </ul>
@@ -63,11 +63,11 @@
             <!--book cata starts-->
                 <div class="col-lg-6 col-md-6 col-sm-6 pull-right">
                     {% if courses %}
-                    <h6><span>创建的图书</span></h6>
+                    <h6><span>创建的 MOOK</span></h6>
                     <ul class="m-tiny-cover-list">
                         {% if owner %}
                         <li class="m-create">
-                            <a href="/create" target="_blank"><span class="icon-m-add-mook"></span><b>创建<br>课程</b></a>
+                            <a href="/create" target="_blank"><span class="icon-m-add-mook"></span><b>创建<br>MOOK</b></a>
                         </li>
                         {% endif %}
                         
