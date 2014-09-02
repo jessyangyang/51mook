@@ -1,4 +1,25 @@
 {% extends 'index/course/layout.html.twig' %}
+{% if article %}
+{# {% block keywords %}{{ parent() }}{% endblock %} #}
+{% block description %}{{ article.summary }}{% endblock %}
+{% block card %}
+    <!-- Twitter Card -->
+    <meta name="twitter:site" content="@51mook">
+    <meta name="twitter:url" content="http://www.51mook.com/course/{{ article.cid }}/{{ article.ccid }}/{{ article.ptitle|url_encode }}">
+    <meta name="twitter:title" content="{{ article.title }}">
+    <meta name="twitter:description" content="{{ article.summary }}...">
+    <meta name="twitter:image" content="{{ article.cover }}">
+
+    <!-- Weibo Card -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="http://www.51mook.com/course/{{ article.cid }}/{{ article.ccid }}/{{ article.ptitle|url_encode }}" />
+    <meta property="og:title" content="{{ article.title }}" />
+    <meta property="og:description" content="{{ article.summary }}..." />
+    <meta property="og:image" content="{{ article.cover }}"/>
+    <meta name="weibo: article:create_at" content="{{ article.dateline|date('Y-m-d H:i:s O') }}" />
+    <meta name="weibo: article:update_at" content="{{ article.modified|date('Y-m-d H:i:s O') }}" />
+{% endblock %}
+{% endif %}
 {% block head_scripts %}
 <link rel="stylesheet" media="screen" href="/assets/libs/gallery2/highlight/8.2/styles/monokai_sublime.css" />
 {% endblock %}

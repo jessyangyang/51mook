@@ -1,5 +1,5 @@
 {% extends 'index/layout.html.twig' %}
-
+{% block description %}{{ course.summary }}{% endblock %}
 {% set script_controller = 'course/chapters' %}
 
 {% block content %}

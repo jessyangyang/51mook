@@ -7,10 +7,15 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="keywords" content="{% block keywords %}墨客,51mook,mook,P2P学习,知识社群,在线教育,数字阅读{% endblock %}" />
   <meta name="description" content="{% block description %}墨客是一个专注社会化学习的社区，给学习者提供网络资料采集和互相交流的服务，覆盖创业、管理、编程、设计、营销等诸多方面。{% endblock %}" />
   <title>{% block title %}{{ title }} | 墨客{% endblock %}</title>
+  {% block prefetch %}
+     <!-- Prefetch -->
+    <link rel="dns-prefetch" href="//fonts.useso.com/">
+  {% endblock %}
   {% block stylesheets %}
     <link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600&subset=latin,latin-ext' rel='stylesheet'>
     <link rel="stylesheet"  href="/assets/css/bootstrap.min.css" />
@@ -22,6 +27,8 @@
       <link href="/assets/css/oldie.css" rel="stylesheet">
     <![endif]-->
   {% endblock %}
+
+  {% block card %}{% endblock %}
   <!--[if lt IE 9]>
     <script src="/assets/libs/html5shiv.js"></script>
   <![endif]-->
