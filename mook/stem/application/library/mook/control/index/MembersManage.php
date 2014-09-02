@@ -28,6 +28,7 @@ class MembersManage extends MembersControl
         return self::$instance;
     }
 
+
     /**
      * Instance construct
      */
