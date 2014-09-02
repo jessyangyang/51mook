@@ -62,7 +62,7 @@
             <!--book information ends-->
             <!--book cata starts-->
                 <div class="col-lg-6 col-md-6 col-sm-6 pull-right">
-                    {% if courses %}
+                    
                     <h6><span>创建的 MOOK</span></h6>
                     <ul class="m-tiny-cover-list">
                         {% if owner %}
@@ -70,7 +70,7 @@
                             <a href="/create" target="_blank"><span class="icon-m-add-mook"></span><b>创建<br>MOOK</b></a>
                         </li>
                         {% endif %}
-                        
+                        {% if courses %}
                         {% for course in courses %}
                         <li><div class="m-book-cell">
                                 <div class="m-book-cover" style="background-image:url({{ course.cover_s|default(course.cover) }})">
@@ -78,9 +78,8 @@
                                 </div></div>
                         </li>
                         {% endfor %}
-                    
+                        {% endif %}
                     </ul>
-                    {% endif %}
 {#                     <h6><span>学习的图书</span></h6>
                     <ul class="m-tiny-cover-list">
                         {% if owner %}
