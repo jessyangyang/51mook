@@ -51,8 +51,6 @@ class MembersControl
         $this->memberInfo = MemberInfo::instance();
         $this->oauthaccesstoken = OAuthAccessTokens::instance();
         $this->images = new ImageControl();
-        // $this->session = Session::getInstance();
-        // 
     }
 
     /**
