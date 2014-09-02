@@ -7,16 +7,14 @@
 
 <form id="user-roles-form" class="form-horizontal" method="post" action="">
 <div class="radios">
+	{% if roles %}
 	{% for role in roles %}
 	<div class="radio">
 	{% if role.id > 10 %}
   		<label class="checkbox-inline"><input type="radio" name="roles"  value="{{ role.id }}" {% if user.role_id == role.id %}checked{% endif %}> {{role.name}}</label>
-	{% endif %}
-	{% if app.super == true and role.id < 10 %}
-		<label class="checkbox-inline"><input type="radio" name="roles"  value="{{ role.id }}" {% if user.role_id == role.id %}checked{% endif %}> {{role.name}}</label>
-	{% endif %}
 	</div>
 	{% endfor %}
+	{% endif %}
 </div>
 	<input type="hidden" name='uid' value='{{ user.id }}'>
 	<input type="hidden" name='type' value='roles'>

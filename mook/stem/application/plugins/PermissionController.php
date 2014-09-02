@@ -72,13 +72,13 @@ class PermissionControllerPlugin extends Plugin_Abstract
                 $request->setControllerName('Index');
                 $request->setActionName('index');
             }
-            // 检查是否是超级管理员、管理员、开发者
-            else if (in_array($key[0], $check) and $user['super'] == false) {
+            // 检查是否是超级管理员
+            else if (in_array($key[0], $check) and $user['role_id'] > 1) {
                 $request->setControllerName('Index');
                 $request->setActionName('index');
             }
             // 检查普通用户的权限
-            else if ($user['role_id'] > 3 and !in_array($this->current_key, $userpermission)) {
+            else if ($user['role_id'] > 1 and !in_array($this->current_key, $userpermission)) {
                 $request->setControllerName('Index');
                 $request->setActionName('index');
             }

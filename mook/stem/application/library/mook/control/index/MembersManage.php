@@ -102,7 +102,6 @@ class MembersManage extends MembersControl
                 $app['email'] = $email;
                 $app['username'] = $username;
                 $app['cover'] = false;
-                $app['super'] = false;
                 $app['role_id'] = self::ROLE_NORMAL;
                 $app['permission'] = $permission;
 
@@ -194,7 +193,6 @@ class MembersManage extends MembersControl
 	            	'email' => $row['email'],
 	            	'username' => $row['username'],
 	            	'cover' => false,
- 	            	'super' => 0,
                     'role_id' => $row['role_id'],
 	            	'permission' => $permission);
 
@@ -214,8 +212,6 @@ class MembersManage extends MembersControl
                         }
                     }
                 }
-
-                if ($row['role_id'] <= 3) $app['super'] = 1;
 
                 $_SESSION['app'] = $app;
                 return $row['id'];
