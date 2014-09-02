@@ -12,6 +12,7 @@ namespace mook\control\index;
 
 use \lib\dao\MembersControl;
 use \mook\control\common\ImagesManage;
+use \mook\common\Session as CustomSession;
 use \lib\dao\RolesControl;
 use \Yaf\Registry;
 
@@ -32,6 +33,7 @@ class MembersManage extends MembersControl
      */
     function __construct($uid = false) {
         parent::__construct();
+        CustomSession::instance();
         $this->images = new ImagesManage();
     }
 
@@ -85,7 +87,7 @@ class MembersManage extends MembersControl
             if ($imgUrl and $avatarId) 
             {
                 $images = new ImagesManage();
-                $cover = $imagrs->getImagesMemberForID($avatarId);
+                $cover = $images->getImagesMemberForID($avatarId);
                 if ($cover) {
                     $app['cover_small'] = ImagesManage::getRealCoverSize($cover['path']);
                     $app['cover_medium'] = ImagesManage::getRealCoverSize($cover['path'],"medium");
@@ -103,7 +105,7 @@ class MembersManage extends MembersControl
                 $app['role_id'] = self::ROLE_NORMAL;
                 $app['permission'] = $permission;
 
-                $this->session->set('app',$app);
+                $_SESSION['app'] = $app;
             }
 
             return true;
@@ -113,7 +115,7 @@ class MembersManage extends MembersControl
 
     public function getCurrentMember()
     {
-        if (!$this->session->has("app")) return false;
+        if (!isset($_SESSION['app'])) return false;
 
         $table = $this->members->table;
 
@@ -139,7 +141,10 @@ class MembersManage extends MembersControl
 
     public function getCurrentSession()
     {
-    	return $this->session->get('app');
+        if (isset($_SESSION['app'])) {
+            return $_SESSION['app'];
+        }
+    	return false;
     }
 
     /**
@@ -188,7 +193,7 @@ class MembersManage extends MembersControl
 	            	'email' => $row['email'],
 	            	'username' => $row['username'],
 	            	'cover' => false,
- 	            	'super' => false,
+ 	            	'super' => 0,
                     'role_id' => $row['role_id'],
 	            	'permission' => $permission);
 
@@ -209,9 +214,9 @@ class MembersManage extends MembersControl
                     }
                 }
 
-                if ($row['role_id'] <= 3) $app['super'] = true;
+                if ($row['role_id'] <= 3) $app['super'] = 1;
 
-                $this->session->set('app',$app);
+                $_SESSION['app'] = $app;
                 return $row['id'];
             }
         }
@@ -225,8 +230,8 @@ class MembersManage extends MembersControl
      */
     public function logout()
     {
-        if ($this->session->has("app")) {
-            $this->session->__unset('app');
+        if (isset($_SESSION['app'])) {
+            unset($_SESSION['app']);
             return true;
         }
         return false;

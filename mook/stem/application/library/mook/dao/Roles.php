@@ -45,19 +45,12 @@ class Roles extends \lib\models\users\Roles
         }
 
         $index = 1;
-        echo "<pre>";
+        $roles->delete();
         
         foreach ($list as $key => $value) {
             $control = explode('_',$key);
-            if (in_array($key, $names) and $control) {
-                $roles->where("name='$key'")->update(array('controller' => $value['route']['controller'], 'action' => $value['route']['action'],'published' => UPDATE_TIME,'sort' => $index,'summary' => ($value['name'] ? $value['name'] : $value['name']),'rcid' => $cate[$control[0]]));
-                 echo 'update :'.$key . "<br>";
-            }
-            else
-            {
-                $roles->insert(array('rcid' => $cate[$control[0]],'name' => $key,'controller' => $value['route']['controller'], 'action' => $value['route']['action'],'published' => UPDATE_TIME, 'summary' => $value['name'], 'sort' => $index));
-                echo 'insert :'.$key . "<br>";
-            }
+            
+            $roles->insert(array('rcid' => $cate[$control[0]],'name' => $key,'controller' => $value['route']['controller'], 'action' => $value['route']['action'],'published' => UPDATE_TIME, 'summary' => $value['name'], 'sort' => $index));
             $index ++;
         }
     }

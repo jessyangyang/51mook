@@ -101,6 +101,14 @@ class TestController extends \Yaf\Controller_Abstract
     {
         $roles = new Roles();
         $roles->initRoles();
+        echo "sussce";
+        exit();
+    }
+
+    public function clearSessionAction()
+    {
+        session_destroy();
+        echo "clear";
         exit();
     }
 }

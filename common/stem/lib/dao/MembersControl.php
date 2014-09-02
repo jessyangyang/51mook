@@ -41,7 +41,7 @@ class MembersControl
     protected $memberInfo;
     protected $oauthaccesstoken;
     protected $images;
-    protected $session;
+    // protected $session;
 
     /**
      * Instance construct
@@ -51,7 +51,8 @@ class MembersControl
         $this->memberInfo = MemberInfo::instance();
         $this->oauthaccesstoken = OAuthAccessTokens::instance();
         $this->images = new ImageControl();
-        $this->session = Session::getInstance();
+        // $this->session = Session::getInstance();
+        // 
     }
 
     /**
@@ -106,8 +107,8 @@ class MembersControl
                     'expires' => strtotime("next Monday"));
                 $this->oauthaccesstoken->insert($authArr);
 
-                $this->session->set('current_id',$userId);
-                $this->session->set('authToken',$authToken);
+                // $this->session->set('current_id',$userId);
+                // $this->session->set('authToken',$authToken);
 
                 header("Auth-Token:".$authToken);
             }
@@ -119,10 +120,10 @@ class MembersControl
 
     public static function getCurrentUser()
     {
-        $session = \Yaf\Session::getInstance();
-        if ($session->has('current_id')) {
-            return Members::getByID($session->current_id);
-        }
+        // $session = \Yaf\Session::getInstance();
+        // if ($session->has('current_id')) {
+        //     return Members::getByID($session->current_id);
+        // }
         return false;
     }
 
@@ -180,33 +181,33 @@ class MembersControl
      */
     public function login($email,$password)
     {
-        $wherearr = "email='" . $this->members->escapeString(trim($email)) . "' AND password='" . md5($this->members->escapeString($password)) . "'";
-        $row = $this->members->where($wherearr)->fetchRow();
+        // $wherearr = "email='" . $this->members->escapeString(trim($email)) . "' AND password='" . md5($this->members->escapeString($password)) . "'";
+        // $row = $this->members->where($wherearr)->fetchRow();
 
-        if ($row) {
-            $session = \Yaf\Session::getInstance();
-            if ($state = $this->oauthaccesstoken->hasArrow(md5($row['id'].$email))) {
-                $session->set('current_id',$state['user_id']);
-                $session->set('authToken',$state['oauth_token']);
-                return $state;
-            }
-            else
-            {
-                $authArr = array(
-                        'oauth_token' => md5($row['id'].$email),
-                        'client_id' => $row['id'],
-                        'user_id' => $row['id'],
-                        'expires' => strtotime("next Monday"));
-                $this->oauthaccesstoken->insert($authArr);
+        // if ($row) {
+        //     $session = \Yaf\Session::getInstance();
+        //     if ($state = $this->oauthaccesstoken->hasArrow(md5($row['id'].$email))) {
+        //         $session->set('current_id',$state['user_id']);
+        //         $session->set('authToken',$state['oauth_token']);
+        //         return $state;
+        //     }
+        //     else
+        //     {
+        //         $authArr = array(
+        //                 'oauth_token' => md5($row['id'].$email),
+        //                 'client_id' => $row['id'],
+        //                 'user_id' => $row['id'],
+        //                 'expires' => strtotime("next Monday"));
+        //         $this->oauthaccesstoken->insert($authArr);
                 
-                $session->set('current_id',$row['id']);
-                $session->set('authToken',md5($row['id'].$email));
+        //         $session->set('current_id',$row['id']);
+        //         $session->set('authToken',md5($row['id'].$email));
 
-                return true;
-            }
+        //         return true;
+        //     }
 
-            header("Auth-Token:".$session->get('authToken'));
-        }
+        //     header("Auth-Token:".$session->get('authToken'));
+        // }
         return false;
     }
 
@@ -217,12 +218,12 @@ class MembersControl
      */
     public function logout()
     {
-        $session = \Yaf\Session::getInstance();
-        if ($session->has("current_id")) {
-            $session->__unset('current_id');
-            $session->__unset('authToken');
-            return true;
-        }
+        // $session = \Yaf\Session::getInstance();
+        // if ($session->has("current_id")) {
+        //     $session->__unset('current_id');
+        //     $session->__unset('authToken');
+        //     return true;
+        // }
         return false;
     }
 

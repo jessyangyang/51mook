@@ -50,7 +50,7 @@ class PermissionControllerPlugin extends Plugin_Abstract
 
         $rest = RegisterRest::initRegister();
         $this->current_key = $this->changedSystemAction($request->getControllerName(),$request->getActionName(),$rest);
-        
+
         if (!$this->current_key) 
         {
             $request->setControllerName('Index');
@@ -67,15 +67,18 @@ class PermissionControllerPlugin extends Plugin_Abstract
             $key = explode('_', $this->current_key);
             $userpermission = isset($user['permission']) ? explode(',', $user['permission']) : array();
 
+            // 不登录情况下，检查系统默认不可访问权限
             if (in_array($key[0], $check) and !$user) {
                 $request->setControllerName('Index');
                 $request->setActionName('index');
             }
+            // 检查是否是超级管理员、管理员、开发者
             else if (in_array($key[0], $check) and $user['super'] == false) {
                 $request->setControllerName('Index');
                 $request->setActionName('index');
             }
-            else if (in_array($key[0], $check) and $user['role_id'] > 3 and !in_array($this->current_key, $userpermission)) {
+            // 检查普通用户的权限
+            else if ($user['role_id'] > 3 and !in_array($this->current_key, $userpermission)) {
                 $request->setControllerName('Index');
                 $request->setActionName('index');
             }
@@ -83,6 +86,14 @@ class PermissionControllerPlugin extends Plugin_Abstract
         }
     }
 
+    /**
+     * [changedSystemAction check system action]
+     * 检查系统是否定义了controller和action
+     * @param  [type] $controller [description]
+     * @param  [type] $action     [description]
+     * @param  [type] $fields     [description]
+     * @return [type]             [description]
+     */
     private function changedSystemAction($controller,$action,$fields)
     {
         if (!is_array($fields)) return false;

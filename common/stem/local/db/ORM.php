@@ -126,13 +126,17 @@ class ORM extends MySQL
         $tmpIntType = array('int','tinyint','smallint','mediumint','integer','bigint');
         $tmpFloatType = array('float','double');
         $tmpFloatType = array('bit');
+        $tmpCharType = array('char','varchar','text');
 
         // query condition
         if(isset($tmpOption['where']) and is_array($tmpOption['where']))
         {
+            $tmpSql = '';
+            $count = count($tmpOption['where']);
+            $i = 1;
             foreach ($tmpOption['where'] as $key => $value) 
             {
-                // Check $value 
+                
                 if(isset($this->fields[$key]) and is_scalar($value))
                 {
                     //Format int
@@ -140,7 +144,7 @@ class ORM extends MySQL
                     {
                         if ( strripos( $this->fields[$key]['type'], $var)) 
                         {
-                            $tmpOption['where']["`$key`"] = intval($value);
+                            $value = intval($value);
                         }
                     }
                     
@@ -149,7 +153,7 @@ class ORM extends MySQL
                     {
                         if( strripos( $this->fields[$key]['type'], $var))
                         {
-                            $tmpOption['where']["`$key`"] = floatval($value);
+                            $value = floatval($value);
                         }
                     }
 
@@ -158,12 +162,32 @@ class ORM extends MySQL
                     {
                          if( strripos( $this->fields[$key]['type'], $var))
                          {
-                            $tmpOption['where']["`$key`"] = $value ? "b'".$value."'." : "b'".$value."'";
+                            $value = $value ? "b'".$value."'." : "b'".$value."'";
                                 
                         }
                     }
+
+                    //char boolean
+                    foreach ($tmpCharType as $key2 => $var) 
+                    {
+                         if( strripos( $this->fields[$key]['type'], $var))
+                         {
+                            $value = "'" . $value . "'";
+                                
+                        }
+                    }
+                
                 }
+                if ($i == $count) {
+                    $tmpSql .= $key . "=" . $value;
+                }
+                else
+                {
+                    $tmpSql .= $key . "=" . $value . " AND ";
+                }
+                $i ++;
             }
+            $tmpOption['where'] = $tmpSql;
         }
         // elseif (isset($tmpOption['where']))
         // {
@@ -341,7 +365,8 @@ class ORM extends MySQL
         $tmpOption = $this->_options();
 
         if ($tmpOption) {
-            $sql = "DELETE FROM " . $tmpOption['table'] . " WHERE " . $tmpOption['where'];
+            if (empty($tmpOption['where'])) $sql = "DELETE FROM " . $tmpOption['table'];
+            else $sql = "DELETE FROM " . $tmpOption['table'] . " WHERE " . $tmpOption['where'];
             self::$db->query($sql);
             return self::$db->affected_rows() ? true : false;
         }

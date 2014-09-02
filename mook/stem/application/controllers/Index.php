@@ -22,7 +22,7 @@ class IndexController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
         $display = "index/index/index.html.twig";
@@ -192,7 +192,7 @@ class IndexController extends \Yaf\Controller_Abstract
         $success = 0;
         $message = "登录失败.";
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
         if ($app) {
@@ -222,7 +222,7 @@ class IndexController extends \Yaf\Controller_Abstract
     	$views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
         if ($app) {
@@ -254,7 +254,7 @@ class IndexController extends \Yaf\Controller_Abstract
         $success = true;
         $message = "";
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
         if ($app) {
@@ -277,7 +277,7 @@ class IndexController extends \Yaf\Controller_Abstract
     	$views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         if ($members->logout()) {
         	header('Location: /');
         }

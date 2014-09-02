@@ -23,7 +23,7 @@ class CourseController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
 
@@ -37,7 +37,7 @@ class CourseController extends \Yaf\Controller_Abstract
     	$views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
         if (!$app) {
@@ -71,7 +71,7 @@ class CourseController extends \Yaf\Controller_Abstract
     	$views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
         $courseControl = AdminCourseManage::instance();
@@ -107,7 +107,7 @@ class CourseController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
         $courseControl = AdminCourseManage::instance();
@@ -150,7 +150,7 @@ class CourseController extends \Yaf\Controller_Abstract
         $views = $this->getView();
         $data = $this->getRequest();
 
-        $members = new MembersManage();
+        $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
         $courseControl = AdminCourseManage::instance();
