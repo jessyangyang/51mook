@@ -189,21 +189,7 @@ class ORM extends MySQL
             }
             $tmpOption['where'] = $tmpSql;
         }
-        // elseif (isset($tmpOption['where']))
-        // {
-        //     $isFilter = array();
-        //     foreach ($this->fields as $key => &$value) {
-        //         if (!in_array($key, $isFilter)) {
-        //             $tmpOption['where'] = str_replace($key, '`'.$key.'`', $tmpOption['where']);
-        //             if ($value['type'] == 'bit') {
-                        
-        //             }
-        //             $isFilter[] = $key;
-        //         }
-        //     }
-        // }
         return $tmpOption;
-
     }
 
 
