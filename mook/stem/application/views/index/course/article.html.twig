@@ -8,14 +8,14 @@
     <meta name="twitter:url" content="http://www.51mook.com/course/{{ article.cid }}/{{ article.ccid }}/{{ article.ptitle|url_encode }}">
     <meta name="twitter:title" content="{{ article.title }}">
     <meta name="twitter:description" content="{{ article.summary }}...">
-    <meta name="twitter:image" content="{{ article.cover }}">
+    <meta name="twitter:image" content="{{ course.cover }}">
 
     <!-- Weibo Card -->
     <meta property="og:type" content="article" />
     <meta property="og:url" content="http://www.51mook.com/course/{{ article.cid }}/{{ article.ccid }}/{{ article.ptitle|url_encode }}" />
     <meta property="og:title" content="{{ article.title }}" />
     <meta property="og:description" content="{{ article.summary }}..." />
-    <meta property="og:image" content="{{ article.cover }}"/>
+    <meta property="og:image" content="{{ course.cover }}"/>
     <meta name="weibo: article:create_at" content="{{ article.dateline|date('Y-m-d H:i:s O') }}" />
     <meta name="weibo: article:update_at" content="{{ article.modified|date('Y-m-d H:i:s O') }}" />
 {% endblock %}
