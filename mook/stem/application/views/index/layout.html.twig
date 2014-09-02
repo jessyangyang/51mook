@@ -12,6 +12,7 @@
   <meta name="keywords" content="{% block keywords %}墨客,51mook,mook,P2P学习,知识社群,在线教育,数字阅读{% endblock %}" />
   <meta name="description" content="{% block description %}墨客是一个专注社会化学习的社区，给学习者提供网络资料采集和互相交流的服务，覆盖创业、管理、编程、设计、营销等诸多方面。{% endblock %}" />
   <title>{% block title %}{{ title }} | 墨客{% endblock %}</title>
+  {% block card %}{% endblock %}
   {% block prefetch %}
      <!-- Prefetch -->
     <link rel="dns-prefetch" href="//fonts.useso.com/">
@@ -27,8 +28,6 @@
       <link href="/assets/css/oldie.css" rel="stylesheet">
     <![endif]-->
   {% endblock %}
-
-  {% block card %}{% endblock %}
   <!--[if lt IE 9]>
     <script src="/assets/libs/html5shiv.js"></script>
   <![endif]-->
