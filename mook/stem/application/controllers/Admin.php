@@ -16,6 +16,7 @@ use \mook\control\admin\AdminBookManage;
 use \mook\control\admin\AdminCourseManage;
 use \mook\control\admin\AdminCollectionManage;
 use \mook\control\index\MembersManage;
+use \mook\control\index\MessageManage;
 use \mook\control\common\ImagesManage;
 use \mook\control\pagesControl;
 
