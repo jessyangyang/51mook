@@ -92,7 +92,7 @@ class Pinyin {
             $tmp = substr($string, $i, 1);
             preg_match("/^[a-zA-Z0-9]+/", $tmp , $matches);
             if (!$matches) {
-                $_P = ord(preg_replace("/^[%&',;=?$\x22\s\+-]+/",'',$tmp));
+                $_P = ord(preg_replace("/^[%&',;=?$\x22\s\+-.]+/",'',$tmp));
                 if($_P>160) { $_Q = ord(substr($string, ++$i, 1)); $_P = $_P*256 + $_Q - 65536; }
                 $_Res .= " " . $this->pinyins($_P, $_Data) . " ";
             }
