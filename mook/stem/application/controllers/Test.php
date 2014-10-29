@@ -116,7 +116,9 @@ class TestController extends \Yaf\Controller_Abstract
     public function clearTemplateCacheAction()
     {
         $twig = \Yaf\Registry::get('twig');
-        // $twig->clearTemplateCache();
+        echo "<pre>";
+        print_r($twig);
+        $twig->clearTemplateCache();
         $twig->clearCacheFiles();
         echo "clear";
         exit();
