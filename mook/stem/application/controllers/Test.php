@@ -118,8 +118,8 @@ class TestController extends \Yaf\Controller_Abstract
         $twig = \Yaf\Registry::get('twig');
         echo "<pre>";
         print_r($twig);
-        $twig->clearTemplateCache();
-        $twig->clearCacheFiles();
+        // $twig->clearTemplateCache();
+        // $twig->clearCacheFiles();
         echo "clear";
         exit();
     }
