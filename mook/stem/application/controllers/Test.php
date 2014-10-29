@@ -123,4 +123,11 @@ class TestController extends \Yaf\Controller_Abstract
         echo "clear";
         exit();
     }
+
+    public function phpinfoAction()
+    {
+
+        print_r(phpinfo());
+        exit();
+    }
 }
