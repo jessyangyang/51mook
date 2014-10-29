@@ -76,6 +76,7 @@ class RegisterRest extends \local\rest\Restful{
         self::regRestURL('test_roles','/test/roles','test','roles','权限更新');
         self::regRestURL('test_feed','/test/feed','test','feed','rss测试');
         self::regRestURL('test_clear_session','/test/clear','test','clearSession','会话清除');
+        self::regRestURL('test_clear_cache','/test/clearcache','test','clearTemplateCache','缓存清除');
 
         /**
          * Web System

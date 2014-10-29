@@ -16,6 +16,7 @@ use \mook\control\common\BlogManage;
 use \mook\control\admin\AdminBookManage;
 use \mook\control\common\LinkManage;
 
+
 class TestController extends \Yaf\Controller_Abstract 
 {
 
@@ -108,6 +109,15 @@ class TestController extends \Yaf\Controller_Abstract
     public function clearSessionAction()
     {
         session_destroy();
+        echo "clear";
+        exit();
+    }
+
+    public function clearTemplateCacheAction()
+    {
+        $twig = \Yaf\Registry::get('twig');
+        $twig->clearTemplateCache();
+        $twig->clearCacheFiles();
         echo "clear";
         exit();
     }

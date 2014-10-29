@@ -152,4 +152,22 @@ class TwigAdapter implements \Yaf\View_Interface
 		$this->script_path = $templateDir;
 		$this->loader->setPaths($this->script_path);
 	}
+
+	/**
+	 * [clearCacheFiles description]
+	 * @return [type] [description]
+	 */
+	public function clearCacheFiles()
+	{
+		$this->twig->clearCacheFiles();
+	}
+
+	/**
+	 * [clearTemplateCache description]
+	 * @return [type] [description]
+	 */
+	public function clearTemplateCache()
+	{
+		$this->twig->clearTemplateCache();
+	}
 }

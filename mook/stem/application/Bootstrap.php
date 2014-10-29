@@ -44,6 +44,7 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract
     {
         $twig = new TwigAdapter(null, \Yaf\Application::app()->getConfig()->twig->toArray());
         $dispatcher->setView($twig);
+        Yaf\Registry::set("twig", $twig);
         // $dispatcher->registerPlugin(new SmartyControllerPlugin());
     }
 
