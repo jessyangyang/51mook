@@ -1,80 +1,57 @@
 <!-- sign up start-->
-    <!-- Modal -->
-    <form id="register-action-form" role="form" action="/register" method="post" novalidate="novalidate" data-widget-cid="widget-0">
-       <div id="register-body" class="modal fade" aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" style="display:block">
-            <div class="modal-dialog m-modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header m-modal-header text-center">
-                        <h4 class="modal-title" id="myModalLabel">加入墨客</h4>
-                    </div>
-                    <div class="modal-body m-modal-body">
-                        <ul class="social-login">
-                            <li>
-                                <a class="btn social"  href="#">
-                                    <span class="color-sina">
-                                        <span class="icon-m-weibo"></span>
-                                    </span>
-                                    使用微博登录
-                                </a>
-                            </li>
-                            <li>
-                                <a class="btn social" href="#">
-                                    <span class="color-weixin">
-                                        <span class="icon-m-weixin"></span>
-                                    </span>
-                                    使用微信登录
-                                </a>
-                            </li>
-                            <li>
-                                <a class="btn social"  href="#">
-                                    <span class="color-lin">
-                                        <span class="icon-m-linked-in"></span>
-                                    </span>
-                                    使用 Linked in 登录
-                                </a>
-                            </li>
-                            <li>
-                                <a class="btn social"  href="#">
-                                    <span class="color-qq">
-                                        <span class="icon-m-qq"></span>
-                                    </span>
-                                    使用QQ登录
-                                </a>
-                            </li>
-
-                        </ul>
-                        <p class="or">
-                            <span>OR</span>
-                        </p>
-                        <p>
-                            <label for="id_username">用户名：</label>
-                            <input id="id_username" type="text" name="id_username" maxlength="30">
-                        </p>
-                        <p>
-                            <label for="id_email">E-mail：</label>
-                            <input id="id_email" type="email" name="email" maxlength="256">
-                        </p>
-                        <p>
-                            <label for="id_password1">密码：</label>
-                            <input id="id_password1" type="password" name="password1">
-                        </p>
-                        <p class="checkbox">
-                            <label for="id_tos">
-                                <input id="id_tos" type="checkbox" name="tos">
-                                I agree to the
-                                <a target="_blank" href="#">terms of service</a>
-                                and
-                                <a target="_blank" href="#">privacy policy</a>
-                                .
-                            </label>
-                        </p>
-                    </div>
-                    <div class="modal-footer m-modal-footer">
-                        <span class="pull-left"><a href="#">已有帐号？<b>点击登录</b></a></span>
-                        <a href="#" class="btn">确 定</a>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-    </form>
-    <!-- sign up end -->
+<!-- Modal -->
+<div class="modal-dialog m-modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header m-modal-header text-center">
+            <h4 class="modal-title" id="model-title">加入墨客</h4>
+        </div>
+        <div class="modal-body m-modal-body">
+        <form id="register-action-form" class="form-horizontal" role="form" action="/register/email/check" method="post" novalidate="novalidate" data-widget-cid="widget-0">
+            <ul class="social-login">
+                <li><a class="btn social"  href="#">
+                    <span class="color-sina"><span class="icon-m-weibo"></span></span>使用微博登录</a>
+                </li>
+                <li><a class="btn social" href="#">
+                    <span class="color-weixin"><span class="icon-m-weixin"></span></span>使用微信登录
+                </a></li>
+                <li><a class="btn social"  href="#">
+                    <span class="color-lin"><span class="icon-m-linked-in"></span></span>使用 Linked in 登录
+                </a></li>
+                <li><a class="btn social"  href="#">
+                    <span class="color-qq"><span class="icon-m-qq"></span></span>使用QQ登录
+                </a></li>
+            </ul>
+            <p class="or"><span>OR</span></p>
+            <span class="m-error"></span>
+            <div class="form-group form-group-box">
+                <label for="id_email">E-mail：</label>
+                <input id="id_email" type="email" name="email" maxlength="256" tabindex="1">
+                <p class="help-block"></p>
+            </div>
+            <div class="form-group form-group-box">
+                <label for="id_password">密码：</label>
+                <input id="id_password" type="password" name="password" tabindex="2">
+                <p class="help-block"></p>
+            </div>
+            <div class="form-group form-group-box">
+                <label for="id_confirmpassword" >再次输入密码：</label>
+                <input class="form-control" id="id_confirmpassword" type="password" name="confirmpassword" tabindex="3" maxlength="256">
+                <p class="help-block"></p>
+            </div>
+            <div class="form-group form-group-box">
+                <label for="id_tos">
+                <input id="id_tos" type="checkbox" name="tos" tabindex="4"/>我已同意
+                    <a target="_blank" href="#"> 墨客服务</a> 和 <a target="_blank" href="#">隐私政策</a>.
+                </label>
+                <p class="help-block"></p>
+            </div>
+        </form>
+        </div>
+        <div class="modal-footer m-modal-footer">
+            <span class="pull-left"><a href="/login">已有帐号？<b>点击登录</b></a></span>
+            <button class="btn" data-toggle="form-submit" data-target="#register-action-form">确 定</button>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+<!-- sign up end -->
+<script type="text/javascript"> app.load('auth/register-ajax') </script>

@@ -13,7 +13,7 @@
     {% if app %}
     <li class="pull-right">
         <a class="text" href="#" id="id_profile" data-toggle="dropdown">
-            <span class="m-avatar"><img src="{{ app.cover_small }}"></span>
+            <span class="m-avatar"><img src="{{ app.cover_small|default("/web/img/default/avatar-icon-default.png")  }}"></span>
         </a>
         <div class="dropdown-menu" role="menu" aria-labelledby="id_profile">
             <a role="menuitem" tabindex="-1" href="/u/{{ app.username }}"><span class="icon-m-user"></span> 我的 MOOK</a>
@@ -32,8 +32,8 @@
         </div>
         </li>
     {% else %}
-    <li class="pull-right"><a class="text" data-url="/login?ajax=true" data-toggle="modal" href="#login" data-target="#modal">登录</a></li>
-    {# <li class="pull-right"><a class="text accounts" href="javascript:void(0);" data-url="/register" data-reveal-id="register" data-animation="fade"  data-toggle="modal" data-target="#id_register">注册</a></li> #}
+    <li class="pull-right"><a class="text accounts" data-url="/login?ajax=true" data-toggle="modal" href="#login" data-target="#modal">登录</a></li>
+    <li class="pull-right"><a class="text accounts" href="#register" data-url="/register?ajax=true" data-toggle="modal" data-target="#modal">注册</a></li>
     {% endif %}
     </ul>
     </div>

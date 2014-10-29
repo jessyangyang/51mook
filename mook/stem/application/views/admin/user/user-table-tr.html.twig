@@ -57,10 +57,11 @@
 
         <li><a class="send-emailverify-email" href="javascript:" data-url="">发送Email验证邮件</a></li>
 
-        {% if user.locked %}
-          <li><a class="unlock-user" href="javascript:" title="解禁用户{{ user.nickname }}" data-url="">解禁用户</a></li>
+        {% if user.role_id > 1000 %}
+          <li><a class="unlock-user" href="javascript:" title="解禁用户{{ user.username }}" data-url="/admin/user/closure/{{user.id}}">解禁用户</a></li>
         {% else %}
-          <li><a class="lock-user" href="javascript:" title="封禁用户{{ user.nickname }}" data-url="">封禁用户</a></li>
+          <li><a class="lock-user" href="javascript:" title="封禁用户{{ user.username }}" data-url="/admin/user/closure/{{user.id}}">封禁用户</a></li>
+          <li><a class="delete-user" href="javascript:" title="删除用户{{ user.username }}" data-url="/admin/user/delete/{{user.id}}">删除用户</a></li>
         {% endif %}
       </ul>
     </div>

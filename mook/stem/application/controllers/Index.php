@@ -150,6 +150,10 @@ class IndexController extends \Yaf\Controller_Abstract
         $views->display("index/index/settings.html.twig");
     }
 
+    /**
+     * [loginAction description]
+     * @return [type] [description]
+     */
     public function loginAction()
     {
     	$views = $this->getView();
@@ -169,14 +173,18 @@ class IndexController extends \Yaf\Controller_Abstract
             $display = 'index/index/login.html.twig';
         }
         if ($data->isPost()) {
-        	if ($uid = $members->login($data->getPost('email'),$data->getPost('password')))
+            $msg = $members->checkUser($data->getPost('email'),$data->getPost('password'));
+            if ($msg['code'] = false){
+                $views->assign('error',array('code'=> 1, 'message' => $msg['message']));
+            }
+        	else if ($uid = $members->login($data->getPost('email'),$data->getPost('password')))
         	{
         		header('Location: /');
             	exit();
         	}
         	else
         	{
-        		$views->assign('error',array('code'=> 1, 'message' => '帐号或密码不正确'));
+        		$views->assign('error',array('code'=> 1, 'message' => '邮箱或密码不正确'));
         	}
         }
 
@@ -201,13 +209,17 @@ class IndexController extends \Yaf\Controller_Abstract
         }
 
         if ($data->isPost()) {
-            if ($uid = $members->login($data->getPost('email'),$data->getPost('password'))) {
+            $msg = $members->checkUser($data->getPost('email'),$data->getPost('password'));
+            if ($msg['code'] == false) {
+                $message = $msg['message'];
+            }
+            else if ($uid = $members->login($data->getPost('email'),$data->getPost('password'))) {
                 $success = 1;
                 $message = "登录成功.";
             }
             else
             {
-                $message = "用户名或密码错误.";
+                $message = "邮箱或密码错误.";
             }
 
         }
@@ -219,52 +231,82 @@ class IndexController extends \Yaf\Controller_Abstract
 
     public function registerAction()
     {
-    	$views = $this->getView();
+        $views = $this->getView();
         $data = $this->getRequest();
 
         $members = MembersManage::instance();
         $app = $members->getCurrentSession();
 
-        if ($app) {
-        	header('Location: /');
-            exit();
-        }
-
-        if ($data->isPost()) {
-            if ($data->getPost('account') == '1') {
-                $views->display('index/index/register.html.twig');
-            }
-        	$username = explode('@',$data->getPost('email'));
-        	if ($uid = $members->register($data->getPost('email'),$username[0],$data->getPost('password'),false)) {
-        		header('Location: /');
-            	exit();
-        	}
-        }
-
-        $views->assign('isLoginEnabled',true);
-        $views->assign('title',"注册墨客");
-        $views->display('index/register/index.html.twig');
-    }
-
-    public function registerCheckAction()
-    {
-        $rest = Restful::instance();
-        $data = $this->getRequest();
-
-        $success = true;
-        $message = "";
-
-        $members = MembersManage::instance();
-        $app = $members->getCurrentSession();
+        $success = 0;
+        $message = "注册失败.";
 
         if ($app) {
             header('Location: /');
             exit();
         }
 
-        if ($email = $data->getQuery('value') and $members->isRegistered($data->getQuery('value'))) {
-            $success = false;
-            $message = "已注册.";
+        $display = 'index/auth/register.html.twig';
+
+        if ($data->getQuery('ajax') == 'true') {
+            $display = 'index/index/register.html.twig';
+        }
+        
+        if ($data->isPost()) {
+            $msg = $members->checkUser($data->getPost('email'),$data->getPost('password'));
+            $username = explode('@',$data->getPost('email'));
+            if ($msg['code'] == false) {
+                $views->assign('error',array('code'=> 1, 'message' => $msg['message']));
+            }
+            elseif ($members->isUserName($username[0])) {
+                $message = "用户名已存在.";
+            }
+            else if ($uid = $members->register($data->getPost('email'),$username[0],$data->getPost('password'))) {
+                header('Location: /');
+                exit();
+            }
+            else
+            {
+                $views->assign('error',array('code'=> 1, 'message' => '邮箱已存在.'));
+            }
+        }
+
+        $views->assign('title',"注册墨客");
+        $views->display($display);
+    }
+    public function registerCheckAction()
+    {
+        $rest = Restful::instance();
+        $data = $this->getRequest();
+
+        $success = 0;
+        $message = "注册失败.";
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession();
+
+        if ($app) {
+            $success = 1;
+            $message = "注册成功.";
+        }
+
+        if ($data->isPost()) {
+            $msg = $members->checkUser($data->getPost('email'),$data->getPost('password'));
+            $username = explode('@',$data->getPost('email'));
+            if ($msg['code'] == false) {
+                $message = $msg['message'];
+            }
+            elseif ($members->isUserName($username[0])) {
+                $message = "用户名已存在.";
+            }
+            else if ($uid = $members->register($data->getPost('email'),$username[0],$data->getPost('password'))) {
+                $success = 1;
+                $message = "注册成功.";
+            }
+            else
+            {
+                $message = "邮箱已存在.";
+            }
+
         }
 
         $rest->assign('success',$success);

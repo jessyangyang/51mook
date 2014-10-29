@@ -2,7 +2,7 @@
 <div class="modal-dialog m-modal-dialog">
     <div class="modal-content">
         <div class="modal-header m-modal-header text-center">
-            <h4 class="modal-title" id="myModalLabel">登录墨客</h4>
+            <h4 class="modal-title" id="model-title">登录墨客</h4>
         </div>
         <div class="modal-body m-modal-body">
             <form id="login-action-form" class="form-horizontal" role="form" action="/login/email/check" method="post" novalidate="novalidate" data-widget-cid="widget-0">
@@ -13,23 +13,23 @@
                 <li><a class="btn social"  href="#"><span class="color-qq"><span class="icon-m-qq"></span></span>使用QQ登录</a></li>
             </ul>
             <p class="or"><span>OR</span></p>
-                <span class="m-error"></span>
-                <div class="form-group form-group-box">
-                    <label for="login-email">E-mail：</label>
-                    <input id="login-email" type="text" name="email" tabindex="1" maxlength="75">
-                    <p class="help-block"></p>
-                </div>
-                <div class="form-group form-group-box">
-                    <label for="login-password">密码：</label>
-                    <input id="login-password" type="password" name="password" tabindex="2">
-                    <p class="help-block"></p>
-                </div>
+            <span class="m-error"></span>
+            <div class="form-group form-group-box">
+                <label for="login-email">E-mail：</label>
+                <input id="login-email" type="text" name="email" tabindex="1" maxlength="75">
+                <p class="help-block"></p>
+            </div>
+            <div class="form-group form-group-box">
+                <label for="login-password">密码：</label>
+                <input id="login-password" type="password" name="password" tabindex="2">
+                <p class="help-block"></p>
+            </div>
             </form>
         </div>
         <div class="modal-footer m-modal-footer">
-            {# <span class="pull-left"><a href="#" data-toggle="modal" data-target="#id_signup">还没有帐号？<b>点击注册</b></a></span> #}
-        <button class="btn" data-toggle="form-submit" data-target="#login-action-form">确 定</button>
+            <span class="pull-left"><a href="/register">还没有帐号？<b>点击注册</b></a></span>
+            <button class="btn" data-toggle="form-submit" data-target="#login-action-form">确 定</button>
         </div>
     </div>
 </div>
-    <script type="text/javascript"> app.load('auth/login-ajax') </script>
+<script type="text/javascript"> app.load('auth/login-ajax') </script>

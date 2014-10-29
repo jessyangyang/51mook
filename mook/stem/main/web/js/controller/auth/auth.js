@@ -8,7 +8,7 @@ define(function(require, exports, module) {
         $('.accounts').on('click',function(e){
             var that = $(this);
             var body = $('body');
-            if ($('#login-body,#register-body').length > 0)return false;
+            if ($('#login-body,#register-body').length > 0) return false;
             $.post(that.data('url'),{'account':'1'},function(response){
 
                 var $html = $(response);
@@ -20,7 +20,7 @@ define(function(require, exports, module) {
                     $('.modal-backdrop').addClass('in');
                 }, 50);
 
-                _loginCheck();
+                // _loginCheck();
 
                 $('#login-body,#register-body').on('click',function(e){
                     var $drag = $(this);

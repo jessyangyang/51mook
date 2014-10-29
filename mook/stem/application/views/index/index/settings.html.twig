@@ -22,7 +22,7 @@
 						<!--account author photo end-->
                   		<div class="m-author-avatar-box text-center">
 							<a class="m-avatar m-author-avatar" onclick="uploadavatar.click()" href="#">
-								<img src="{{ app.cover }}">
+								<img src="{{ app.cover|default("/web/img/default/avatar-icon-default.png") }}">
 							</a> 
             				<button href="#" onclick="uploadavatar.click()" class="btn m-btn-defult grey"><span class="icon-m-user-normal-photo"></span>修改头像</button>
 							<input type="file" id="uploadavatar"> 

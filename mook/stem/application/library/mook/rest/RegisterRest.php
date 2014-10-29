@@ -32,7 +32,7 @@ class RegisterRest extends \local\rest\Restful{
         self::regRestURL('admin_user_roles','/admin/user/roles/:id','admin','userRoles','编辑用户组');
         self::regRestURL('admin_user_avatar','/admin/user/avatar/:id','admin','userAvatar','用户头像');
         self::regRestURL('admin_user_reset','/admin/user/reset/:id','admin','userReset','重置密码');
-        self::regRestURL('admin_user_delete','/admin/user/delete/:id','admin','userDelete','删除用户');
+        self::regRestURL('admin_user_delete','/admin/user/delete/:action/:id','admin','userDelete','删除用户');
 
         // admin usergroups
         self::regRestURL('admin_user_groups','/admin/user/groups','admin','userGroups','用户组');

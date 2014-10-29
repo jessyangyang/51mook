@@ -9,10 +9,11 @@
 <div class="radios">
 	{% if roles %}
 	{% for role in roles %}
+	{% if role.id > 2 %}
 	<div class="radio">
-	{% if role.id > 10 %}
   		<label class="checkbox-inline"><input type="radio" name="roles"  value="{{ role.id }}" {% if user.role_id == role.id %}checked{% endif %}> {{role.name}}</label>
 	</div>
+	{% endif %}
 	{% endfor %}
 	{% endif %}
 </div>

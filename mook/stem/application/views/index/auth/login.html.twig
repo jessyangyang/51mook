@@ -23,6 +23,9 @@
                                     	<a class="btn social"  href="#"><span class="color-qq"><span class="icon-m-qq"></span></span>使用QQ登录</a></li>
                                 </ul>
                                 <p class="or"><span>OR</span></p>
+                                {% if error %}
+                                <span class="m-error" style="display:block;">{{ error.message }}</span>
+                                {% endif %}
                                 <div class="form-group form-group-box">
                                     <label for="email" >E-mail：</label>
                                     <input class="form-control" id="email" type="text" name="email" tabindex="1" maxlength="75">
@@ -38,7 +41,7 @@
                                 </p>
                                 <div class="form-actions">
                                     <span class="pull-left"><a href="/register">还没有用户？点此注册</a></span>
-                                    <button type="submit" class="btn">登录</button>
+                                    <button type="submit" class="btn">登 录</button>
                                 </div>
                             </form>
                         </div></div></div></div>

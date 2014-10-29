@@ -137,17 +137,28 @@ class MembersControl
     }
 
     /**
+     * [isUserName description]
+     * @param  [type]  $username [description]
+     * @return boolean           [description]
+     */
+    public function isUserName($username)
+    {
+        if ($data = $this->members->where("username='" . $username ."'")->fetchRow()) return $data;
+        return false;
+    }
+
+    /**
      * [checkUser description]
      * @param  [type] $email    [description]
      * @param  [type] $password [description]
      * @return [type]           [description]
      */
-    public function checkUser($email,$password,$isRegistered = true)
+    public function checkUser($email, $password)
     {
         $message = array();
-        $message['title'] = false;
+        $message['code'] = false;
 
-        if ($email == '' || $password == '')
+        if (empty($email)|| empty($password))
         {
             $message['message'] = "邮箱或密码不能为空!";
         }
@@ -155,20 +166,25 @@ class MembersControl
         {
             $message['message'] = "密码长度需大于6!";
         }
-        else if (!ereg("^[-a-zA-Z0-9_.]+@([0-9A-Za-z][0-9A-Za-z-]+\.)+[A-Za-z]{2,5}$",$email))
+        else if (!preg_match("/^[-a-zA-Z0-9_.]+@([0-9A-Za-z][0-9A-Za-z-]+\.)+[A-Za-z]{2,5}$/",$email))
         {
             $message['message'] = "邮箱格式不正确!";
         }
-        else if ($isRegistered and $this->isRegistered($email))
-        {
-            $message['message'] = "邮箱已注册!";
-        }
         else
         {
-            $message['title'] = true;
+            $message['code'] = true;
         }
         return $message;
     }
+
+    /**
+     * [inject_check description]
+     * @param  [type] $sql [description]
+     * @return [type]      [description]
+     */
+    public function inject_check($sql) { 
+        return preg_match("/select|insert|update|delete|\'|\/\*|\*|\.\.\/|\.\/|union|into|load_file|outfile/i", $sql); // 进行过滤 
+    } 
 
     /**
      * Login

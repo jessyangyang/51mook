@@ -291,6 +291,43 @@ class AdminController extends \Yaf\Controller_Abstract
         $views->display('admin/user/change-password-modal.html.twig');
     }
 
+    /**
+     * [userClosureAction description]
+     * 
+     * @param  Int $action [1.recover 2.closure 3.delete]
+     * @param  boolean $id     [description]
+     * @return [type]          [description]
+     */
+    public function userDeleteAction($action = false, $id = false)
+    {
+        $views = $this->getView();
+        $data = $this->getRequest();
+
+        $members = MembersManage::instance();
+        $app = $members->getCurrentSession(); 
+        if (!$app) exit(); 
+
+        if ($data->isPost()) {
+            switch ($action) {
+                case 1:
+                    # code...
+                    break;
+                case 2:
+                    # code...
+                    break;
+                case 3:
+                    # code...
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+        }
+
+        $views->assign('app',$app);
+        $views->display('admin/user/user-table-tr.html.twig');
+    }
+
     public function userGroupsAction()
     {
     	$views = $this->getView();

@@ -47,9 +47,13 @@ class MembersManage extends MembersControl
      * @param String , $img , image url
      * @return Boolean
      */
-    public function register($email,$username,$password,$imgUrl = false,$is_session = true)
+    public function register($email, $username, $password, $imgUrl = false, $is_session = true)
     {
+        if (empty($email) or empty($password)) return false;
+
         $email = addslashes($email);
+        $username = addslashes($username);
+        $password = addslashes($password);
 
         $arr = array(
             'email' => $email,
@@ -168,10 +172,14 @@ class MembersManage extends MembersControl
      */
     public function login($email,$password)
     {
-        if ($this->getCurrentSession()) return false;
+        if ($this->getCurrentSession() or empty($email) or empty($password)) return false;
 
-        $wherearr = "email='" . $this->members->escapeString(trim($email)) . "' AND password='" . md5($this->members->escapeString($password)) . "'";
+        $email = addslashes($email);
+        $password = addslashes($password);
+
+        $wherearr = "email='" . $this->members->escapeString($email) . "' AND password='" . md5($this->members->escapeString($password)) . "'";
         $row = $this->members->field("id,email,username,role_id,published")->where($wherearr)->fetchRow();
+
         if ($row) {
             if ($user = $this->getCurrentSession()) {
                 if($user['uid'] == $row['id']) return false;
@@ -246,5 +254,10 @@ class MembersManage extends MembersControl
         if (!$uid and !is_array($fields)) return false;
 
         return $this->members->where("id='$uid'")->update($fields);
+    }
+
+    public function deleteMembers($uid)
+    {
+        
     }
 }

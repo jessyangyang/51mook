@@ -10,7 +10,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="m-flow-title">
                         <div class="m-profile">
-                            <a class="m-avatar" href="#"><img src="{{ user.cover }}"></a>
+                            <a class="m-avatar" href="#"><img src="{{ user.cover|default("/web/img/default/avatar-icon-default.png") }}"></a>
                             <h2><a href="/settings">{{ user.username }}<span class="icon-m-pencil edit"></span></a></h2>
                             <p class="small"><a href="/settings">编辑签名档<span class="icon-m-pencil edit"></span></a></p>
                         </div>
