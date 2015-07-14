@@ -78,6 +78,7 @@ class RegisterRest extends \local\rest\Restful{
         self::regRestURL('test_php_info','/test/phpinfo','test','phpinfo','php信息');
         self::regRestURL('test_clear_session','/test/clear','test','clearSession','会话清除');
         self::regRestURL('test_clear_cache','/test/clearcache','test','clearTemplateCache','缓存清除');
+        self::regRestURL('test_wechat', '/test/wechat', 'test', 'wechat', '微信服务号测试');
 
         /**
          * Web System
@@ -124,7 +125,10 @@ class RegisterRest extends \local\rest\Restful{
         self::regRestURL('files_image_upload','/files/upload/:type','files','upload','更新图片');
         self::regRestURL('files_image_load','/files/load/:type','files','load','加载图片');
         self::regRestURL('files_image_send','/files/send/:fileName','files','send','发送图片');
-        
+
+        // Error 
+        self::regRestURL('error_index','/error/:code','error','index','错误提示页');
+
         return self::$restURL;
     }
 

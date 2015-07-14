@@ -2,7 +2,7 @@
 /**
  * PermissionPlugin
  *
- * @package     DuyuMvc
+ * @package  DuyuMvc
  * @author      Jess
  * @version     1.0
  * @license     http://wiki.duyu.com/duyuMvc
@@ -15,7 +15,6 @@ use \Yaf\Application;
 use \mook\control\index\MembersManage;
 use \mook\rest\RegisterRest;
 use \Yaf\Session;
-
 
 class PermissionControllerPlugin extends Plugin_Abstract 
 {
@@ -31,6 +30,7 @@ class PermissionControllerPlugin extends Plugin_Abstract
         $this->checkMemberPermission($request, $response);
     }
 
+    /***/
     private function checkSystemPermission(Request_Abstract $request, Response_Abstract $response)
     {
         $config = Application::app()->getConfig()->get("roles")->toArray();
@@ -40,21 +40,31 @@ class PermissionControllerPlugin extends Plugin_Abstract
         }
     }
 
+    /**
+     *  检查用户权限
+     * @param  Request_Abstract
+     * @param  Response_Abstract
+     * @return [type]
+     */
     public function checkMemberPermission(Request_Abstract $request, Response_Abstract $response)
     {
         $config = Application::app()->getConfig()->get("roles")->toArray();
 
+        // 是否开启权限检查
         if ($config and $config['permission'] == false) {
            return;
         }
 
         $rest = RegisterRest::initRegister();
-        $this->current_key = $this->changedSystemAction($request->getControllerName(),$request->getActionName(),$rest);
+        // 获取当前路由
+        $this->current_key = $this->getSystemAction($request->getControllerName(),$request->getActionName(),$rest);
 
+        // 如果路由不存在，跳转到默认路由位置。
         if (!$this->current_key) 
         {
             $request->setControllerName('Index');
             $request->setActionName('index');
+            return;
         }
 
         $check = explode(',', $config['check']);
@@ -64,43 +74,45 @@ class PermissionControllerPlugin extends Plugin_Abstract
             $members = MembersManage::instance();
             $user = $members->getCurrentSession();
 
-            $key = explode('_', $this->current_key);
+            $controlName = explode('_', $this->current_key);
             $userpermission = isset($user['permission']) ? explode(',', $user['permission']) : array();
 
-            // 不登录情况下，检查系统默认不可访问权限
-            if (in_array($key[0], $check) and !$user) {
-                $request->setControllerName('Index');
-                $request->setActionName('index');
+            // 如果是超级管理员，不检查权限。
+            if ($user && $user['role_id'] == 1) {
+                return;
             }
-            // 检查是否是超级管理员
-            else if (in_array($key[0], $check) and $user['role_id'] > 1) {
-                $request->setControllerName('Index');
-                $request->setActionName('index');
+
+            if ($user) {
+                // 检查普通用户的权限
+                if ($user and $user['role_id'] > 1 and !in_array($this->current_key, $userpermission)) {
+                    $request->setControllerName('Index');
+                    $request->setActionName('index');
+                }
+            } else {
+                //获取匿名用户禁止路由权限
+                if (in_array($controlName[0], $check)) {
+                    $request->setControllerName('Index');
+                    $request->setActionName('index');
+                }
             }
-            // 检查普通用户的权限
-            else if ($user['role_id'] > 1 and !in_array($this->current_key, $userpermission)) {
-                $request->setControllerName('Index');
-                $request->setActionName('index');
-            }
-    
         }
     }
 
     /**
-     * [changedSystemAction check system action]
+     * [getSystemAction check system action]
      * 检查系统是否定义了controller和action
      * @param  [type] $controller [description]
      * @param  [type] $action     [description]
      * @param  [type] $fields     [description]
      * @return [type]             [description]
      */
-    private function changedSystemAction($controller,$action,$fields)
+    private function getSystemAction($controller,$action,$fields)
     {
         if (!is_array($fields)) return false;
 
         foreach ($fields as $key => $field) {
             foreach ($field as $key2 => $value) {
-                if(strtolower($value['controller']) == strtolower($controller) and strtolower($value['action']) == strtolower($action))
+                if( is_array($value) and strtolower($value['controller']) == strtolower($controller) and strtolower($value['action']) == strtolower($action))
                 {
                     return $key;
                 }
