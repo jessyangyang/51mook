@@ -11,6 +11,8 @@
 use \Yaf\Dispatcher;
 use \Yaf\Loader;
 use \local\db\MySQL;
+use \local\log\Logger;
+use \local\log\SystemLogger;
 use \mook\common;
 use \local\template\TwigAdapter;
 use \mook\rest\RegisterRest;
@@ -21,6 +23,15 @@ class Bootstrap extends \Yaf\Bootstrap_Abstract
     {
         // $exception = new Exception();
         // $dispatcher->setErrorHandler(array(get_class($this),'error_handler'));
+        register_shutdown_function(function() {
+            SystemLogger::close();
+        });
+
+        //Initialized the SystemLogger
+        $systemLogDir = Yaf\Application::app()->getConfig()->get('log')->get('dir');
+        if ($systemLogDir) {
+            SystemLogger::init($systemLogDir, Logger::LEVEL_DEBUG);
+        }
     }
 
     public function _initConfig(Dispatcher $dispatcher)

@@ -14,6 +14,7 @@ use \Yaf\Plugin_Abstract;
 use \Yaf\Application;
 use \mook\control\index\MembersManage;
 use \mook\rest\RegisterRest;
+use \local\log\SystemLogger;
 use \Yaf\Session;
 
 class PermissionControllerPlugin extends Plugin_Abstract 
@@ -28,9 +29,15 @@ class PermissionControllerPlugin extends Plugin_Abstract
     public function routerShutdown(Request_Abstract $request, Response_Abstract $response) 
     {
         $this->checkMemberPermission($request, $response);
+        $this->logsMessageAction($request, $response);
     }
 
-    /***/
+    /**
+     * [checkSystemPermission 检查系统权限]
+     * @param  Request_Abstract  $request  [description]
+     * @param  Response_Abstract $response [description]
+     * @return [type]                      [description]
+     */
     private function checkSystemPermission(Request_Abstract $request, Response_Abstract $response)
     {
         $config = Application::app()->getConfig()->get("roles")->toArray();
@@ -60,6 +67,7 @@ class PermissionControllerPlugin extends Plugin_Abstract
         $this->current_key = $this->getSystemAction($request->getControllerName(),$request->getActionName(),$rest);
 
         // 如果路由不存在，跳转到默认路由位置。
+        // 必须在 RegisterRest 注册 route 才能获取访问权限
         if (!$this->current_key) 
         {
             $request->setControllerName('Index');
@@ -96,6 +104,22 @@ class PermissionControllerPlugin extends Plugin_Abstract
                 }
             }
         }
+    }
+
+    /**
+     * [logsMessageAction ]
+     * @param  Request_Abstract  $request  [description]
+     * @param  Response_Abstract $response [description]
+     * @return [type]                      [description]
+     */
+    private function logsMessageAction(Request_Abstract $request, Response_Abstract $response) {
+        $permission = Application::app()->getConfig()->get("log")->get("permission");
+
+        if ($permission and $permission == false) {
+           return;
+        }
+
+        SystemLogger::info('  Controller: ' . $request->getControllerName() . ' Action:' . $request->getActionName() . ' is called');
     }
 
     /**

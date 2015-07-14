@@ -16,6 +16,7 @@ use \mook\control\common\BlogManage;
 use \mook\control\admin\AdminBookManage;
 use \mook\control\common\LinkManage;
 use \local\social\WeChatSDK;
+use \local\log\SystemLogger;
 
 
 class TestController extends \Yaf\Controller_Abstract 
@@ -130,6 +131,7 @@ class TestController extends \Yaf\Controller_Abstract
     }
 
     public function wechatAction() {
+        SystemLogger::debug("GETS:" . implode(",",$_GET));
         $options = array(
              'token'=>'krxkid', //填写你设定的key
              'encodingaeskey'=>'2un8rwmEnk2icZnqoIR8niY2M2292zwJjxbEEyiUveL', //填写加密用的EncodingAESKey
@@ -166,6 +168,6 @@ class TestController extends \Yaf\Controller_Abstract
             )
         );
         $result = $weObj->createMenu($newmenu);
-        exit();
+        return false;
     }
 }
