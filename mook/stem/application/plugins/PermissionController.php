@@ -60,9 +60,6 @@ class PermissionControllerPlugin extends Plugin_Abstract
         $this->current_key = $this->getSystemAction($request->getControllerName(),$request->getActionName(),$rest);
 
         // 如果路由不存在，跳转到默认路由位置。
-        echo "<pre>";
-        print_r($this->current_key);
-        print_r($rest);
         // if (!$this->current_key) 
         // {
         //     $request->setControllerName('Index');
