@@ -45,6 +45,9 @@ define('DOMAIN', (strtolower(getenv('HTTPS')) == 'on' ? 'https' : 'http') . '://
 // The current site path
 define('PATH', parse_url(getenv('REQUEST_URI'), PHP_URL_PATH));
 
+// The current php version
+define('PHPVERSION', floatval(substr(PHP_VERSION, 0, 3)));
+
 // PHP ini Settings
 ini_set('session.name',"51mookSession");
 ini_set('session.save_handler','user');
