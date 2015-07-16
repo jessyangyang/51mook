@@ -44,6 +44,7 @@ class ORM extends MySQL
     public function __construct($dbPrimaryKey = false ,$dbConfigName = "default" ) {
 
         self::$db = Mysql::init($dbPrimaryKey,$dbConfigName);
+        self::$db->setCharset("UTF8");
 
         if ($dbPrimaryKey) {    
             if ($tmpRow = $this->fetchRow($dbPrimaryKey)) {
@@ -102,7 +103,7 @@ class ORM extends MySQL
         
         // Find data for field
         if (substr($dbMethod, 0, 4) == "find") {
-            return $this->wherr(strtolower(substr($dbMethod, 0, 4)."='{$dbFields[0]}'"))->fetchRow();
+            return $this->where(strtolower(substr($dbMethod, 0, 4)."='{$dbFields[0]}'"))->fetchRow();
         }
     }
 
@@ -371,9 +372,13 @@ class ORM extends MySQL
         $tmpOption['where'] = empty($tmpOption['where'])? '': ' WHERE '.$tmpOption['where'];
         //Return record of wrong sql in base,when the sql make wrong.
         $sql = 'SELECT '.$tmpOption['field'].' FROM '.$tmpOption['table'].' '.$tmpOption['where'].' LIMIT 0,1';
-        if($resule = self::$db->query($sql))
+        if($result = self::$db->query($sql))
         {
-            return $resule[0];
+            if (!empty($result[0]) and is_array($result)) {
+                return $result[0];
+            } else {
+                return array();
+            } ;
         }
         return array();
     }

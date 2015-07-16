@@ -139,11 +139,11 @@ class MySQL
         // Query Database
         if ($tmpParams) {
             // Prepare in mysql > 5.0
-            $resule = self::$dbo->prepare($tmpSql);
-            $resule->execute($tmpParams);
+            $result = self::$dbo->prepare($tmpSql);
+            $result->execute($tmpParams);
         } 
         else {
-            $resule = self::$dbo->query($tmpSql);
+            $result = self::$dbo->query($tmpSql);
         }
 
         
@@ -151,9 +151,16 @@ class MySQL
             self::printDebug("SQL Error:",$tmpSql);
             return false;
         }
-        if (isset($resule->num_rows) and $resule->num_rows > 0) {
-
-            return $resule->fetch_all(MYSQLI_ASSOC);
+        if (isset($result->num_rows) and $result->num_rows > 0) {
+            if (PHPVERSION <= 5.3) {
+                return $result->fetch_all(MYSQLI_ASSOC);
+            } else {
+                $rows = array();
+                while ($row = $result->fetch_assoc()) {
+                    $rows[] = $row;
+                }
+                return $rows;
+            }
             
         }
 

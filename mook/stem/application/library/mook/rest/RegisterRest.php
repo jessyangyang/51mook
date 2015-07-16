@@ -1,6 +1,9 @@
 <?php
 /**
- * Register
+ * RegisterRest
+ *
+ *  系统权限注册类。
+ *  所有新建 route 必须注册后才能获取权限访问。
  *
  * @package     DuyuMvc
  * @author      Jess
